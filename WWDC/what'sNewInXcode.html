@@ -1,0 +1,258 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>what's new in Xcode 6</title>
+
+</head>
+<body>
+<h2>what's new in Xcode 6</h2>
+
+<hr />
+
+<p>在这部视屏中我们可以看到以下几种更新</p>
+
+<ul>
+<li><p>swift</p></li>
+<li><p>Live Design</p></li>
+<li><p>Visual Debugging</p></li>
+<li><p>Performance testing</p></li>
+</ul>
+
+
+<hr />
+
+<h3>swift</h3>
+
+<p>现在学习swift的网站有很多  其中包括在github上的中文网，但是现在已经不怎么更新了</p>
+
+<p>还有就是在自己的iBooks中去下载swifty语言  书籍的更新是很快的 也是值得学习的</p>
+
+<p>其中值得关注的是 swift 更大程度的契合了XIB/Stotryboard @IBDesigable和@IBInspectable 使得类的初始化更加的便捷，可以直接在xib/storyboard中完成</p>
+
+<p>这个在视屏中都有介绍</p>
+
+<hr />
+
+<h3>Live Design</h3>
+
+<p>使用Storyboard快速编辑UI界面</p>
+
+<p>通过选择不同的屏幕尺度  可以单独配置相应设备的UI</p>
+
+<p>这是一个试图  展示在不同的设备上的效果是这样的</p>
+
+<p><img src="./images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-03-17%20%E4%B8%8A%E5%8D%8811.34.27.png" alt="" /></p>
+
+<p>当选择的编辑框是width any和height any的时候编辑UI对不同的设备都产生影响</p>
+
+<p><img src="./images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-03-17%20%E4%B8%8A%E5%8D%8811.35.07.png" alt="" />
+<img src="./images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-03-17%20%E4%B8%8A%E5%8D%8811.34.58.png" alt="" /></p>
+
+<p>如果只想改变在Ipad设备上的UI的时候,选中ipad编辑视图框进行编辑</p>
+
+<p><img src="./images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-03-17%20%E4%B8%8A%E5%8D%8811.35.21.png" alt="" />
+<img src="./images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-03-17%20%E4%B8%8A%E5%8D%8811.35.30.png" alt="" />
+<img src="./images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-03-17%20%E4%B8%8A%E5%8D%8811.35.44.png" alt="" /></p>
+
+<p>这样就只改变了ipad的UI效果</p>
+
+<p>避免了以前使用多套Storyboard</p>
+
+<p>......</p>
+
+<hr />
+
+<h3>Visual Debugging</h3>
+
+<p>这个工具对于我们来说 时很实用的，比如在code review的时候可以更加清晰的看清UI的布局及相应UI之间的约束是怎样维系的</p>
+
+<p>同时结合xib注释可以了解相应UI的作用及实现</p>
+
+<p>在运行了demo之后选中</p>
+
+<p><img src="./images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-03-17%20%E4%B8%8A%E5%8D%8811.59.19.png" alt="" /></p>
+
+<p>选中相应的UI打开右边的属性框  可以看到当前UI的属性</p>
+
+<p><img src="./images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-03-17%20%E4%B8%8A%E5%8D%8811.59.46.png" alt="" /></p>
+
+<p>在屏幕上拖动XIB文件可以看到UI视图的层次</p>
+
+<p><img src="./images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-03-17%20%E4%B8%8B%E5%8D%8812.00.19.png" alt="" /></p>
+
+<p>拖动层次间的距离条  可以是间距增大  便于查看</p>
+
+<p><img src="./images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-03-17%20%E4%B8%8B%E5%8D%8812.00.23.png" alt="" /></p>
+
+<p>拖动下图的进度可以看到UI层次的叠加是怎样形成的</p>
+
+<p><img src="./images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-03-17%20%E4%B8%8B%E5%8D%8812.00.26.png" alt="" /></p>
+
+<p>当有hidden属性  或者层次较高的UI覆盖了底层的UI  可以通过这样这个按钮找到它  并且了解到相应的功能及属性</p>
+
+<p><img src="./images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-03-17%20%E4%B8%8B%E5%8D%8812.00.28.png" alt="" /></p>
+
+<p>选中相应的UI可以查看这个UI的约束</p>
+
+<p><img src="./images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-03-17%20%E4%B8%8B%E5%8D%8812.00.34.png" alt="" /></p>
+
+<p><img src="./images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-03-17%20%E4%B8%8B%E5%8D%8812.00.36.png" alt="" /></p>
+
+<hr />
+
+<h3>Performance Testing</h3>
+
+<p> 测试案例对于我们来说  用的还是比较少的   但是用兴趣的同学  可以自己去看看视频</p>
+</body>
+</html>
