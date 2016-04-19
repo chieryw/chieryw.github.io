@@ -160,7 +160,7 @@ sup {
 
 <h4>问题描述</h4>
 
-<p>用JSPatch修复了一个主流程模块的事件点击函数，在这个事件中，包含了网络请求（不止一个，连续多个请求）。解决了线上的Bug😘,很是开心。过了一天后，有同学发现在ios7系统下的主模块入口进不去了，正好是上次修复的bug,😱，好恐怖！</p>
+<p>用JSPatch修复了一个主流程模块的事件点击函数，在这个事件中，包含了网络请求（不止一个，连续多个请求）。包上线了之后，成功的解决了线上的Bug。但是，过了一天后，有同学发现在ios7系统下的主模块入口进不去了，正好是上次修复的bug,😱！</p>
 
 <h4>研究问题</h4>
 
@@ -173,7 +173,7 @@ sup {
 </ul>
 
 
-<p>会不会是后修复的文件引起的问题？删除这个文件，果然生效。💢，一万只艹尼玛略过。</p>
+<p>会不会是后修复的文件引起的问题？删除这个文件，果然生效。</p>
 
 <h4>解决问题</h4>
 
@@ -199,8 +199,6 @@ sup {
 <pre><code>JavaScript 语言是单线程的，在 OC 使用 JavaScriptCore 引擎执行 JS 代码时，会对 JS 代码块加锁，保证同个 JSContext 下的 JS 代码都是顺序执行。所以使用 JSPatch 替换的方法都会在这个锁里执行，无法并行执行，这导致如果主线程和子线程同时运行了 JSPatch 替换的方法，子线程就会卡住主线程。
 </code></pre>
 
-<p><img src="../images/ios7Thread.png" alt="线程执行的流程" /></p>
-
 <p>当前线程是否是主线程，这个其实我们可以变换一下思路，在之前提供的<a href="https://github.com/chieryw/TestJSPatchCase">demo工程中</a>,不直接修复<code>canInitWithRequest</code>方法，先在这个方法中打印当前的线程，再在JS中执行tempSelector方法返回，更改的地方有</p>
 
 <pre><code>OC:
@@ -210,7 +208,7 @@ sup {
 }
 
 + (BOOL)tempSelector {
-    NSLog(@"暂时走了这个方法");
+    // 这个方法将在JS中修复
     return YES;
 }
 
@@ -227,11 +225,15 @@ defineClass('TestProtocol', {}, {
 
 <p>})</p>
 
-<p>ios8,ios9不会奔溃，我们打印了相应的log从日志分析中，我们会读到想要的信息</p>
-
 <p>ios7日志图片</p>
 
 <p><img src="../images/ios7Log.png" alt="ios7Log图片" /></p>
+
+<p>根据日志，我们预测了ios7上的JSPatch的执行线程为：</p>
+
+<p><img src="../images/ios7Thread.png" alt="线程执行的流程" /></p>
+
+<p>ios8,ios9不会奔溃，我们打印了相应的log从日志分析中，我们会读到想要的信息</p>
 
 <p>ios9日志图片</p>
 
@@ -241,6 +243,6 @@ defineClass('TestProtocol', {}, {
 
 <p><img src="../images/ios9Thread.png" alt="线程执行的流程" /></p>
 
-<p>区别还是很大的，看来的cpu在操作分配顺序上ios7和ios8、9存在了很大的区别。这也就解释了为什么在ios8/9上没有存在子线程卡死主线程的情况。</p>
+<p>区别还是很大的，ios7上修复的JSPatch，会并行执行。ios8、9上则是顺序执行。看来cpu在对JSCore操作分配顺序上ios7和ios8、9存在了很大的区别。这也就解释了为什么在ios8/9上没有存在子线程卡死主线程的情况。</p>
 </body>
 </html>
