@@ -1,0 +1,246 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>JSPatch 子线程调用卡死问题</title>
+
+</head>
+<body>
+<h3>JSPatch 子线程调用卡死问题</h3>
+
+<h4>问题描述</h4>
+
+<p>用JSPatch修复了一个主流程模块的事件点击函数，在这个事件中，包含了网络请求（不止一个，连续多个请求）。解决了线上的Bug😘,很是开心。过了一天后，有同学发现在ios7系统下的主模块入口进不去了，正好是上次修复的bug,😱，好恐怖！</p>
+
+<h4>研究问题</h4>
+
+<p>开发同学组织起来准备拯救世界，问题一点点的被挖掘出来。</p>
+
+<ul>
+<li><p>涉及系统ios7</p></li>
+<li><p>涉及版本xxx</p></li>
+<li><p>奔溃激增在某一JSPatch发版后（在我们修复了bug之后，有人又发了一版）</p></li>
+</ul>
+
+
+<p>会不会是后修复的文件引起的问题？删除这个文件，果然生效。💢，一万只艹尼玛略过。</p>
+
+<h4>解决问题</h4>
+
+<p>删除之后修复的文件，发布JSPatch到线上，这个问题解决了。</p>
+
+<h4>后期跟踪</h4>
+
+<p>bug是解决了，但是真正的原因还是没有分析出来。经过后期的追踪，终于找到了问题的关键所在。这里给出一个<a href="https://github.com/chieryw/TestJSPatchCase">Demo</a>，欢迎大家下载验证。回到剖析问题的话题，当时我们修复了一个主流程的点击事件的bug,这个点击事件是会触发多个网络请求的。之后修复的bug，就是和这个网络请求有关。</p>
+
+<p><img src="../images/testProtocol.h.png" alt="之后bug的图片" /></p>
+
+<p><img src="../images/testProtocol.h.png" alt="之后bug的图片" /></p>
+
+<p>修复了继承自NSURLProtocol的+(BOOL)canInitWithRequest:(NSURLRequest *)request方法，那么这个方法的触发条件是什么？</p>
+
+<ul>
+<li>NSURLConnection的请求都会走到这个方法中去</li>
+</ul>
+
+
+<p>现在，JSPatch修复的方法点击之后又进入了JSPatch的方法中了，这里大家需要了解一下<a href="https://github.com/bang590/JSPatch/wiki/performSelectorInOC-%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3">JSPatch执行的线程问题</a>。主要看这么一句</p>
+
+<pre><code>JavaScript 语言是单线程的，在 OC 使用 JavaScriptCore 引擎执行 JS 代码时，会对 JS 代码块加锁，保证同个 JSContext 下的 JS 代码都是顺序执行。所以使用 JSPatch 替换的方法都会在这个锁里执行，无法并行执行，这导致如果主线程和子线程同时运行了 JSPatch 替换的方法，子线程就会卡住主线程。
+</code></pre>
+
+<p><img src="../images/ios7Thread.png" alt="线程执行的流程" /></p>
+
+<p>当前线程是否是主线程，这个其实我们可以变换一下思路，在之前提供的<a href="https://github.com/chieryw/TestJSPatchCase">demo工程中</a>,不直接修复<code>canInitWithRequest</code>方法，先在这个方法中打印当前的线程，再在JS中执行tempSelector方法返回，更改的地方有</p>
+
+<pre><code>OC:
++ (BOOL)canInitWithRequest:(NSURLRequest *)request {
+    NSLog(@"当前线程：%@",[NSThread currentThread]);
+    return [self tempSelector];
+}
+
++ (BOOL)tempSelector {
+    NSLog(@"暂时走了这个方法");
+    return YES;
+}
+
+JS:直接替换TestProtocol.js内容为
+
+defineClass('TestProtocol', {}, {
+    tempSelector: function() {
+        console.log('当前线程');
+        console.log(require('NSThread').currentThread())
+        console.log('走了JS修复的protocol方法');
+        return true;
+},
+</code></pre>
+
+<p>})</p>
+
+<p>ios8,ios9不会奔溃，我们打印了相应的log从日志分析中，我们会读到想要的信息</p>
+
+<p>ios7日志图片</p>
+
+<p><img src="../images/ios7Log.png" alt="ios7Log图片" /></p>
+
+<p>ios9日志图片</p>
+
+<p><img src="../images/ios9Log.png" alt="ios9Log图片" /></p>
+
+<p>从日志中得出ios9上的执行顺序有了变化</p>
+
+<p><img src="../images/ios9Thread.png" alt="线程执行的流程" /></p>
+
+<p>区别还是很大的，看来的cpu在操作分配顺序上ios7和ios8、9存在了很大的区别。这也就解释了为什么在ios8/9上没有存在子线程卡死主线程的情况。</p>
+</body>
+</html>
