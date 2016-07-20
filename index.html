@@ -228,6 +228,92 @@ PromiseKit3
 <li><p><a href="http://www.jianshu.com/p/53eec1a2ad93">ReactiveCocoa学习篇——【上】</a></p></li>
 <li><p><a href="http://www.jianshu.com/p/05544e4ac972">ReactiveCocoa学习篇——【下】</a></p></li>
 </ul>
+
+<hr>
+
+<h2>
+<a id="notification" class="anchor" href="#notification" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/Notification.html">Notification</a>
+</h2>
+
+<p>苹果的notification包含了两个类型</p>
+
+<ul>
+<li>Local Notification</li>
+<li>Remote Notification</li>
+</ul>
+
+<p>当接收到推送的时候，我们可以做出相应的提示</p>
+
+<pre><code>一个AlertView提示
+一个Application icon上的badge
+一个语音
+</code></pre>
+
+<p>我们可以将Local Notification 和 Remote Notification当成一种类型来处理，这样对于用户来说是比较容易接受的，毕竟都是推送。但是如果你想定制不同的类型，也是可以的，苹果给出了每个类型对应的API，所以对于单独的定制也是支持的。</p>
+
+<hr>
+
+<h2>
+<a id="notification传输流程" class="anchor" href="#notification%E4%BC%A0%E8%BE%93%E6%B5%81%E7%A8%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/Notification%E4%BC%A0%E8%BE%93%E6%B5%81%E7%A8%8B.html">Notification传输流程</a>
+</h2>
+
+<p>说到Notification的传输流程，其实是包含了三个部分的，这三个部分也是我们需要了解的Notification的核心内容。</p>
+
+<ul>
+<li>Provider-to-APNs Connection Trust</li>
+<li>APNs-to-Device Connection Trust</li>
+<li>Token Generation and Dispersal</li>
+</ul>
+
+<hr>
+
+<h2>
+<a id="notification-在ios10上的变化" class="anchor" href="#notification-%E5%9C%A8ios10%E4%B8%8A%E7%9A%84%E5%8F%98%E5%8C%96" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Notification 在IOS10上的变化</h2>
+
+<p>ios10在notification上的变化还是很大的，notificationCenter中显示的不在是之前仅仅只有一个body，新增了如下几点。</p>
+
+<ul>
+<li>title</li>
+<li>subtitle</li>
+<li>attachment(giff,image,video)</li>
+</ul>
+
+<p>展示的内容更加的丰富。同时在localNotification由原来的只有一种scheduled(时间间隔维度),现在增加到了三种。</p>
+
+<ul>
+<li>UNTimeIntervalNotificationTrigger(时间间隔维度)</li>
+<li>UNCalendarNotificationTrigger(日期维度)</li>
+<li>UNLocationNotificationTrigger(地理位置维度)</li>
+</ul>
+
+<p>同时支持notification展开，自定义展开后的内容。这里看这样一片<a href="http://www.jianshu.com/p/db2f938542e6">文章</a>就可以了，不在做过多的阐述</p>
+
+<hr>
+
+<h2>
+<a id="locationnotification实践" class="anchor" href="#locationnotification%E5%AE%9E%E8%B7%B5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/locationNotification%E5%AE%9E%E8%B7%B5.html">locationNotification实践</a>
+</h2>
+
+<p>当你手上拿着锤子的时候，全世界都是钉子。迫不及待的想试验一下新的Notification到底长得什么模样。下载最新的Xcode beta,新建工程，开始用swift语言尝试写工程</p>
+
+<p>首先向用户申请打开推送请求</p>
+
+<pre><code>// 向用户请求认证信息
+func authorizationNotification() {
+    UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.sound,.badge]) { (granted, error) in
+        if granted {
+            // 用户已经认证了
+            self.addNotificationHandleInApplication()
+        }
+        else {
+            // 用户拒绝
+            print("用户拒绝了")
+        }
+    }
+}
+</code></pre>
+
+<hr>
         </section>
 
         <footer>
