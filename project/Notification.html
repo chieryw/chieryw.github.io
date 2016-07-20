@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<title>Notification</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+
+
+</head>
+
+<body>
+
+<h1 id="toc_0">Notification</h1>
+
+<p>苹果的notification包含了两个类型</p>
+
+<ul>
+<li>Local Notification</li>
+<li>Remote Notification</li>
+</ul>
+
+<p>当接收到推送的时候，我们可以做出相应的提示</p>
+
+<div><pre><code class="language-none">一个AlertView提示
+一个Application icon上的badge
+一个语音</code></pre></div>
+
+<p>我们可以将Local Notification 和 Remote Notification当成一种类型来处理，这样对于用户来说是比较容易接受的，毕竟都是推送。但是如果你想定制不同的类型，也是可以的，苹果给出了每个类型对应的API，所以对于单独的定制也是支持的。</p>
+
+<h3 id="toc_1">Location Notification</h3>
+
+<p>这个通知一般都是由客户端主动发起，用一个定时器，定时的发出一个本地通知。所以这个通知中一般包含下面的内容</p>
+
+<ul>
+<li>Scheduled time.定制时间</li>
+<li>Notification type.通知类型（这里包含信息，按钮，事件，声音，一个数字）</li>
+<li>Custom data.自定义的数据</li>
+</ul>
+
+<p>这里需要注意的就是，这个自定义的Location Notification数量有限，最多只能支持64个本地通知，循环的通知只能算一个通知。想一想还是很多的。</p>
+
+<h3 id="toc_2">Remote Notification</h3>
+
+<p>远程推送和本地推送逻辑上都是一样的，只是一个是本地发出的通知，另一个是服务端发出的通知。所以在设计到网络服务的时候东西就会变得麻烦了很多。这里主要讲述的是苹果的APNs服务，</p>
+
+<p>需要注意的点是，当设备没有连接网络的时候。后台是不会向客户端发送推送的，而这些已有的推送会在后端保存，当前端处于网络环境的时候，会向客户端发出推送。这里可能会涉及到消息过时的处理。</p>
+
+<h2 id="toc_3">注册、调度和处理用户通知</h2>
+
+<p>Apple在ios8之后需要通过在UIApplication文件中实现 registerUserNotificationSettings:函数来告诉系统当一个新的通知来临的时候，以什么样的方式展示给用户，这里给出一个事例demo</p>
+
+<div><pre><code class="language-none">UIUserNotificationType types = (UIUserNotificationType) (UIUserNotificationTypeBadge |
+         UIUserNotificationTypeSound | UIUserNotificationTypeAlert);
+
+UIUserNotificationSettings *mySettings =
+            [UIUserNotificationSettings settingsForTypes:types categories:nil];
+
+[[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];</code></pre></div>
+
+<p>上图的demo中给出的是在通知来临的时候可以展示alert,badge,sound来提示用户。为了区分交互类型的，</p>
+
+<p>在设置actionNotification是会设置一个变量</p>
+
+<div><pre><code class="language-none">[tempCategory setActions:@[tempAction] forContext:UIUserNotificationActionContextDefault];</code></pre></div>
+
+<p>UIUserNotificationActionContextDefault这是一个枚举类型，通常就是default,默认情况支持4个action,另一个值的action值，只是支持2个action。这个应用场景没有做实际的检验，但是从文档中看，可以看出在不同的屏幕尺寸上展示4个action似乎回事有问题的。所以在小屏手机上还是考虑一下action的优先级，分情况去展示这个action</p>
+
+<p>对于ios8之后的系统，程序需要实现以下的这几个delegate去处理自定义的action的识别</p>
+
+<div><pre><code class="language-none">// 处理远程自定义action推送
+application:handleActionWithIdentifier:forRemoteNotification:completionHandler:
+
+// 处理本地自定义action推送
+application:handleActionWithIdentifier:forLocalNotification:completionHandler:.</code></pre></div>
+
+<h2 id="toc_4">APNs</h2>
+
+<p>APNs可以说是远程推送的核心内容，它是一个健壮的高效的服务在分发消息到远程的设备上。每一台远程设备都建立一个被认证的加密的IP远程连接来接受服务端分发的消息，如果当一个远程信息到达的时候，用户由没有在使用手机，这个时候就会在用户的设备上显示一个提示，等待用户去处理相关的信息</p>
+
+<p>服务端向用户提供需要push的信息，并将这些信息封装在payload&amp;attaches，用HTTP/2的网络多路传输的方式去分发相应的push,APNs的处理是在用户端做的处理</p>
+
+<h2 id="toc_5">payload</h2>
+
+<p>payload是每个notification都包含的模块，因为它相当于notification的信息载体，可以包含信息，alert,sound,badge或是自定义的data。但是在内容的大小是有限制的</p>
+
+<div><pre><code class="language-none">* ios8之后使用HTTP/2传输的payload的size是4kb
+* ios8之后使用二进制协议传输的payload的size是2kb
+* ios8之前是256byte</code></pre></div>
+
+<p>自定义的json只能包含下面集中类型</p>
+
+<div><pre><code class="language-none">* dictionary
+* array
+* string
+* number
+* bool</code></pre></div>
+
+<h2 id="toc_6">表现</h2>
+
+<p>当程序不处于foreground运行的时候，手机界面上会显示一个notification。点按这个notification，指定的程序会被启动。当程序处于运行状态时，手机不会出现notification,而是直接调用已经实现的代理。</p>
+
+<p>这里需要注意的是，APNs的 Qualit of Service(Qos)执行的store-and-forward函数在处理下线设备接收推送是这样处理的</p>
+
+<blockquote>
+<p>当服务器发出了一个推送给到了APNs,当时当前的设备是不在线，这时，APNs缓存当前这一条信息，当设备恢复有网状态的时候，这个时候，如果这个notification还没有过期，APNs会将这一条信息推送给前端。但是，如果这个设备一直不在网络服务的状态，且这个时候服务器又发来了多个notification,这个时候就会执行这个函数，结果就是，只保留最新的notification,将之前的的notification都置为忽略的状态。但是最后的这个最新的notification也是有时效限制的，所有，设备在一段时间不上线的话，这个notification也是会过期的</p>
+</blockquote>
+
+<h2 id="toc_7">notes</h2>
+
+<p>设备的token是会变化的这些token的变化一般会在这样的条件下变化</p>
+
+<ul>
+<li>恢复备份数据</li>
+<li>更新操作系统信息</li>
+<li>重置系统内容</li>
+</ul>
+
+<p>所以注册token的方法总是在设备启动的时候执行一次，当拿到这个token及时传输到服务器，同步设备信息，才能准确及时的接收到通知。同时需要注意的是，这个代理方法的调用是随机的，只要这个设备的token变化了，这个代理方法就会被调用。所以代理方法的调用不仅仅是在程序启动注册或是重新注册的时候才会调用。所以最好不要缓存这个token。这也说明了这个Token不是唯一能标明设备的id。</p>
+
+<p>ios10之前的nitification不能知道通知是否正常送达，所以在推送的信息最好不要是“敏感信息”，这个敏感信息包含的就会很多，比如说</p>
+
+<div><pre><code class="language-none">条件性的信息
+验证性的信息</code></pre></div>
+
+<p>在播放音乐的时候，只是支持一下几种格式</p>
+
+<ul>
+<li>aiff</li>
+<li>wav</li>
+<li>caf</li>
+</ul>
+
+<p>如果格式不支持的话，可以打开相关的视屏到处对应的格式，同时在这里需要说明的是，视屏文件的大小不能超过30秒。这里还介绍了一个视屏格式转化的工具 <code>afconvert</code>。</p>
+
+<div><pre><code class="language-none">afconvert /System/Library/Sounds/Submarine.aiff ~/Desktop/sub.caf -d ima4 -f caff -v</code></pre></div>
+
+<p>具体的工具的使用还是去google一下，这里只是做一个介绍</p>
+
+<p>远程推送，本身支持如何通知用户，例如你可以使用一个alert,或是一个声音，或是一个badge.都是可以的。但是在现在的使用场景中，大部分使用的都是自定义的payload</p>
+
+<h2 id="toc_8">相关博文</h2>
+
+<p><a href="http://www.jianshu.com/p/508066017286">对 APNs 的认识</a></p>
+
+<p><a href="http://www.jianshu.com/p/e7b817e23fbc">APNs推送那些事</a></p>
+
+<p><a href="http://www.jianshu.com/p/db9c95c9e29f">简单使用APNs</a></p>
+
+<p><a href="http://www.jianshu.com/p/a510b4f8b300">iOS10推送新框架UserNotifications</a></p>
+
+<p><a href="http://www.jianshu.com/p/f9fa71325a7d">WWDC2016-session707 Introduction to Notifications</a></p>
+
+<p><a href="http://www.jianshu.com/p/2f3202b5e758">玩转 iOS 10 推送 —— UserNotifications Framework（上）</a></p>
+
+<p><a href="http://www.jianshu.com/p/db2f938542e6">remote Notification 实践</a></p>
+
+
+
+
+</body>
+
+</html>
