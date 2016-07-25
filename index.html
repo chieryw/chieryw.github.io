@@ -314,6 +314,30 @@ func authorizationNotification() {
 </code></pre>
 
 <hr>
+
+<h2>
+<a id="kmp算法" class="anchor" href="#kmp%E7%AE%97%E6%B3%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/KMP%E7%AE%97%E6%B3%95.html">KMP算法</a>
+</h2>
+
+<p>在简单的字符串匹配算法中我们一般会使用这样的匹配demo去做处理</p>
+
+<pre><code>// 返回子串T在主串S，pos之后的位置,这里子串在主串中重复的情况
+int Index(SSTring S,SSTring T, int pos) {
+    if (!S || !T) return
+    if (!(pos &gt;=0 &amp;&amp; pos &lt; S.length)) return
+
+    int i = pos; j = 0;
+    while(i &lt; S.lenth &amp;&amp; j &lt; T.length) {
+        if (S[i] == T[j]) j++;
+        else j = 0;
+        i++;
+    } 
+    if (j &gt; T.length) return i - T.length;
+    else return 0;
+}
+</code></pre>
+
+<hr>
         </section>
 
         <footer>
