@@ -316,6 +316,25 @@ func authorizationNotification() {
 <hr>
 
 <h2>
+<a id="remote-notification" class="anchor" href="#remote-notification" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/RemoteNotification.html">Remote Notification</a>
+</h2>
+
+<p>首先介绍如何完成远程推送的前期准备，这里只做简单介绍。</p>
+
+<p>在Mac上生成 Apple推送通知SSL许可证：</p>
+
+<ul>
+<li><p>登录到 iPhone Developer Connection Portal 并点击 App IDs</p></li>
+<li><p>创建一个不使用通配符的 App ID 。通配符 ID 不能用于推送通知服务。例如，我们的iPhone程序ID像这样：  AB123346CD.com.serverdensity.iphone</p></li>
+<li><p>点击App ID旁的“Configure”，然后按下按钮生产 推送通知许可证。根据“向导”指导的步骤生成一个签名并上传，最后下载生成的许可证。此步骤在 Apple文档中 也有谈到。</p></li>
+<li><p>通过双击.cer文件将你的 aps_developer_identity.cer 引入Keychain中。</p></li>
+</ul>
+
+<p>...</p>
+
+<hr>
+
+<h2>
 <a id="kmp算法" class="anchor" href="#kmp%E7%AE%97%E6%B3%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/KMP%E7%AE%97%E6%B3%95.html">KMP算法</a>
 </h2>
 
