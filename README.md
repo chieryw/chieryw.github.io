@@ -1,4 +1,4 @@
 chieryw.github.io
 =================
 
-chieryw'blog
+[chieryw'blog](http://chieryw.github.io/)
