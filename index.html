@@ -357,6 +357,26 @@ int Index(SSTring S,SSTring T, int pos) {
 </code></pre>
 
 <hr>
+
+<h2>
+<a id="为jspatch添加nsintegerboolcgfloatdouble类型的地址传递解析" class="anchor" href="#%E4%B8%BAjspatch%E6%B7%BB%E5%8A%A0nsintegerboolcgfloatdouble%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E4%BC%A0%E9%80%92%E8%A7%A3%E6%9E%90" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/JSPatch%E8%A1%A5%E5%85%85.html">为JSPatch添加NSInteger,BOOL,CGFloat,double类型的地址传递解析</a>
+</h2>
+
+<p>使用场景，针对客户端中常常使用这样的实参形式来保存地址中的值。</p>
+
+<pre><code>// 声明变量a
+NSInteger a = 0;
+
+// 取地址a做容器承接值
+[self changA:&amp;a];
+
+// 改变a地址中的值
+- (void)changeA:(NSInteger *)a {
+    *a = 10;
+}
+</code></pre>
+
+<hr>
         </section>
 
         <footer>
