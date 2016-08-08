@@ -30,111 +30,162 @@
 
         <section id="main_content">
           <h2>
-<a id="这是我用markdown生成的首页的代码" class="anchor" href="#%E8%BF%99%E6%98%AF%E6%88%91%E7%94%A8markdown%E7%94%9F%E6%88%90%E7%9A%84%E9%A6%96%E9%A1%B5%E7%9A%84%E4%BB%A3%E7%A0%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>这是我用markdown生成的首页的代码</h2>
+<a id="remote-notification" class="anchor" href="#remote-notification" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/RemoteNotification.html">Remote Notification</a>
+</h2>
 
-<p>这里会有一些markdown的介绍
-<img src="http://25.io/mou/Mou_128.png" alt="Mou icon"></p>
+<p>首先介绍如何完成远程推送的前期准备，这里只做简单介绍。</p>
+
+<p>在Mac上生成 Apple推送通知SSL许可证：</p>
+
+<ul>
+<li><p>登录到 iPhone Developer Connection Portal 并点击 App IDs</p></li>
+<li><p>创建一个不使用通配符的 App ID 。通配符 ID 不能用于推送通知服务。例如，我们的iPhone程序ID像这样：  AB123346CD.com.serverdensity.iphone</p></li>
+<li><p>点击App ID旁的“Configure”，然后按下按钮生产 推送通知许可证。根据“向导”指导的步骤生成一个签名并上传，最后下载生成的许可证。此步骤在 Apple文档中 也有谈到。</p></li>
+<li><p>通过双击.cer文件将你的 aps_developer_identity.cer 引入Keychain中。</p></li>
+</ul>
+
+<p>...</p>
+
+<hr>
 
 <h2>
-<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Overview</h2>
+<a id="locationnotification实践" class="anchor" href="#locationnotification%E5%AE%9E%E8%B7%B5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/locationNotification%E5%AE%9E%E8%B7%B5.html">locationNotification实践</a>
+</h2>
 
-<p><strong>Mou</strong>, the missing Markdown editor for <em>web developers</em>.</p>
+<p>当你手上拿着锤子的时候，全世界都是钉子。迫不及待的想试验一下新的Notification到底长得什么模样。下载最新的Xcode beta,新建工程，开始用swift语言尝试写工程</p>
 
-<h3>
-<a id="syntax" class="anchor" href="#syntax" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Syntax</h3>
+<p>首先向用户申请打开推送请求</p>
+
+<pre><code>// 向用户请求认证信息
+func authorizationNotification() {
+    UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.sound,.badge]) { (granted, error) in
+        if granted {
+            // 用户已经认证了
+            self.addNotificationHandleInApplication()
+        }
+        else {
+            // 用户拒绝
+            print("用户拒绝了")
+        }
+    }
+}
+</code></pre>
+
+<hr>
+
+<h2>
+<a id="notification-在ios10上的变化" class="anchor" href="#notification-%E5%9C%A8ios10%E4%B8%8A%E7%9A%84%E5%8F%98%E5%8C%96" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Notification 在IOS10上的变化</h2>
+
+<p>ios10在notification上的变化还是很大的，notificationCenter中显示的不在是之前仅仅只有一个body，新增了如下几点。</p>
+
+<ul>
+<li>title</li>
+<li>subtitle</li>
+<li>attachment(giff,image,video)</li>
+</ul>
+
+<p>展示的内容更加的丰富。同时在localNotification由原来的只有一种scheduled(时间间隔维度),现在增加到了三种。</p>
+
+<ul>
+<li>UNTimeIntervalNotificationTrigger(时间间隔维度)</li>
+<li>UNCalendarNotificationTrigger(日期维度)</li>
+<li>UNLocationNotificationTrigger(地理位置维度)</li>
+</ul>
+
+<p>同时支持notification展开，自定义展开后的内容。这里看这样一片<a href="http://www.jianshu.com/p/db2f938542e6">文章</a>就可以了，不在做过多的阐述</p>
+
+<hr>
+
+<h2>
+<a id="notification传输流程" class="anchor" href="#notification%E4%BC%A0%E8%BE%93%E6%B5%81%E7%A8%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/Notification%E4%BC%A0%E8%BE%93%E6%B5%81%E7%A8%8B.html">Notification传输流程</a>
+</h2>
+
+<p>说到Notification的传输流程，其实是包含了三个部分的，这三个部分也是我们需要了解的Notification的核心内容。</p>
+
+<ul>
+<li>Provider-to-APNs Connection Trust</li>
+<li>APNs-to-Device Connection Trust</li>
+<li>Token Generation and Dispersal</li>
+</ul>
+
+<hr>
+
+<h2>
+<a id="notification" class="anchor" href="#notification" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/Notification.html">Notification</a>
+</h2>
+
+<p>苹果的notification包含了两个类型</p>
+
+<ul>
+<li>Local Notification</li>
+<li>Remote Notification</li>
+</ul>
+
+<p>当接收到推送的时候，我们可以做出相应的提示</p>
+
+<pre><code>一个AlertView提示
+一个Application icon上的badge
+一个语音
+</code></pre>
+
+<p>我们可以将Local Notification 和 Remote Notification当成一种类型来处理，这样对于用户来说是比较容易接受的，毕竟都是推送。但是如果你想定制不同的类型，也是可以的，苹果给出了每个类型对应的API，所以对于单独的定制也是支持的。</p>
+
+<hr>
+
+<h2>
+<a id="reactivecocoa" class="anchor" href="#reactivecocoa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ReactiveCocoa</h2>
+
+<p>你的工程现在使用了ReactiveCocoa了吗？ReactiveCocoa作为MVVM模块之间信息交互的担当，现在也是发展飞速。今天又回顾了一下ReactiveCocoa的代码，目前为止只是使用阶段，倒是没有去了解其中的原理，使用上也不是很有底气。所以今天就google了一些原理，千奇百怪的文章比比皆是，真是选花了眼，还是没有找到自己想要的原理篇，直到找到了这样一篇<a href="http://nathanli.cn/2015/08/27/reactivecocoa2-%E6%BA%90%E7%A0%81%E6%B5%85%E6%9E%90/">文章</a></p>
+
+<pre><code>文章中没有将所有的原理都一一讲解，主要讲述的还是RACSubscriber 和RACDisposable的原理，举例也是很详细的。
+从文章中你可以了解到作者在分析ReactiveCocoa原理的思路，授之以渔的行为，文章皆是干货提炼，很是滋补。可以作为研究ReactiveCocoa的思路来读。
+</code></pre>
 
 <h4>
-<a id="strong-and-emphasize" class="anchor" href="#strong-and-emphasize" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Strong and Emphasize</h4>
+<a id="reactivecocoa使用简单介绍" class="anchor" href="#reactivecocoa%E4%BD%BF%E7%94%A8%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ReactiveCocoa使用简单介绍</h4>
 
-<p><strong>strong</strong> or <strong>strong</strong> ( Cmd + B )</p>
-
-<p><em>emphasize</em> or <em>emphasize</em> ( Cmd + I )</p>
-
-<p><strong>Sometimes I want a lot of text to be bold.
-Like, seriously, a <em>LOT</em> of text</strong></p>
-
-<p>........
-这里是它的下载地址<a href="http://25.io/mou/">在这里</a></p>
-
-<p>用起来还是蛮不错的</p>
-
-<hr>
-
-<h2>
-<a id="uicollectionview简单的实现和调用" class="anchor" href="#uicollectionview%E7%AE%80%E5%8D%95%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%92%8C%E8%B0%83%E7%94%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>UICollectionView简单的实现和调用</h2>
-
-<p>当我们在使用UITableView的时候，常常会抱怨为什么UITableView的实现并不是那么的尽如人意，也就是差不多在设个时候UICollectionView诞生了，不仅仅在每行的可以编辑元素，每列上的性质也得到了提升，每个cell可以具有自己的个性......</p>
-
-<p>这里有它的<a href="https://github.com/chieryw/UICollectionView">源码地址</a></p>
-
-<hr>
-
-<h2>
-<a id="coremotion简单的实现和调用" class="anchor" href="#coremotion%E7%AE%80%E5%8D%95%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%92%8C%E8%B0%83%E7%94%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>CoreMotion简单的实现和调用</h2>
-
-<p>之前关注了Cocoachina，看到上面有一篇文章写的是详解CMDeViceMotion，点进去看了之后被效果图吸引了</p>
+<p>一开始接触ReactiveCocoa还是明白这个空间该怎样去写才是王道，除了看github上的文档之外。还是有很多的相关博客是介绍ReactiveCocoa是如何使用的.这里就有一个博客是介绍如何使用的</p>
 
 <ul>
-<li>向左摇动实现了popViewController的效果</li>
-<li>横向的摇动实现了presentedViewController的切换</li>
+<li><p><a href="http://www.jianshu.com/p/53eec1a2ad93">ReactiveCocoa学习篇——【上】</a></p></li>
+<li><p><a href="http://www.jianshu.com/p/05544e4ac972">ReactiveCocoa学习篇——【下】</a></p></li>
 </ul>
 
-<p>很帅气的效果</p>
+<hr>
 
-<p>这里有它的<a href="https://github.com/chieryw/CoreMotion">源码地址</a></p>
+<h2>
+<a id="promisekit" class="anchor" href="#promisekit" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PromiseKit</h2>
+
+<p>在工程中，我们经常会使用到异步处理。当几个异步处理放在一起的时候，程序的可读性就会变差，同时代码量也会上升。<a href="https://github.com/mxcl/PromiseKit">PromiseKit</a>很好的解决了这一问题。PromiseKit采用的是链式编程的思想，可读性和代码量上都得到了很好的提升。这里有一篇<a href="http://nathanli.cn/2015/11/15/ios-%E4%B8%AD%E7%9A%84-promise-%E6%A8%A1%E5%BC%8F/">博客</a>很好的介绍了PromiseKit的用法和优势。文中的大量代码都是使用OC来写的，也就是说博客中的介绍大部分还是基于PromiseKit1/2。现在PromiseKit已经出了三个版本了</p>
+
+<pre><code>PromiseKit1
+    支持OC
+    少量的Swift
+PromiseKit2
+    支持OC
+    支持Swift
+PromiseKit3
+    支持Swift
+    针对不同的swift版本请使用不同的Tag
+</code></pre>
+
+<p>具体的使用还是要根据你当前的工程是基于哪个版本，以及所使用的语言。</p>
 
 <hr>
 
 <h2>
-<a id="whats-new-in-xcode" class="anchor" href="#whats-new-in-xcode" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>what's new in Xcode</h2>
-
-<p>在这部视屏中我们可以看到以下几种更新</p>
-
-<ul>
-<li><p>swift</p></li>
-<li><p>Live Design</p></li>
-<li><p>Visual Debugging</p></li>
-<li><p>Performance testing </p></li>
-</ul>
-
-<p><a href="./WWDC/what'sNewInXcode.html">详细信息</a>
-<a href="https://developer.apple.com/videos/wwdc/2014/">视屏地址</a></p>
-
-<hr>
-
-<h2>
-<a id="重新回到写博客的道路" class="anchor" href="#%E9%87%8D%E6%96%B0%E5%9B%9E%E5%88%B0%E5%86%99%E5%8D%9A%E5%AE%A2%E7%9A%84%E9%81%93%E8%B7%AF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>重新回到写博客的道路</h2>
-
-<p>再回首恍然如梦，离上次写博客的日期，已经将近有一年了，期间琳琳碎碎有整理的一些资料，也没来的及上传。记忆点也变得少了，是时候回到正常的道路上了。记录下生活中的点滴，成长的道路上还是要有那么一些记忆点来回味我们的人生。</p>
-
-<p>FIGHTING!!!!!  我又回来了！</p>
-
-<hr>
-
-<h2>
-<a id="jspatch-子线程调用卡死问题" class="anchor" href="#jspatch-%E5%AD%90%E7%BA%BF%E7%A8%8B%E8%B0%83%E7%94%A8%E5%8D%A1%E6%AD%BB%E9%97%AE%E9%A2%98" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/jspatch%E5%AD%90%E7%BA%BF%E7%A8%8B%E5%8D%A1%E6%AD%BB%E9%97%AE%E9%A2%98.html">JSPatch 子线程调用卡死问题</a>
+<a id="what-new-in-swift" class="anchor" href="#what-new-in-swift" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/what%20new%20in%20swift.html">what new in swift</a>
 </h2>
 
-<h3>
-<a id="问题描述" class="anchor" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>问题描述</h3>
+<p>Swift 开源已有6个月，开源社区讨论从未停歇过。Swift3 的目标有以下4点：</p>
 
-<p>用JSPatch修复了一个主流程模块的事件点击函数，在这个事件中，包含了网络请求（不止一个，连续多个请求）。包上线了之后，成功的解决了线上的Bug。但是，过了一天后，有同学发现在ios7系统下的主模块入口进不去了，正好是上次修复的bug,<g-emoji alias="scream" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f631.png">😱</g-emoji>！</p>
+<pre><code>1、发展开源社区
+2、新平台的可移植性
+3、开放更多基础功能
+4、持续优化
+</code></pre>
 
-<p><a href="./project/jspatch%E5%AD%90%E7%BA%BF%E7%A8%8B%E5%8D%A1%E6%AD%BB%E9%97%AE%E9%A2%98.html">More</a></p>
-
-<hr>
-
-<h2>
-<a id="rsa非对称加密与app证书签名" class="anchor" href="#rsa%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E4%B8%8Eapp%E8%AF%81%E4%B9%A6%E7%AD%BE%E5%90%8D" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/rsa%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E4%B8%8Eapp%E8%AF%81%E4%B9%A6%E7%AD%BE%E5%90%8D.html">RSA非对称加密与APP证书签名</a>
-</h2>
-
-<p>最近看了RSA非对称加密的原理实现，其中阮一峰博客中提到的最为详细（文章末尾已经给出地址）。从实现原理到实际应用，整个流程都做了介绍，相信看完后就可以理解RSA算法的精髓，以及公钥与私钥的分配了。</p>
-
-<p>看完了之后，突然想到Apple的签名问题（这一问题其实早有文章介绍过了），当你看完了RSA的原理，再去思考苹果的签名，你会发现apple sign也不是那么的神秘。</p>
-
-<p>下面记录了参考文章，记录自己自己的阅读里程。</p>
-
-<p><a href="./project/rsa%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E4%B8%8Eapp%E8%AF%81%E4%B9%A6%E7%AD%BE%E5%90%8D.html">More</a></p>
+<p><a href="./project/what%20new%20in%20swift.html">More</a></p>
 
 <hr>
 
@@ -175,162 +226,16 @@ Like, seriously, a <em>LOT</em> of text</strong></p>
 <hr>
 
 <h2>
-<a id="what-new-in-swift" class="anchor" href="#what-new-in-swift" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/what%20new%20in%20swift.html">what new in swift</a>
+<a id="rsa非对称加密与app证书签名" class="anchor" href="#rsa%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E4%B8%8Eapp%E8%AF%81%E4%B9%A6%E7%AD%BE%E5%90%8D" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/rsa%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E4%B8%8Eapp%E8%AF%81%E4%B9%A6%E7%AD%BE%E5%90%8D.html">RSA非对称加密与APP证书签名</a>
 </h2>
 
-<p>Swift 开源已有6个月，开源社区讨论从未停歇过。Swift3 的目标有以下4点：</p>
+<p>最近看了RSA非对称加密的原理实现，其中阮一峰博客中提到的最为详细（文章末尾已经给出地址）。从实现原理到实际应用，整个流程都做了介绍，相信看完后就可以理解RSA算法的精髓，以及公钥与私钥的分配了。</p>
 
-<pre><code>1、发展开源社区
-2、新平台的可移植性
-3、开放更多基础功能
-4、持续优化
-</code></pre>
+<p>看完了之后，突然想到Apple的签名问题（这一问题其实早有文章介绍过了），当你看完了RSA的原理，再去思考苹果的签名，你会发现apple sign也不是那么的神秘。</p>
 
-<p><a href="./project/what%20new%20in%20swift.html">More</a></p>
+<p>下面记录了参考文章，记录自己自己的阅读里程。</p>
 
-<hr>
-
-<h2>
-<a id="promisekit" class="anchor" href="#promisekit" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PromiseKit</h2>
-
-<p>在工程中，我们经常会使用到异步处理。当几个异步处理放在一起的时候，程序的可读性就会变差，同时代码量也会上升。<a href="https://github.com/mxcl/PromiseKit">PromiseKit</a>很好的解决了这一问题。PromiseKit采用的是链式编程的思想，可读性和代码量上都得到了很好的提升。这里有一篇<a href="http://nathanli.cn/2015/11/15/ios-%E4%B8%AD%E7%9A%84-promise-%E6%A8%A1%E5%BC%8F/">博客</a>很好的介绍了PromiseKit的用法和优势。文中的大量代码都是使用OC来写的，也就是说博客中的介绍大部分还是基于PromiseKit1/2。现在PromiseKit已经出了三个版本了</p>
-
-<pre><code>PromiseKit1
-    支持OC
-    少量的Swift
-PromiseKit2
-    支持OC
-    支持Swift
-PromiseKit3
-    支持Swift
-    针对不同的swift版本请使用不同的Tag
-</code></pre>
-
-<p>具体的使用还是要根据你当前的工程是基于哪个版本，以及所使用的语言。</p>
-
-<hr>
-
-<h2>
-<a id="reactivecocoa" class="anchor" href="#reactivecocoa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ReactiveCocoa</h2>
-
-<p>你的工程现在使用了ReactiveCocoa了吗？ReactiveCocoa作为MVVM模块之间信息交互的担当，现在也是发展飞速。今天又回顾了一下ReactiveCocoa的代码，目前为止只是使用阶段，倒是没有去了解其中的原理，使用上也不是很有底气。所以今天就google了一些原理，千奇百怪的文章比比皆是，真是选花了眼，还是没有找到自己想要的原理篇，直到找到了这样一篇<a href="http://nathanli.cn/2015/08/27/reactivecocoa2-%E6%BA%90%E7%A0%81%E6%B5%85%E6%9E%90/">文章</a></p>
-
-<pre><code>文章中没有将所有的原理都一一讲解，主要讲述的还是RACSubscriber 和RACDisposable的原理，举例也是很详细的。
-从文章中你可以了解到作者在分析ReactiveCocoa原理的思路，授之以渔的行为，文章皆是干货提炼，很是滋补。可以作为研究ReactiveCocoa的思路来读。
-</code></pre>
-
-<h4>
-<a id="reactivecocoa使用简单介绍" class="anchor" href="#reactivecocoa%E4%BD%BF%E7%94%A8%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ReactiveCocoa使用简单介绍</h4>
-
-<p>一开始接触ReactiveCocoa还是明白这个空间该怎样去写才是王道，除了看github上的文档之外。还是有很多的相关博客是介绍ReactiveCocoa是如何使用的.这里就有一个博客是介绍如何使用的</p>
-
-<ul>
-<li><p><a href="http://www.jianshu.com/p/53eec1a2ad93">ReactiveCocoa学习篇——【上】</a></p></li>
-<li><p><a href="http://www.jianshu.com/p/05544e4ac972">ReactiveCocoa学习篇——【下】</a></p></li>
-</ul>
-
-<hr>
-
-<h2>
-<a id="notification" class="anchor" href="#notification" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/Notification.html">Notification</a>
-</h2>
-
-<p>苹果的notification包含了两个类型</p>
-
-<ul>
-<li>Local Notification</li>
-<li>Remote Notification</li>
-</ul>
-
-<p>当接收到推送的时候，我们可以做出相应的提示</p>
-
-<pre><code>一个AlertView提示
-一个Application icon上的badge
-一个语音
-</code></pre>
-
-<p>我们可以将Local Notification 和 Remote Notification当成一种类型来处理，这样对于用户来说是比较容易接受的，毕竟都是推送。但是如果你想定制不同的类型，也是可以的，苹果给出了每个类型对应的API，所以对于单独的定制也是支持的。</p>
-
-<hr>
-
-<h2>
-<a id="notification传输流程" class="anchor" href="#notification%E4%BC%A0%E8%BE%93%E6%B5%81%E7%A8%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/Notification%E4%BC%A0%E8%BE%93%E6%B5%81%E7%A8%8B.html">Notification传输流程</a>
-</h2>
-
-<p>说到Notification的传输流程，其实是包含了三个部分的，这三个部分也是我们需要了解的Notification的核心内容。</p>
-
-<ul>
-<li>Provider-to-APNs Connection Trust</li>
-<li>APNs-to-Device Connection Trust</li>
-<li>Token Generation and Dispersal</li>
-</ul>
-
-<hr>
-
-<h2>
-<a id="notification-在ios10上的变化" class="anchor" href="#notification-%E5%9C%A8ios10%E4%B8%8A%E7%9A%84%E5%8F%98%E5%8C%96" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Notification 在IOS10上的变化</h2>
-
-<p>ios10在notification上的变化还是很大的，notificationCenter中显示的不在是之前仅仅只有一个body，新增了如下几点。</p>
-
-<ul>
-<li>title</li>
-<li>subtitle</li>
-<li>attachment(giff,image,video)</li>
-</ul>
-
-<p>展示的内容更加的丰富。同时在localNotification由原来的只有一种scheduled(时间间隔维度),现在增加到了三种。</p>
-
-<ul>
-<li>UNTimeIntervalNotificationTrigger(时间间隔维度)</li>
-<li>UNCalendarNotificationTrigger(日期维度)</li>
-<li>UNLocationNotificationTrigger(地理位置维度)</li>
-</ul>
-
-<p>同时支持notification展开，自定义展开后的内容。这里看这样一片<a href="http://www.jianshu.com/p/db2f938542e6">文章</a>就可以了，不在做过多的阐述</p>
-
-<hr>
-
-<h2>
-<a id="locationnotification实践" class="anchor" href="#locationnotification%E5%AE%9E%E8%B7%B5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/locationNotification%E5%AE%9E%E8%B7%B5.html">locationNotification实践</a>
-</h2>
-
-<p>当你手上拿着锤子的时候，全世界都是钉子。迫不及待的想试验一下新的Notification到底长得什么模样。下载最新的Xcode beta,新建工程，开始用swift语言尝试写工程</p>
-
-<p>首先向用户申请打开推送请求</p>
-
-<pre><code>// 向用户请求认证信息
-func authorizationNotification() {
-    UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.sound,.badge]) { (granted, error) in
-        if granted {
-            // 用户已经认证了
-            self.addNotificationHandleInApplication()
-        }
-        else {
-            // 用户拒绝
-            print("用户拒绝了")
-        }
-    }
-}
-</code></pre>
-
-<hr>
-
-<h2>
-<a id="remote-notification" class="anchor" href="#remote-notification" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/RemoteNotification.html">Remote Notification</a>
-</h2>
-
-<p>首先介绍如何完成远程推送的前期准备，这里只做简单介绍。</p>
-
-<p>在Mac上生成 Apple推送通知SSL许可证：</p>
-
-<ul>
-<li><p>登录到 iPhone Developer Connection Portal 并点击 App IDs</p></li>
-<li><p>创建一个不使用通配符的 App ID 。通配符 ID 不能用于推送通知服务。例如，我们的iPhone程序ID像这样：  AB123346CD.com.serverdensity.iphone</p></li>
-<li><p>点击App ID旁的“Configure”，然后按下按钮生产 推送通知许可证。根据“向导”指导的步骤生成一个签名并上传，最后下载生成的许可证。此步骤在 Apple文档中 也有谈到。</p></li>
-<li><p>通过双击.cer文件将你的 aps_developer_identity.cer 引入Keychain中。</p></li>
-</ul>
-
-<p>...</p>
+<p><a href="./project/rsa%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E4%B8%8Eapp%E8%AF%81%E4%B9%A6%E7%AD%BE%E5%90%8D.html">More</a></p>
 
 <hr>
 
@@ -359,6 +264,19 @@ int Index(SSTring S,SSTring T, int pos) {
 <hr>
 
 <h2>
+<a id="jspatch-子线程调用卡死问题" class="anchor" href="#jspatch-%E5%AD%90%E7%BA%BF%E7%A8%8B%E8%B0%83%E7%94%A8%E5%8D%A1%E6%AD%BB%E9%97%AE%E9%A2%98" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/jspatch%E5%AD%90%E7%BA%BF%E7%A8%8B%E5%8D%A1%E6%AD%BB%E9%97%AE%E9%A2%98.html">JSPatch 子线程调用卡死问题</a>
+</h2>
+
+<h3>
+<a id="问题描述" class="anchor" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>问题描述</h3>
+
+<p>用JSPatch修复了一个主流程模块的事件点击函数，在这个事件中，包含了网络请求（不止一个，连续多个请求）。包上线了之后，成功的解决了线上的Bug。但是，过了一天后，有同学发现在ios7系统下的主模块入口进不去了，正好是上次修复的bug,<g-emoji alias="scream" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f631.png">😱</g-emoji>！</p>
+
+<p><a href="./project/jspatch%E5%AD%90%E7%BA%BF%E7%A8%8B%E5%8D%A1%E6%AD%BB%E9%97%AE%E9%A2%98.html">More</a></p>
+
+<hr>
+
+<h2>
 <a id="为jspatch添加nsintegerboolcgfloatdouble类型的地址传递解析" class="anchor" href="#%E4%B8%BAjspatch%E6%B7%BB%E5%8A%A0nsintegerboolcgfloatdouble%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E4%BC%A0%E9%80%92%E8%A7%A3%E6%9E%90" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="./project/JSPatch%E8%A1%A5%E5%85%85.html">为JSPatch添加NSInteger,BOOL,CGFloat,double类型的地址传递解析</a>
 </h2>
 
@@ -377,6 +295,86 @@ NSInteger a = 0;
 </code></pre>
 
 <hr>
+
+<h2>
+<a id="重新回到写博客的道路" class="anchor" href="#%E9%87%8D%E6%96%B0%E5%9B%9E%E5%88%B0%E5%86%99%E5%8D%9A%E5%AE%A2%E7%9A%84%E9%81%93%E8%B7%AF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>重新回到写博客的道路</h2>
+
+<p>再回首恍然如梦，离上次写博客的日期，已经将近有一年了，期间琳琳碎碎有整理的一些资料，也没来的及上传。记忆点也变得少了，是时候回到正常的道路上了。记录下生活中的点滴，成长的道路上还是要有那么一些记忆点来回味我们的人生。</p>
+
+<p>FIGHTING!!!!!  我又回来了！</p>
+
+<hr>
+
+<h2>
+<a id="whats-new-in-xcode" class="anchor" href="#whats-new-in-xcode" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>what's new in Xcode</h2>
+
+<p>在这部视屏中我们可以看到以下几种更新</p>
+
+<ul>
+<li><p>swift</p></li>
+<li><p>Live Design</p></li>
+<li><p>Visual Debugging</p></li>
+<li><p>Performance testing </p></li>
+</ul>
+
+<p><a href="./WWDC/what'sNewInXcode.html">详细信息</a>
+<a href="https://developer.apple.com/videos/wwdc/2014/">视屏地址</a></p>
+
+<hr>
+
+<h2>
+<a id="coremotion简单的实现和调用" class="anchor" href="#coremotion%E7%AE%80%E5%8D%95%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%92%8C%E8%B0%83%E7%94%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>CoreMotion简单的实现和调用</h2>
+
+<p>之前关注了Cocoachina，看到上面有一篇文章写的是详解CMDeViceMotion，点进去看了之后被效果图吸引了</p>
+
+<ul>
+<li>向左摇动实现了popViewController的效果</li>
+<li>横向的摇动实现了presentedViewController的切换</li>
+</ul>
+
+<p>很帅气的效果</p>
+
+<p>这里有它的<a href="https://github.com/chieryw/CoreMotion">源码地址</a></p>
+
+<hr>
+
+<h2>
+<a id="uicollectionview简单的实现和调用" class="anchor" href="#uicollectionview%E7%AE%80%E5%8D%95%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%92%8C%E8%B0%83%E7%94%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>UICollectionView简单的实现和调用</h2>
+
+<p>当我们在使用UITableView的时候，常常会抱怨为什么UITableView的实现并不是那么的尽如人意，也就是差不多在设个时候UICollectionView诞生了，不仅仅在每行的可以编辑元素，每列上的性质也得到了提升，每个cell可以具有自己的个性......</p>
+
+<p>这里有它的<a href="https://github.com/chieryw/UICollectionView">源码地址</a></p>
+
+<hr>
+
+<h2>
+<a id="这是我用markdown生成的首页的代码" class="anchor" href="#%E8%BF%99%E6%98%AF%E6%88%91%E7%94%A8markdown%E7%94%9F%E6%88%90%E7%9A%84%E9%A6%96%E9%A1%B5%E7%9A%84%E4%BB%A3%E7%A0%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>这是我用markdown生成的首页的代码</h2>
+
+<p>这里会有一些markdown的介绍
+<img src="http://25.io/mou/Mou_128.png" alt="Mou icon"></p>
+
+<h2>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Overview</h2>
+
+<p><strong>Mou</strong>, the missing Markdown editor for <em>web developers</em>.</p>
+
+<h3>
+<a id="syntax" class="anchor" href="#syntax" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Syntax</h3>
+
+<h4>
+<a id="strong-and-emphasize" class="anchor" href="#strong-and-emphasize" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Strong and Emphasize</h4>
+
+<p><strong>strong</strong> or <strong>strong</strong> ( Cmd + B )</p>
+
+<p><em>emphasize</em> or <em>emphasize</em> ( Cmd + I )</p>
+
+<p><strong>Sometimes I want a lot of text to be bold.
+Like, seriously, a <em>LOT</em> of text</strong></p>
+
+<p>........
+这里是它的下载地址<a href="http://25.io/mou/">在这里</a></p>
+
+<p>用起来还是蛮不错的</p>
         </section>
 
         <footer>
