@@ -232,6 +232,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/23/2016-11-23-NotificationOptimization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chiery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/23/2016-11-23-NotificationOptimization/" itemprop="url">Notification Optimization</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-23T16:40:23+08:00">
+                2016-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NotificationOptimization/" itemprop="url" rel="index">
+                    <span itemprop="name">NotificationOptimization</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>ios10对推送做了很大的优化，我们先来看一下推送展示的逻辑：</p>
+<p><img src="%3C!--%EF%BF%BC0--%3E/images/notificationOptimize-1.png" alt></p>
+<p>如上图所示：在功能上可以划分为四个模块：</p>
+<p>A: 服务端推送模块</p>
+<pre><code>决定推送的内容，以及推送采取的展示方案（展示方案通过category标识）</code></pre><p>B: NotificationExtensionServie 推送到达时展示预处理模块</p>
+<pre><code>这个模块的处理是很快的，目前apple给出的推荐demo中的演示是加载附件中的图片。...
+在测试中你会发现，一个带有图片的推送到达时做了处理但是没有展示。
+但是在第二次推送的时候却展示了。这是因为servieExtension会将已经存在的推送内容直接展示，
+需要网络获取的文件有30s的时间可以缓存。所以基本山在第二次推送到达的时候，这个图片已经加载完成，
+并缓存了起来</code></pre><p>C: NotificationExtensionContent 推送中间层展开界面的处理</p>
+<pre><code>主要根据业务需求，自定义功能界面</code></pre><p>D: Appdelegate.m 注册按钮样式</p>
+<pre><code>在UNUserNotification中注册按钮样式，在推送到达后展开推送中间页时使用。</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/23/2016-11-23-NotificationOptimization/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/11/2016-11-11-宫崎骏作品/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1607,157 +1764,6 @@ Token Generation and Dispersal</code></pre><p>服务端到APNs的链接建立信
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/02/2016-07-02-Notification/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chiery'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/07/02/2016-07-02-Notification/" itemprop="url">Notification</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-02T10:04:23+08:00">
-                2016-07-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/APNs/" itemprop="url" rel="index">
-                    <span itemprop="name">APNs</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Notification"><a href="#Notification" class="headerlink" title="Notification"></a>Notification</h2><p>苹果的notification包含了两个类型</p>
-<pre><code>Local Notification
-Remote Notification</code></pre><p>当接收到推送的时候，我们可以做出相应的提示</p>
-<pre><code>一个AlertView提示
-一个Application icon上的badge
-一个语音</code></pre><p>我们可以将Local Notification 和 Remote Notification当成一种类型来处理，这样对于用户来说是比较容易接受的，毕竟都是推送。但是如果你想定制不同的类型，也是可以的，苹果给出了每个类型对应的API，所以对于单独的定制也是支持的。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/07/02/2016-07-02-Notification/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1808,7 +1814,7 @@ Remote Notification</code></pre><p>当接收到推送的时候，我们可以做
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1819,7 +1825,7 @@ Remote Notification</code></pre><p>当接收到推送的时候，我们可以做
               
               <div class="site-state-item site-state-categories">
                 
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">categories</span>
                 
               </div>
@@ -1830,7 +1836,7 @@ Remote Notification</code></pre><p>当接收到推送的时候，我们可以做
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
