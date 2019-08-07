@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/catagories/index.html</loc>
+    
+    <lastmod>2019-08-07T13:45:58.990Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/index.html</loc>
+    
+    <lastmod>2019-08-07T13:45:23.289Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/12/27/2018-12-27-%E8%87%AA%E5%AE%9A%E4%B9%89%20VCStack/</loc>
     
     <lastmod>2019-08-07T13:37:36.213Z</lastmod>
