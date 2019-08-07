@@ -87,18 +87,18 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="初衷当前客户端中使用的crash收集工具为第三方提供，用到的第三方工具有  fabric bugly  第三方工具在使用的过程中，存在的问题：  内聚的功能过多。有的功能我们并不会用到，成为了负担 定制化场景少。对于不同的app，希望错不同的维度来查询对应的结果 SDK size 较大  针对上面的这些问题，打算出一套自己的crash工具，工具本省应该具备的功能：  功能单一性 健壮性 定制化产出">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC0--%3E/images/crash-1.png">
-<meta property="og:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC1--%3E/images/crash-3.png">
-<meta property="og:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC2--%3E/images/crash-2.png">
-<meta property="og:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC3--%3E/images/crash-5.png">
-<meta property="og:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC4--%3E/images/crash-6.png">
-<meta property="og:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC5--%3E/images/crash-7.png">
-<meta property="og:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC6--%3E/images/crash-8.png">
-<meta property="og:updated_time" content="2018-08-25T17:33:06.000Z">
+<meta property="og:image" content="http://yoursite.com/images/crash-1.png">
+<meta property="og:image" content="http://yoursite.com/images/crash-3.png">
+<meta property="og:image" content="http://yoursite.com/images/crash-2.png">
+<meta property="og:image" content="http://yoursite.com/images/crash-5.png">
+<meta property="og:image" content="http://yoursite.com/images/crash-6.png">
+<meta property="og:image" content="http://yoursite.com/images/crash-7.png">
+<meta property="og:image" content="http://yoursite.com/images/crash-8.png">
+<meta property="og:updated_time" content="2019-08-07T13:23:12.764Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS Crash 一">
 <meta name="twitter:description" content="初衷当前客户端中使用的crash收集工具为第三方提供，用到的第三方工具有  fabric bugly  第三方工具在使用的过程中，存在的问题：  内聚的功能过多。有的功能我们并不会用到，成为了负担 定制化场景少。对于不同的app，希望错不同的维度来查询对应的结果 SDK size 较大  针对上面的这些问题，打算出一套自己的crash工具，工具本省应该具备的功能：  功能单一性 健壮性 定制化产出">
-<meta name="twitter:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC0--%3E/images/crash-1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/crash-1.png">
 
 
 
@@ -352,7 +352,7 @@
 <h3 id="app发生crash之后如何定位"><a href="#app发生crash之后如何定位" class="headerlink" title="app发生crash之后如何定位"></a>app发生crash之后如何定位</h3><p>当手机中的应用发生奔溃了之后，都会在系统日志中生成一条crash日志，这里为了测试，会新建一个应用，模拟crash。比如一个数组越界的crash</p>
 <pre><code>NSMutableArray *array = [NSMutableArray array];
 [array addObject:nil];</code></pre><p>工程创建好了之后，可以先在xcode中编译一下，出发这里的demo，会发现奔溃现象，奔溃现场如下：</p>
-<p><img src="%3C!--%EF%BF%BC0--%3E/images/crash-1.png" alt></p>
+<p><img src="/images/crash-1.png" alt></p>
 <p>从奔溃的堆栈中我们可以发现如下信息：</p>
 <ul>
 <li>reson</li>
@@ -366,7 +366,7 @@
 <li>点击可以crash的地方，产生几条crash记录</li>
 </ol>
 <p>正常情况下，我们启动xcode,通过 <code>Window</code> -&gt; <code>Devices and Simulators</code> -&gt; <code>选中当前crash手机（这里需要usb连接）</code> -&gt; <code>View Devices Logs</code>。等待xcode scaning完成，应该就会看到crash文件，保险起见，最好check一下时间。但是也有看不到情况，例如我的xcode就没有执行scaning的操作，导致没有同步到crash数据。</p>
-<p><img src="%3C!--%EF%BF%BC1--%3E/images/crash-3.png" alt></p>
+<p><img src="/images/crash-3.png" alt></p>
 <p>如果遇到了同样的情况，请走下面的操作：</p>
 <ol>
 <li>USB连接电脑</li>
@@ -374,7 +374,7 @@
 <li>cd 到 <code>~/Library/Logs/CrashReporter/MobileDevice/** iphone</code></li>
 <li>ls</li>
 </ol>
-<p>就可以看到对应的crash文件了,如下<br><img src="%3C!--%EF%BF%BC2--%3E/images/crash-2.png" alt></p>
+<p>就可以看到对应的crash文件了,如下<br><img src="/images/crash-2.png" alt></p>
 <p>看一下同样的报错在真实环境中是什么的：</p>
 <pre><code>Incident Identifier: 056AE3FF-0053-4B5F-8C42-5CFD2F4CE9F4
 CrashReporter Key:   3c6d6b39fd3e330ce44828e97ab49661480cbb94
@@ -525,11 +525,11 @@ Last Exception Backtrace:
 <li>symbolicatecrash工具</li>
 </ul>
 <p>并且这两个工具都在xcode中，前提条件是这个ipa包是通过你的xcode archive出去的，当前的机器上保留了dSYM文件。之后只需要将crash文件拖到xcode crash中就会自动解析了。效果如下：</p>
-<p><img src="%3C!--%EF%BF%BC3--%3E/images/crash-5.png" alt></p>
+<p><img src="/images/crash-5.png" alt></p>
 <h4 id="Xcode-统计的Crash"><a href="#Xcode-统计的Crash" class="headerlink" title="Xcode 统计的Crash"></a>Xcode 统计的Crash</h4><p>app 上传到APP store之后，使用过程中产生的crash，同时当前的设备打开了日志分析的功能，crash日志就会被Apple统计到。通过步骤 <code>Xcode</code> -&gt; <code>Window</code> -&gt; <code>Organizer</code> -&gt; <code>选中Crash</code> -&gt; <code>选中对应的app</code> 可以看到对应的crash，符号化的过程，可以在本地，也可以在apple服务端，取决于，上传app 二进制包的时候，有没有将符号文件一并上传。效果如下</p>
-<p><img src="%3C!--%EF%BF%BC4--%3E/images/crash-6.png" alt><br><img src="%3C!--%EF%BF%BC5--%3E/images/crash-7.png" alt></p>
+<p><img src="/images/crash-6.png" alt><br><img src="/images/crash-7.png" alt></p>
 <h2 id="需要注意的点"><a href="#需要注意的点" class="headerlink" title="需要注意的点"></a>需要注意的点</h2><p>在archive的时候，不要选bitCode，否则安装的二进制造成的crash无法符号化。原因使用bitCode上传给apple,bitCode只是一个中间码，需要根据不同的架构来决定最终生成的代码是什么？所以,如果使用bitCode上传的话，需要向apple下载dSYM文件。如下是使用bitcode发布时的流程图</p>
-<p><img src="%3C!--%EF%BF%BC6--%3E/images/crash-8.png" alt></p>
+<p><img src="/images/crash-8.png" alt></p>
 <h2 id="参考地址"><a href="#参考地址" class="headerlink" title="参考地址"></a>参考地址</h2><p><a href="https://developer.apple.com/library/archive/technotes/tn2151/_index.html#//apple_ref/doc/uid/DTS40008184-CH1-SYMBOLICATION" target="_blank" rel="noopener">Understanding and Analyzing Application Crash Reports</a></p>
 
       

@@ -87,16 +87,16 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="LocationNotification实践当你手上拿着锤子的时候，全世界都是钉子。迫不及待的想试验一下新的Notification到底长得什么模样。下载最新的Xcode beta,新建工程，开始用swift语言尝试写工程。首先向用户申请打开推送请求 // 向用户请求认证信息 func authorizationNotification() {     UNUserNotificationCent">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2016/07/05/2016-07-05-locationNotification实践/%3C!--%EF%BF%BC0--%3E/images/localNotification-1.png">
-<meta property="og:image" content="http://yoursite.com/2016/07/05/2016-07-05-locationNotification实践/%3C!--%EF%BF%BC1--%3E/images/localNotification-2.png">
-<meta property="og:image" content="http://yoursite.com/2016/07/05/2016-07-05-locationNotification实践/%3C!--%EF%BF%BC2--%3E/images/localNotification-3.png">
-<meta property="og:image" content="http://yoursite.com/2016/07/05/2016-07-05-locationNotification实践/%3C!--%EF%BF%BC3--%3E/images/localNotification-4.jpeg">
-<meta property="og:image" content="http://yoursite.com/2016/07/05/2016-07-05-locationNotification实践/%3C!--%EF%BF%BC4--%3E/images/localNotification-5.png">
-<meta property="og:updated_time" content="2018-08-25T17:36:23.000Z">
+<meta property="og:image" content="http://yoursite.com/images/localNotification-1.png">
+<meta property="og:image" content="http://yoursite.com/images/localNotification-2.png">
+<meta property="og:image" content="http://yoursite.com/images/localNotification-3.png">
+<meta property="og:image" content="http://yoursite.com/images/localNotification-4.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/localNotification-5.png">
+<meta property="og:updated_time" content="2019-08-07T13:24:43.881Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="locationNotification实践">
 <meta name="twitter:description" content="LocationNotification实践当你手上拿着锤子的时候，全世界都是钉子。迫不及待的想试验一下新的Notification到底长得什么模样。下载最新的Xcode beta,新建工程，开始用swift语言尝试写工程。首先向用户申请打开推送请求 // 向用户请求认证信息 func authorizationNotification() {     UNUserNotificationCent">
-<meta name="twitter:image" content="http://yoursite.com/2016/07/05/2016-07-05-locationNotification实践/%3C!--%EF%BF%BC0--%3E/images/localNotification-1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/localNotification-1.png">
 
 
 
@@ -428,11 +428,11 @@ func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent noti
     completionHandler()
 
 }</code></pre><p>ok,现在为止一切代码都已经实现完成了。run,看一下效果</p>
-<p><img src="%3C!--%EF%BF%BC0--%3E/images/localNotification-1.png" alt></p>
+<p><img src="/images/localNotification-1.png" alt></p>
 <p>点击allow</p>
-<p><img src="%3C!--%EF%BF%BC1--%3E/images/localNotification-2.png" alt></p>
+<p><img src="/images/localNotification-2.png" alt></p>
 <p>看到了比之前的notification是不是多了很多的内容呢。下面我们再来自定义一个notificationContent,添加addTagert-&gt;NotificationContent。此时最重要的是你要在notificationContent目录下的info.plist文件中加上这样的category identitifier,只有定义的category才会将notificationContent唤起</p>
-<p><img src="%3C!--%EF%BF%BC2--%3E/images/localNotification-3.png" alt></p>
+<p><img src="/images/localNotification-3.png" alt></p>
 <p>在func didReceive(_ notification: UNNotification)函数先实现</p>
 <pre><code>while self.view.subviews.count &gt; 0 {
             self.view.subviews.last?.removeFromSuperview()
@@ -465,9 +465,9 @@ func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent noti
     mapView.showsUserLocation = true
     mapView.isZoomEnabled = true
     self.view.addSubview(mapView)</code></pre><p>这里包含了一个actionButton,一个mapView,一个网络图片，run来看一下效果</p>
-<p><img src="%3C!--%EF%BF%BC3--%3E/images/localNotification-4.jpeg" alt></p>
+<p><img src="/images/localNotification-4.jpeg" alt></p>
 <p>这个红色的区域其实系统自定义的，只要你的notificationContent中包含了title,subtitle,body就会自动展示。如果不想显示直接在info.plist中将</p>
-<p><img src="%3C!--%EF%BF%BC4--%3E/images/localNotification-5.png" alt></p>
+<p><img src="/images/localNotification-5.png" alt></p>
 <p>这样就不会展示了</p>
 <p>因为远程推送xcode-beta中还是有一些bug,等迭代到相对稳定版本在测试吧！！！！！！</p>
 

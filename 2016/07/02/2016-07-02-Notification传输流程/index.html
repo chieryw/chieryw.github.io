@@ -87,16 +87,16 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="Notification 传输流程说到Notification的传输流程，其实是包含了三个部分的，这三个部分也是我们需要了解的Notification的核心内容。 Provider-to-APNs Connection Trust APNs-to-Device Connection Trust Token Generation and Dispersal服务端到APNs的链接建立信任，下面先来看一">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2016/07/02/2016-07-02-Notification传输流程/%3C!--%EF%BF%BC0--%3E/images/Provider-to-APNs.png">
-<meta property="og:image" content="http://yoursite.com/2016/07/02/2016-07-02-Notification传输流程/%3C!--%EF%BF%BC1--%3E/images/APNs-to-Device.png">
-<meta property="og:image" content="http://yoursite.com/2016/07/02/2016-07-02-Notification传输流程/%3C!--%EF%BF%BC2--%3E/images/fetch-token.png">
-<meta property="og:image" content="http://yoursite.com/2016/07/02/2016-07-02-Notification传输流程/%3C!--%EF%BF%BC3--%3E/images/share-device-token.png">
-<meta property="og:image" content="http://yoursite.com/2016/07/02/2016-07-02-Notification传输流程/%3C!--%EF%BF%BC4--%3E/images/Token-Trust.png">
-<meta property="og:updated_time" content="2018-08-25T17:37:07.000Z">
+<meta property="og:image" content="http://yoursite.com/images/Provider-to-APNs.png">
+<meta property="og:image" content="http://yoursite.com/images/APNs-to-Device.png">
+<meta property="og:image" content="http://yoursite.com/images/fetch-token.png">
+<meta property="og:image" content="http://yoursite.com/images/share-device-token.png">
+<meta property="og:image" content="http://yoursite.com/images/Token-Trust.png">
+<meta property="og:updated_time" content="2019-08-07T13:24:53.153Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Notification 传输流程">
 <meta name="twitter:description" content="Notification 传输流程说到Notification的传输流程，其实是包含了三个部分的，这三个部分也是我们需要了解的Notification的核心内容。 Provider-to-APNs Connection Trust APNs-to-Device Connection Trust Token Generation and Dispersal服务端到APNs的链接建立信任，下面先来看一">
-<meta name="twitter:image" content="http://yoursite.com/2016/07/02/2016-07-02-Notification传输流程/%3C!--%EF%BF%BC0--%3E/images/Provider-to-APNs.png">
+<meta name="twitter:image" content="http://yoursite.com/images/Provider-to-APNs.png">
 
 
 
@@ -334,7 +334,7 @@ APNs-to-Device Connection Trust
 Token Generation and Dispersal</code></pre><p>服务端到APNs的链接建立信任，下面先来看一张图</p>
 <a id="more"></a>
 
-<p><img src="%3C!--%EF%BF%BC0--%3E/images/Provider-to-APNs.png" alt></p>
+<p><img src="/images/Provider-to-APNs.png" alt></p>
 <p>这是apple给出的服务端到APNs的服务链接流程图，在之后的实践中你会发现这些证书的获取，是必须手动在官网的证书上去操作的。所以这一步的在实际操作中的诠释是</p>
 <ul>
 <li>进入到官网下载develop和production证书到本地</li>
@@ -342,18 +342,18 @@ Token Generation and Dispersal</code></pre><p>服务端到APNs的链接建立信
 <li>将证书和私钥成对打包到同一个pem文件中做推送时用</li>
 </ul>
 <h2 id="APNs-to-Device-Connection-Trust"><a href="#APNs-to-Device-Connection-Trust" class="headerlink" title="APNs-to-Device Connection Trust"></a>APNs-to-Device Connection Trust</h2><p>APNs到客户端之间的连接信任，看一下流程图</p>
-<p><img src="%3C!--%EF%BF%BC1--%3E/images/APNs-to-Device.png" alt></p>
+<p><img src="/images/APNs-to-Device.png" alt></p>
 <p>在上面的图中，有请求证书的操作，也有链接建立的操作，在实际的操作中其实是这样的</p>
 <ul>
 <li>手动下载推送证书到xcode或是Xcode自管理生成推送证书供设备使用</li>
 <li>客户端在启动的时候拿着已经生成的证书想APNs请求</li>
 <li>建立链接信任</li>
 </ul>
-<p><img src="%3C!--%EF%BF%BC2--%3E/images/fetch-token.png" alt></p>
+<p><img src="/images/fetch-token.png" alt></p>
 <p>当客户端和远程APNs建立链接之后会获取到APNs下发的token，这个token可以标识唯一的设备。这个token需要传递给服务端，这样服务端就可以知道向哪一个设备推送信息了。</p>
-<p><img src="%3C!--%EF%BF%BC3--%3E/images/share-device-token.png" alt></p>
+<p><img src="/images/share-device-token.png" alt></p>
 <p>这就是客户端与APNs建立链接以及将token传递给服务端的整个过程</p>
-<h2 id="Token-Trust-Notification"><a href="#Token-Trust-Notification" class="headerlink" title="Token Trust (Notification)"></a>Token Trust (Notification)</h2><p><img src="%3C!--%EF%BF%BC4--%3E/images/Token-Trust.png" alt></p>
+<h2 id="Token-Trust-Notification"><a href="#Token-Trust-Notification" class="headerlink" title="Token Trust (Notification)"></a>Token Trust (Notification)</h2><p><img src="/images/Token-Trust.png" alt></p>
 <p>服务端在向远程设备发送信息，服务端到APNs的请求中包含的有</p>
 <ul>
 <li>信息载体payload</li>

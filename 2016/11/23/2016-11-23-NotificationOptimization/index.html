@@ -87,21 +87,21 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="ios10对推送做了很大的优化，我们先来看一下推送展示的逻辑：  如上图所示：在功能上可以划分为四个模块： A: 服务端推送模块 决定推送的内容，以及推送采取的展示方案（展示方案通过category标识）B: NotificationExtensionServie 推送到达时展示预处理模块 这个模块的处理是很快的，目前apple给出的推荐demo中的演示是加载附件中的图片。... 在测试中你会发现">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2016/11/23/2016-11-23-NotificationOptimization/%3C!--%EF%BF%BC0--%3E/images/notificationOptimize-1.png">
-<meta property="og:image" content="http://yoursite.com/2016/11/23/2016-11-23-NotificationOptimization/%3C!--%EF%BF%BC1--%3E/images//notificationOptimize-2.png">
-<meta property="og:image" content="http://yoursite.com/2016/11/23/2016-11-23-NotificationOptimization/%3C!--%EF%BF%BC2--%3E/images/notificationOptimize-3.jpeg">
-<meta property="og:image" content="http://yoursite.com/2016/11/23/2016-11-23-NotificationOptimization/%3C!--%EF%BF%BC3--%3E/images/notificationOptimize-4.jpeg">
-<meta property="og:image" content="http://yoursite.com/2016/11/23/2016-11-23-NotificationOptimization/%3C!--%EF%BF%BC4--%3E/images/notificationOptimize-5.jpeg">
-<meta property="og:image" content="http://yoursite.com/2016/11/23/2016-11-23-NotificationOptimization/%3C!--%EF%BF%BC5--%3E/images/notificationOptimize-6.jpeg">
-<meta property="og:image" content="http://yoursite.com/2016/11/23/2016-11-23-NotificationOptimization/%3C!--%EF%BF%BC6--%3E/images/notificationOptimize-7.jpeg">
-<meta property="og:image" content="http://yoursite.com/2016/11/23/2016-11-23-NotificationOptimization/%3C!--%EF%BF%BC7--%3E/images/notificationOptimize-9.jpeg">
-<meta property="og:image" content="http://yoursite.com/2016/11/23/2016-11-23-NotificationOptimization/%3C!--%EF%BF%BC8--%3E/images/notificationOptimize-8.jpeg">
-<meta property="og:image" content="http://yoursite.com/2016/11/23/2016-11-23-NotificationOptimization/%3C!--%EF%BF%BC9--%3E/images/notificationOptimize-10.jpeg">
-<meta property="og:updated_time" content="2018-08-25T17:33:54.000Z">
+<meta property="og:image" content="http://yoursite.com/images/notificationOptimize-1.png">
+<meta property="og:image" content="http://yoursite.com/images//notificationOptimize-2.png">
+<meta property="og:image" content="http://yoursite.com/images/notificationOptimize-3.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/notificationOptimize-4.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/notificationOptimize-5.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/notificationOptimize-6.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/notificationOptimize-7.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/notificationOptimize-9.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/notificationOptimize-8.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/notificationOptimize-10.jpeg">
+<meta property="og:updated_time" content="2019-08-07T13:23:58.467Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Notification Optimization">
 <meta name="twitter:description" content="ios10对推送做了很大的优化，我们先来看一下推送展示的逻辑：  如上图所示：在功能上可以划分为四个模块： A: 服务端推送模块 决定推送的内容，以及推送采取的展示方案（展示方案通过category标识）B: NotificationExtensionServie 推送到达时展示预处理模块 这个模块的处理是很快的，目前apple给出的推荐demo中的演示是加载附件中的图片。... 在测试中你会发现">
-<meta name="twitter:image" content="http://yoursite.com/2016/11/23/2016-11-23-NotificationOptimization/%3C!--%EF%BF%BC0--%3E/images/notificationOptimize-1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/notificationOptimize-1.png">
 
 
 
@@ -334,7 +334,7 @@
 
       
         <p>ios10对推送做了很大的优化，我们先来看一下推送展示的逻辑：</p>
-<p><img src="%3C!--%EF%BF%BC0--%3E/images/notificationOptimize-1.png" alt></p>
+<p><img src="/images/notificationOptimize-1.png" alt></p>
 <p>如上图所示：在功能上可以划分为四个模块：</p>
 <p>A: 服务端推送模块</p>
 <pre><code>决定推送的内容，以及推送采取的展示方案（展示方案通过category标识）</code></pre><p>B: NotificationExtensionServie 推送到达时展示预处理模块</p>
@@ -358,7 +358,7 @@
 </ul>
 <p>当时是整个框架带着这些诟病一起上线了，实在是个不治之举。这个问题之前一直没有解决，XcodeBeta版本中验证了很多方案也是没有成功，包括下面的方案。</p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>最近又开始对这一问题做了详细的跟踪，终于找到了一个满意的解决方案。这里先看图：</p>
-<p><img src="%3C!--%EF%BF%BC1--%3E/images//notificationOptimize-2.png" alt></p>
+<p><img src="/images//notificationOptimize-2.png" alt></p>
 <p>产生的构思来自于这个图片，将UNUserNotificationCenter看成独立于App和AppExtension之外的独立结构，所有的app注册category都是向这个结构中添加按钮样式。那么问题就来了，可不可以不在appdelegate.m中注册信息，将category的注册放到extensionServie中，答案是可以的。</p>
 <p>这里其实应该是有几个疑问的？</p>
 <p>1： servie中注册和app中注册有区别？能生效？</p>
@@ -463,7 +463,7 @@ actionIdentifier已经变了</code></pre><h4 id="对于之前发出的推动展�
 <li>点击查看效果</li>
 </ul>
 <p>从日志分析可以得出理论结论，无论点击展开新的覆盖的推送还是点击以前较为旧的推送，都应该展示最新的推送的按钮的样式。但是实际结果是这样的</p>
-<p><img src="%3C!--%EF%BF%BC2--%3E/images/notificationOptimize-3.jpeg" alt><img src="%3C!--%EF%BF%BC3--%3E/images/notificationOptimize-4.jpeg" alt><img src="%3C!--%EF%BF%BC4--%3E/images/notificationOptimize-5.jpeg" alt><img src="%3C!--%EF%BF%BC5--%3E/images/notificationOptimize-6.jpeg" alt><img src="%3C!--%EF%BF%BC6--%3E/images/notificationOptimize-7.jpeg" alt></p>
+<p><img src="/images/notificationOptimize-3.jpeg" alt><img src="/images/notificationOptimize-4.jpeg" alt><img src="/images/notificationOptimize-5.jpeg" alt><img src="/images/notificationOptimize-6.jpeg" alt><img src="/images/notificationOptimize-7.jpeg" alt></p>
 <p>这个结论与日志打印得出的理论结论不相同，覆盖了之后的category按钮样式应该只有一个啊，之前的按钮难道还在缓存中没有释放？。试想了两种情况解决：</p>
 <ul>
 <li>等待足够长时间，等待之前action缓存释放</li>
@@ -573,7 +573,7 @@ actionIdentifier已经变了</code></pre><h4 id="对于之前发出的推动展�
     check
 ), custom dismiss: NO, CarPlay: NO&gt;
 )}</code></pre><p>这样就会存在三个category的注册了，推送中也能匹配到三个不同的按钮样式了</p>
-<p><img src="%3C!--%EF%BF%BC7--%3E/images/notificationOptimize-9.jpeg" alt><img src="%3C!--%EF%BF%BC8--%3E/images/notificationOptimize-8.jpeg" alt><img src="%3C!--%EF%BF%BC9--%3E/images/notificationOptimize-10.jpeg" alt></p>
+<p><img src="/images/notificationOptimize-9.jpeg" alt><img src="/images/notificationOptimize-8.jpeg" alt><img src="/images/notificationOptimize-10.jpeg" alt></p>
 <p>但是这种方式的好处是业务线可以自己管理自己的推送的样式，与公共模块解耦，但是同样存在弊端，例如一个IM类应用，如果频繁的发出这样的推送，携带这样的资源就没有必要了</p>
 <h3 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h3><ul>
 <li>推送消息不是很频繁的情况可以使用第二种方案（payload中每次只带这个业务的推送的category）。可以减少接口开发，契合业务需求。</li>

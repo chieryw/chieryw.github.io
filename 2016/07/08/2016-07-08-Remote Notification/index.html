@@ -87,16 +87,16 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="remote Notification在做远程推送的时候，需要向apple申请证书上的支持。首先介绍如何完成远程推送的前期准备，主要是证书的申请和制作，这里只做简单介绍。主要的操作都是在macOS系统上完成的，跟着操作一步一步来，就可以生成测试使用的证书：  登录到 iPhone Developer Connection Portal 并点击 App IDs 创建一个不使用通配符的 App ID">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2016/07/08/2016-07-08-Remote%20Notification/%3C!--%EF%BF%BC0--%3E/images/remoteNotification-1.png">
-<meta property="og:image" content="http://yoursite.com/2016/07/08/2016-07-08-Remote%20Notification/%3C!--%EF%BF%BC1--%3E/images/remoteNotification-2.png">
-<meta property="og:image" content="http://yoursite.com/2016/07/08/2016-07-08-Remote%20Notification/%3C!--%EF%BF%BC2--%3E/images/remoteNotification-3.png">
-<meta property="og:image" content="http://yoursite.com/2016/07/08/2016-07-08-Remote%20Notification/%3C!--%EF%BF%BC3--%3E/images/remoteNotification-4.png">
-<meta property="og:image" content="http://yoursite.com/2016/07/08/2016-07-08-Remote%20Notification/%3C!--%EF%BF%BC4--%3E/images/remoteNotification-5.png">
-<meta property="og:updated_time" content="2018-08-25T17:35:53.000Z">
+<meta property="og:image" content="http://yoursite.com/images/remoteNotification-1.png">
+<meta property="og:image" content="http://yoursite.com/images/remoteNotification-2.png">
+<meta property="og:image" content="http://yoursite.com/images/remoteNotification-3.png">
+<meta property="og:image" content="http://yoursite.com/images/remoteNotification-4.png">
+<meta property="og:image" content="http://yoursite.com/images/remoteNotification-5.png">
+<meta property="og:updated_time" content="2019-08-07T13:24:37.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Remote Notification">
 <meta name="twitter:description" content="remote Notification在做远程推送的时候，需要向apple申请证书上的支持。首先介绍如何完成远程推送的前期准备，主要是证书的申请和制作，这里只做简单介绍。主要的操作都是在macOS系统上完成的，跟着操作一步一步来，就可以生成测试使用的证书：  登录到 iPhone Developer Connection Portal 并点击 App IDs 创建一个不使用通配符的 App ID">
-<meta name="twitter:image" content="http://yoursite.com/2016/07/08/2016-07-08-Remote%20Notification/%3C!--%EF%BF%BC0--%3E/images/remoteNotification-1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/remoteNotification-1.png">
 
 
 
@@ -479,14 +479,14 @@ notification: {
                             }
         }
 }</code></pre><p>从打印信息中我们没有看到自定义的信息，是不是出了问题。打一下断点调试一下，原来userInfo没有打印出来，Why,应该被打印的信息为什么被省略了。如下图</p>
-<p><img src="%3C!--%EF%BF%BC0--%3E/images/remoteNotification-1.png" alt></p>
+<p><img src="/images/remoteNotification-1.png" alt></p>
 <p>在上面的图片中就包含了我们自定义的信息。但是这里有一个问题，就是NotificationContent对象会向UserInfo这个对象中做检索，将里面对应key的信息提取到上层中直接展示。这一点在代码处理上也得到了验证。</p>
 <p>到目前为止，工程已经调试完毕了。但是现在想尝试一下NotificationServie是如何被触发的，这样就可以自定义相关的notification第一个界面的展示了。在此之前 你需要做如下的操作，</p>
 <ul>
 <li>target中增加notificationServieExtension</li>
 <li>将主工程的target和extension的target中的capabilities中的push Notification通知打开。 这里需要注意的一点是。这里使用的证书必须是同一个teamID下的</li>
 </ul>
-<p><img src="%3C!--%EF%BF%BC1--%3E/images/remoteNotification-2.png" alt></p>
+<p><img src="/images/remoteNotification-2.png" alt></p>
 <p>测试的文件有image,gif,movie，但这些资源文件都是本地的（文件添加在extension中的bundle中）。刚才又测试了一下网络的数据传输，发现一个坑。在Apple的attachment附件api定义中附件的展示是一个url,也就是说当我拿到了一个例如网络图片的data数据的时候还是不能直接展示，需要将data存在在一个文件夹下生成对应的url，才能展示。但是extension不能操作APP的沙河，存储数据就只能写在APP group这个数据共享中，但简单的存储数据违背了app group共享数据的初衷。还有就是现在beta测试中不能同时打开push notification和App group两个capabilities，否则远程推送不能送达。</p>
 <pre><code>@available(iOS 10.0, *)
 public class UNNotificationAttachment : NSObject, NSCopying, NSSecureCoding {
@@ -530,7 +530,7 @@ public let UNNotificationAttachmentOptionsThumbnailTimeKey: String</code></pre><
 <li>gif</li>
 <li>movie</li>
 </ul>
-<p><img src="%3C!--%EF%BF%BC2--%3E/images/remoteNotification-3.png" alt></p>
+<p><img src="/images/remoteNotification-3.png" alt></p>
 <p>三个样式的资源，让我们看一下实现。</p>
 <pre><code>override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler:(UNNotificationContent) -&gt; Void) {
         self.contentHandler = contentHandler
@@ -554,8 +554,8 @@ public let UNNotificationAttachmentOptionsThumbnailTimeKey: String</code></pre><
             contentHandler(bestAttemptContent)
         }
     }</code></pre><p>下面看一下展示</p>
-<p><img src="%3C!--%EF%BF%BC3--%3E/images/remoteNotification-4.png" alt></p>
-<p><img src="%3C!--%EF%BF%BC4--%3E/images/remoteNotification-5.png" alt></p>
+<p><img src="/images/remoteNotification-4.png" alt></p>
+<p><img src="/images/remoteNotification-5.png" alt></p>
 
       
     </div>

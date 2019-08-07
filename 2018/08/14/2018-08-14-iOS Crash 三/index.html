@@ -87,14 +87,14 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="前两章说了crash文件解析的方法和crash文件中包含的内容，基于的条件是拿到当前奔溃的手机，再拿到手机中对应的日志。或者，用户打开了日志上报的功能，统计到的日志被apple收集了。这两种方式都比较被动，而且没有筛选的功能。对于监测app状态来说不是很准确，定位的过程也比较长。 自定义一个crash 收集工具上面已经介绍了背景，接下来开始自定义工具，先画一个逻辑图来阐述工具具备的功能  一步一步">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2018/08/14/2018-08-14-iOS%20Crash%20三/%3C!--%EF%BF%BC0--%3E/images/crash-9.png">
-<meta property="og:image" content="http://yoursite.com/2018/08/14/2018-08-14-iOS%20Crash%20三/%3C!--%EF%BF%BC1--%3E/images/crash-10.png">
-<meta property="og:image" content="http://yoursite.com/2018/08/14/2018-08-14-iOS%20Crash%20三/%3C!--%EF%BF%BC2--%3E/images/crash-11.png">
-<meta property="og:updated_time" content="2018-08-25T17:32:45.000Z">
+<meta property="og:image" content="http://yoursite.com/images/crash-9.png">
+<meta property="og:image" content="http://yoursite.com/images/crash-10.png">
+<meta property="og:image" content="http://yoursite.com/images/crash-11.png">
+<meta property="og:updated_time" content="2019-08-07T13:23:30.883Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS Crash 三">
 <meta name="twitter:description" content="前两章说了crash文件解析的方法和crash文件中包含的内容，基于的条件是拿到当前奔溃的手机，再拿到手机中对应的日志。或者，用户打开了日志上报的功能，统计到的日志被apple收集了。这两种方式都比较被动，而且没有筛选的功能。对于监测app状态来说不是很准确，定位的过程也比较长。 自定义一个crash 收集工具上面已经介绍了背景，接下来开始自定义工具，先画一个逻辑图来阐述工具具备的功能  一步一步">
-<meta name="twitter:image" content="http://yoursite.com/2018/08/14/2018-08-14-iOS%20Crash%20三/%3C!--%EF%BF%BC0--%3E/images/crash-9.png">
+<meta name="twitter:image" content="http://yoursite.com/images/crash-9.png">
 
 
 
@@ -328,7 +328,7 @@
       
         <p>前两章说了crash文件解析的方法和crash文件中包含的内容，基于的条件是拿到当前奔溃的手机，再拿到手机中对应的日志。或者，用户打开了日志上报的功能，统计到的日志被apple收集了。这两种方式都比较被动，而且没有筛选的功能。对于监测app状态来说不是很准确，定位的过程也比较长。</p>
 <h3 id="自定义一个crash-收集工具"><a href="#自定义一个crash-收集工具" class="headerlink" title="自定义一个crash 收集工具"></a>自定义一个crash 收集工具</h3><p>上面已经介绍了背景，接下来开始自定义工具，先画一个逻辑图来阐述工具具备的功能</p>
-<p><img src="%3C!--%EF%BF%BC0--%3E/images/crash-9.png" alt></p>
+<p><img src="/images/crash-9.png" alt></p>
 <p>一步一步来，首先在客户端收集crash,收集的方式包含两种：</p>
 <ul>
 <li>NSSetUncaughtExceptionHandler</li>
@@ -571,7 +571,7 @@ struct Test {
 &lt;/dict&gt;
 &lt;/plist&gt;</code></pre></li>
 </ul>
-<p>这里先介绍一个符号化的原理，apple提供了一个<code>atos</code>命令行工具，来完成符号化的过程。在crash的堆栈中，我们可以看到这样的信息<br><img src="%3C!--%EF%BF%BC1--%3E/images/crash-10.png" alt></p>
+<p>这里先介绍一个符号化的原理，apple提供了一个<code>atos</code>命令行工具，来完成符号化的过程。在crash的堆栈中，我们可以看到这样的信息<br><img src="/images/crash-10.png" alt></p>
 <p>针对一行一行的堆栈信息做如下操作： </p>
 <pre><code>atos -arch &lt;Binary Architecture&gt; -o &lt;Path to dSYM file&gt;/Contents/Resources/DWARF/&lt;binary image name&gt; -l &lt;load address&gt; &lt;address to symbolicate&gt;</code></pre><p>这里存在几个参数：</p>
 <ul>
@@ -595,7 +595,7 @@ struct Test {
 <li>load commad</li>
 <li>data</li>
 </ul>
-<p><img src="%3C!--%EF%BF%BC2--%3E/images/crash-11.png" alt></p>
+<p><img src="/images/crash-11.png" alt></p>
 <p>header部分就是协议部分，定义了当前二进制使用的框架类型等，在Header中可以拿到的信息有</p>
 <ul>
 <li>二进制的框架类型</li>

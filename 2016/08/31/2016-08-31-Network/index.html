@@ -87,12 +87,12 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="一个好的网络框架的设计是很复杂的，抛开设计本身，一个好的网络框架的设计应该包含如下几种特性： 尽可能多的传输请求的数据。 避免失效 大流量传输的需要配备UE 适当的错误处理 适当的处理网络状况受限 选择该任务的API 小心谨慎的设计软件，避免风险">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2016/08/31/2016-08-31-Network/%3C!--%EF%BF%BC0--%3E/images/Network-1.png">
-<meta property="og:updated_time" content="2018-08-25T17:34:12.000Z">
+<meta property="og:image" content="http://yoursite.com/images/Network-1.png">
+<meta property="og:updated_time" content="2019-08-07T13:24:15.634Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Network">
 <meta name="twitter:description" content="一个好的网络框架的设计是很复杂的，抛开设计本身，一个好的网络框架的设计应该包含如下几种特性： 尽可能多的传输请求的数据。 避免失效 大流量传输的需要配备UE 适当的错误处理 适当的处理网络状况受限 选择该任务的API 小心谨慎的设计软件，避免风险">
-<meta name="twitter:image" content="http://yoursite.com/2016/08/31/2016-08-31-Network/%3C!--%EF%BF%BC0--%3E/images/Network-1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/Network-1.png">
 
 
 
@@ -421,7 +421,7 @@
 </ul>
 <p>如果在应用中使用了<code>NSURLConnection</code>API做网络请求，可以开启<code>setHTTPShouldUsePipelining:</code>设置，可以提升这种顺序的网络请求的速度。但是如果服务器不支持处理管道网络请求的话，表现上还是没有变化。</p>
 <h2 id="衡量网络需求"><a href="#衡量网络需求" class="headerlink" title="衡量网络需求"></a>衡量网络需求</h2><p>在选择网络API之前，先看一下网络家族的API</p>
-<p><img src="%3C!--%EF%BF%BC0--%3E/images/Network-1.png" alt></p>
+<p><img src="/images/Network-1.png" alt></p>
 <p>OSX和ios提供了三个主要的用户端的API layer,前两个是Foundation和CFNetwork(依附于Core Foundation)，是特殊的框架对于OSX和ios.底层的API设计，POSIX，与UNIX和LINUX操作系统是一样的。可以使用Foundation完成客户端的网络设计，如果有特别的需求，可以使用底层的API.</p>
 <h3 id="常见的网络任务"><a href="#常见的网络任务" class="headerlink" title="常见的网络任务"></a>常见的网络任务</h3><p>在选择网络API之前，需要清楚app所需的网络任务</p>
 <ul>

@@ -87,17 +87,17 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="随着支付宝，QQ AR技术的应用，越来越多的团队开始认识到AR的价值，可以说2016年AR技术离我们又进了一步。再往前倒一年，你会发现，其实双11会场也是做过AR红包的，但是当时的红包效果确实不怎么地，界面抖动的太厉害（没有对感应器做深层次的了解）。随之还有QQ火炬接力，当时没有记错的话，QQ的AR是好像2d的，设备要求在水平放置时，才能展示更好的效果。随着研究的深入，产品的效果也是越来越理想，这">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/%3C!--%EF%BF%BC0--%3E/images/LocationAR01.jpeg">
-<meta property="og:image" content="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/%3C!--%EF%BF%BC1--%3E/images/LocationAR02.jpeg">
-<meta property="og:image" content="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/%3C!--%EF%BF%BC2--%3E/images/compass.gif">
-<meta property="og:image" content="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/%3C!--%EF%BF%BC3--%3E/images/LocationAR-03.gif">
-<meta property="og:image" content="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/%3C!--%EF%BF%BC4--%3E/images/LocationAR-04.gif">
-<meta property="og:image" content="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/%3C!--%EF%BF%BC5--%3E/images/LocationAR-05.gif">
-<meta property="og:updated_time" content="2018-08-25T17:33:21.000Z">
+<meta property="og:image" content="http://yoursite.com/images/LocationAR01.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/LocationAR02.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/compass.gif">
+<meta property="og:image" content="http://yoursite.com/images/LocationAR-03.gif">
+<meta property="og:image" content="http://yoursite.com/images/LocationAR-04.gif">
+<meta property="og:image" content="http://yoursite.com/images/LocationAR-05.gif">
+<meta property="og:updated_time" content="2019-08-07T13:23:39.707Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于地理位置的AR增强现实">
 <meta name="twitter:description" content="随着支付宝，QQ AR技术的应用，越来越多的团队开始认识到AR的价值，可以说2016年AR技术离我们又进了一步。再往前倒一年，你会发现，其实双11会场也是做过AR红包的，但是当时的红包效果确实不怎么地，界面抖动的太厉害（没有对感应器做深层次的了解）。随之还有QQ火炬接力，当时没有记错的话，QQ的AR是好像2d的，设备要求在水平放置时，才能展示更好的效果。随着研究的深入，产品的效果也是越来越理想，这">
-<meta name="twitter:image" content="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/%3C!--%EF%BF%BC0--%3E/images/LocationAR01.jpeg">
+<meta name="twitter:image" content="http://yoursite.com/images/LocationAR01.jpeg">
 
 
 
@@ -330,7 +330,7 @@
 
       
         <p>随着支付宝，QQ AR技术的应用，越来越多的团队开始认识到AR的价值，可以说2016年AR技术离我们又进了一步。再往前倒一年，你会发现，其实双11会场也是做过AR红包的，但是当时的红包效果确实不怎么地，界面抖动的太厉害（没有对感应器做深层次的了解）。随之还有QQ火炬接力，当时没有记错的话，QQ的AR是好像2d的，设备要求在水平放置时，才能展示更好的效果。随着研究的深入，产品的效果也是越来越理想，这里介绍两个国内的AR产品。“视+”,基于标记的AR技术，逼格很高，也拥有了很庞大的用户群。”随便走“基于地理位置的AR技术，下面来几张截图：</p>
-<p><img src="%3C!--%EF%BF%BC0--%3E/images/LocationAR01.jpeg" alt><img src="%3C!--%EF%BF%BC1--%3E/images/LocationAR02.jpeg" alt></p>
+<p><img src="/images/LocationAR01.jpeg" alt><img src="/images/LocationAR02.jpeg" alt></p>
 <p>这次的主题也是基于地理位置的AR实现。</p>
 <a id="more"></a>
 
@@ -521,7 +521,7 @@ typedef void(^QARCompletionHandle) (NSError *error);
 接下来说CoreMotion中magneticField磁场信息获取到的指南针的角度
 你会发现绿色和蓝色箭头和红色箭头会存在很大的夹角，这个夹角是在设备抬起的时候导致的。
 在现有的资料查询和实验后没有找到一个标准的公式，能将CoreMotion中的磁场信息转化成稳定的指南针信息
-保留这个磁场的计算</code></pre><p><img src="%3C!--%EF%BF%BC2--%3E/images/compass.gif" alt></p>
+保留这个磁场的计算</code></pre><p><img src="/images/compass.gif" alt></p>
 <p>上面的代码来自<a href="http://stackoverflow.com/questions/15380632/in-ios-what-is-the-difference-between-the-magnetic-field-values-from-the-core-l" target="_blank" rel="noopener">stackoverflow</a>这里讲解了CoreMotion中的magneticField和CLLocation中的trueHeading的不同点。</p>
 <p>同样尝试的还有CoreMotion中的欧拉角中的YAW，测试中发现这是一个不确定的值，没有参考系。所以导致设备找不着北（这个不清楚是个例还是真的就是这样）。使用欧拉角可能会存在万向节死锁的问题（这里如果只是使用欧拉角中的一个值的话，应该不会出现死锁）。</p>
 <p>最后摸索的四元素，如果你去查资料，估计也很难明白它是什么作用。首先看一下他的结构</p>
@@ -537,7 +537,7 @@ double myPitch = atan2(2*(quat.x*quat.w + quat.y*quat.z), 1 - 2*quat.x*quat.x - 
 // yaw这个值来自正北
 double myYaw = degreesConvert(atan2(2*(quat.z*quat.w + quat.x*quat.y), 1 - 2*quat.y*quat.y - 2*quat.z*quat.z));</code></pre><p>拿到的Yaw的角度，经过测试是参考的指南针的方向，得到的值也很稳定。</p>
 <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>这里先来看一下成果</p>
-<p><img src="%3C!--%EF%BF%BC3--%3E/images/LocationAR-03.gif" alt> <img src="%3C!--%EF%BF%BC4--%3E/images/LocationAR-04.gif" alt> <img src="%3C!--%EF%BF%BC5--%3E/images/LocationAR-05.gif" alt></p>
+<p><img src="/images/LocationAR-03.gif" alt> <img src="/images/LocationAR-04.gif" alt> <img src="/images/LocationAR-05.gif" alt></p>
 <p>上面的gif就是完成之后的效果图了，为什么会是三份呢，在计算位置变化和绘制界面上采用了不同的方案。这也是一个渐变的过程，随着对AR技术了解的深入渐渐的趋向于用矩阵来计算目标物的位置移动，之后接触到了GLKit和sceneKit</p>
 <p>UIView绘制目标并做位置移动。这里存在的优点和缺点是</p>
 <ul>

@@ -87,14 +87,14 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="CoreAudioCoreAudio提供了一套软件技术来方便开发者实现audio的一些特性，其中就包含了录制，播放，音效处理，定位，格式转换，文件流处理，同时包含： * 可以在应用中使用内嵌的平衡器和混响器 * 自动获取音频的IO * 将电话设备的信息应用到应用中 * 在不干扰音效的情况下减少或是延长电池寿命CoreAudio包含了C和OC的API，从而可以通过灵活的编程环境来保持一个低延迟音频信">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2016/05/03/2016-05-03-AudioCore/%3C!--%EF%BF%BC0--%3E/images/CoreAudio-1.png">
-<meta property="og:image" content="http://yoursite.com/2016/05/03/2016-05-03-AudioCore/%3C!--%EF%BF%BC1--%3E/images/CoreAudio-5.png">
-<meta property="og:image" content="http://yoursite.com/2016/05/03/2016-05-03-AudioCore/%3C!--%EF%BF%BC2--%3E/images/CoreAudio-4.png">
-<meta property="og:updated_time" content="2018-08-25T17:38:47.000Z">
+<meta property="og:image" content="http://yoursite.com/images/CoreAudio-1.png">
+<meta property="og:image" content="http://yoursite.com/images/CoreAudio-5.png">
+<meta property="og:image" content="http://yoursite.com/images/CoreAudio-4.png">
+<meta property="og:updated_time" content="2019-08-07T13:25:13.408Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CoreAudio">
 <meta name="twitter:description" content="CoreAudioCoreAudio提供了一套软件技术来方便开发者实现audio的一些特性，其中就包含了录制，播放，音效处理，定位，格式转换，文件流处理，同时包含： * 可以在应用中使用内嵌的平衡器和混响器 * 自动获取音频的IO * 将电话设备的信息应用到应用中 * 在不干扰音效的情况下减少或是延长电池寿命CoreAudio包含了C和OC的API，从而可以通过灵活的编程环境来保持一个低延迟音频信">
-<meta name="twitter:image" content="http://yoursite.com/2016/05/03/2016-05-03-AudioCore/%3C!--%EF%BF%BC0--%3E/images/CoreAudio-1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/CoreAudio-1.png">
 
 
 
@@ -335,7 +335,7 @@
 
 <p>整个参考文档是很长的，Core Audio Essentials章节中主要讲述的是Core Audio的组成，以及每个组成可以做到的事情。</p>
 <p>首先介绍API的结构：</p>
-<p><img src="%3C!--%EF%BF%BC0--%3E/images/CoreAudio-1.png" alt></p>
+<p><img src="/images/CoreAudio-1.png" alt></p>
 <p>顺带介绍每个层的每个api的功能，例如底层结构中：</p>
 <ul>
 <li>I/Okit主要适合驱动做交互</li>
@@ -376,9 +376,9 @@
 <p>使用顶层的API audio session可以更好的处理这些中断操作。</p>
 <p>接下来就是一下实例了，使用AVAudioPlayer播放文件，System Sound Servie播放声音，Recorder等等。但是这些都是有自己的独立章节去讲述的。</p>
 <h2 id="Audio-Queue-Servies"><a href="#Audio-Queue-Servies" class="headerlink" title="Audio Queue Servies"></a>Audio Queue Servies</h2><p>当你接触了网络流播放，必然要去了解Audio Queue Servies相关的信息，那么AudioQueue到底是做什么的？先看图</p>
-<p><img src="%3C!--%EF%BF%BC1--%3E/images/CoreAudio-5.png" alt> </p>
+<p><img src="/images/CoreAudio-5.png" alt> </p>
 <p>上图中描述的是录制声音的主要流程，流程中有三个缓冲buffer,当收到外界的数据来源的时候，先填充第一个buffer缓冲池，缓冲池填充满之后，就会触发callBack函数，处理完成了之后，将这个缓冲池放回队列中。这就形成了一个循环。</p>
-<p><img src="%3C!--%EF%BF%BC2--%3E/images/CoreAudio-4.png" alt></p>
+<p><img src="/images/CoreAudio-4.png" alt></p>
 <p>上图中的播放队列也是一样的逻辑。可以参考这个<a href="http://msching.github.io/blog/categories/ios/" target="_blank" rel="noopener">博客</a>,写的非常的详细.</p>
 <p>上面的博客中已经详细的介绍了相应对象的功能以及原理，看完了之后会获益良多：</p>
 <ul>

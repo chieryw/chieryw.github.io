@@ -87,21 +87,21 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="CoreText实现添加标签CoreText是基于C语言的API设计，主要通过UIView的drawRect:来实现自定义的文案排版，但是在OS X系统上放回的确实NSRect的一个对象，这个时候你可以使用的NSRectToCGRect这个函数来将结果做一下转化，以适应更多的平台。这里有个需要注意的点：图形环境是根据UIGraphicsGetCurrentContext此函数的结果，但是在这个结果">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC0--%3E/images/CoreText-1.png">
-<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC1--%3E/images/CoreText-2.png">
-<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC2--%3E/images/CoreText-3.png">
-<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC3--%3E/images/CoreText-7.png">
-<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC4--%3E/images/CoreText-8.png">
-<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC5--%3E/images/CoreText-9.png">
-<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC6--%3E/images/CoreText-10.png">
-<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC7--%3E/images/CoreText-11.png">
-<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC8--%3E/images/CoreText-12.png">
-<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC9--%3E/images/CoreText-6.png">
-<meta property="og:updated_time" content="2018-08-25T17:35:18.000Z">
+<meta property="og:image" content="http://yoursite.com/images/CoreText-1.png">
+<meta property="og:image" content="http://yoursite.com/images/CoreText-2.png">
+<meta property="og:image" content="http://yoursite.com/images/CoreText-3.png">
+<meta property="og:image" content="http://yoursite.com/images/CoreText-7.png">
+<meta property="og:image" content="http://yoursite.com/images/CoreText-8.png">
+<meta property="og:image" content="http://yoursite.com/images/CoreText-9.png">
+<meta property="og:image" content="http://yoursite.com/images/CoreText-10.png">
+<meta property="og:image" content="http://yoursite.com/images/CoreText-11.png">
+<meta property="og:image" content="http://yoursite.com/images/CoreText-12.png">
+<meta property="og:image" content="http://yoursite.com/images/CoreText-6.png">
+<meta property="og:updated_time" content="2019-08-07T13:24:29.833Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CoreText实现添加标签">
 <meta name="twitter:description" content="CoreText实现添加标签CoreText是基于C语言的API设计，主要通过UIView的drawRect:来实现自定义的文案排版，但是在OS X系统上放回的确实NSRect的一个对象，这个时候你可以使用的NSRectToCGRect这个函数来将结果做一下转化，以适应更多的平台。这里有个需要注意的点：图形环境是根据UIGraphicsGetCurrentContext此函数的结果，但是在这个结果">
-<meta name="twitter:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC0--%3E/images/CoreText-1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/CoreText-1.png">
 
 
 
@@ -338,7 +338,7 @@
 <a id="more"></a>
 
 <p>下面来看一组图片,CoreText是在运行时构建的多层次的文本对象，如图，在这个层次的最顶端是一个<code>frameSetter</code>对象，当有一个文本或是一个图形输入的时候，frameSetter就会生成一个或是多个文本（CTFrameRef）,每个CTFrame对象代表一个段落</p>
-<p><img src="%3C!--%EF%BF%BC0--%3E/images/CoreText-1.png" alt></p>
+<p><img src="/images/CoreText-1.png" alt></p>
 <p>为了生成可是的文本，frameSetter会调用一个叫CTTypesetterRef的对象，然后将FrameSetter将相应的段落信息，行信息，等等属性，转化成AttributeString放进排版的文本中去</p>
 <h4 id="Font-Obejcts"><a href="#Font-Obejcts" class="headerlink" title="Font Obejcts"></a>Font Obejcts</h4><p>字体对象用来制定一个字符的字体size等表现，你可以用多线程的思想来创建多个fontObejct，以便于使用。同时当我们制定对应文本的时候，在系统中会有这样一个字体表，或从中匹配一个默认值做显示。同时也是可以自定义这个字体表的存取的。在创建FontObejct的时候，你可以使用已有的fontDescriptors，也可以自定义一个出来，FontDescriptor对象是一个相当于字典的对象。可以很方便的充中拿到你想要的信息。同时你可以将你自定义的字体对象放到一个Collections中，这个Collection可以为你提供遍历和存储的功能，你可以很方便从中去到你已经存储的字体集，从而统一实现app的文字展示</p>
 <p>在这之后的Apple 原文还是不翻译了，最终起效果的就是上面的图片所示的内容。主要的就是一个CTFrameSetter这样的一个排版设置，下面就让我们一起来看一下这个函数中都包含了那些信息。下面的只是简介都会使用简短代码的方式，完整的代码整理后放到了<a href="https://github.com/chieryd/CTTest" target="_blank" rel="noopener">这里</a></p>
@@ -514,7 +514,7 @@ CTFrameRef frame,
 CGContextRef context ) CT_AVAILABLE(10_5, 3_2);</code></pre><p>介绍了上面的两个.h文件的API之后，还需要介绍CTLine.h的API和CTRun.h文件的API。基本上就够了。这里只介绍上面的两个，如果想了解后两个可以自行查看。类似的方法自己可以分析的</p>
 <h2 id="项目需求"><a href="#项目需求" class="headerlink" title="项目需求"></a>项目需求</h2><p>图文混排，用CoreText不是一件难事。这样的例子google一下，相信你就会有思路了。或者，如果你的项目支持更高的ios版本的话，可以使用ios7新出的TextKit来完成图文混排，TextKit可是苹果耗费3年时间优化的。可以很好的支持你想要的效果，但是这也不是说苹果将要使用TextKit取代CoreText，TextKit只是CoreText的封装，你可以根据自己的需求，选择合适的框架，来完成自己的工作。</p>
 <p>这一次使用CoreText想要完成的效果是，看下图</p>
-<p><img src="%3C!--%EF%BF%BC1--%3E/images/CoreText-2.png" alt></p>
+<p><img src="/images/CoreText-2.png" alt></p>
 <p>在一个给定的区域内绘制文本，文本中可能含有很多标签，这些标签可以自定义如下属性</p>
 <ul>
 <li>borderWidth</li>
@@ -628,7 +628,7 @@ CFRelease(frame);
 CFRelease(path);
 CFRelease(framesetter);</code></pre><p>上面的代码只要随意的复制粘贴到一个UIView的drawRect方法中就可以了。之后将这个UIView的View加载显示的VC中，即可得到如上图所示的效果。</p>
 <p>在这里，还是先用一张图来讲述CoreText的排版是如何排版的。</p>
-<p><img src="%3C!--%EF%BF%BC2--%3E/images/CoreText-3.png" alt></p>
+<p><img src="/images/CoreText-3.png" alt></p>
 <p>如上图所示：CoreText会把一行里连在一起相同属性的文字合在一起作为一个CTRun，每一行是一个CTLine，多行合在一起组成CTFrame。如上图，第一行的文字有两种样式，第一部分是加粗，第二部分是斜体，因为样式不同所以分成了两个CTRun，CTLine包含了这两个CTRun，CTFrame包含了所有CTLine。</p>
 <p>上面效果图的实现与这张理论图很是相似，效果图的实现是在文本排版完成后添加边框来实现的。主要原理是</p>
 <ul>
@@ -665,7 +665,7 @@ CFRelease(framesetter);</code></pre><p>上面的代码只要随意的复制粘�
 CGRect CTLineGetBoundsWithOptions(
     CTLineRef line,
     CTLineBoundsOptions options ) CT_AVAILABLE(10_8, 6_0);</code></pre><p>第一个函数可以知道attributeString在CTLine中所占的高度 高度=ascent+descent,第二个函数可以知道，CTRun的bounds，尽管第二个函数也是可以知道高度，但是这个高度没有前一个函数计算得出的高度精确。知道了上述的信息之后，文本排版的高度和宽度就都已经得到了解决。下面是效果图</p>
-<p><img src="%3C!--%EF%BF%BC3--%3E/images/CoreText-7.png" alt></p>
+<p><img src="/images/CoreText-7.png" alt></p>
 <p>与上次不同的是，这次是先将需要绘制的文字的空间预留出来。这样的优点在于可以自定义这个空间的大小，你可以将这个空间的大小放大一些，同时在绘制的时候，在预留的空间里剪裁一个适合的空间来绘制文本。这样边框就不会和文字挨得很紧密了。<a href="https://github.com/chieryd/CTTest" target="_blank" rel="noopener">demo</a></p>
 <pre><code>//为文字设置CTRunDelegate,delegate决定留给文字的空间大小
     CTDisplayViewModel *model = [CTDisplayViewModel new];
@@ -779,18 +779,18 @@ __weak typeof(self) weakSelf = self;
 </li>
 </ul>
 <p>上面所述的就是本次绘制的核心逻辑，所有的行Path都是经过计算得到的size,所以可以做预留空间。继承绘制方案二的优点，同时也解决了换行的难题</p>
-<p>说了这么多，来看一下效果，阶段性的展示<br><img src="%3C!--%EF%BF%BC4--%3E/images/CoreText-8.png" alt></p>
+<p>说了这么多，来看一下效果，阶段性的展示<br><img src="/images/CoreText-8.png" alt></p>
 <p>上图存在的问题</p>
 <ul>
 <li>坐标系</li>
 <li>文字基线不对齐</li>
 </ul>
-<p><img src="%3C!--%EF%BF%BC5--%3E/images/CoreText-9.png" alt></p>
+<p><img src="/images/CoreText-9.png" alt></p>
 <p>上图存在的问题</p>
 <ul>
 <li>文字基线不对齐</li>
 </ul>
-<p><img src="%3C!--%EF%BF%BC6--%3E/images/CoreText-10.png" alt><img src="%3C!--%EF%BF%BC7--%3E/images/CoreText-11.png" alt><img src="%3C!--%EF%BF%BC8--%3E/images/CoreText-12.png" alt></p>
+<p><img src="/images/CoreText-10.png" alt><img src="/images/CoreText-11.png" alt><img src="/images/CoreText-12.png" alt></p>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>说了那么多究竟该如何使用呢。直接上代码</p>
 <pre><code>CTDisplayView *displayView = [CTDisplayView new];
     displayView.frame =CGRectMake(100, 20, CGRectGetWidth(self.view.bounds) - 40, CGRectGetHeight(self.view.bounds) - 200);
@@ -882,7 +882,7 @@ CTParagraphStyleRef style = CTParagraphStyleCreate(settings, 1);
                        } range:[attString.string rangeOfString:@&quot;我们这里简单地将&quot;]];</code></pre></li>
 </ul>
 <p>然后修改文字为<code>我\u180E们\u180E这\u180E里\u180E简\u180E单\u180E地\u180E将</code>这样文字在行尾展示补全的时候，就会自动切换到下一行了。但是这里会有一个问题，如下图</p>
-<p><img src="%3C!--%EF%BF%BC9--%3E/images/CoreText-6.png" alt></p>
+<p><img src="/images/CoreText-6.png" alt></p>
 <p>文字中有乱七八糟的东西，可以通过把 \u180E 所在字符设置成 [UIColor clearColor] 来避免。</p>
 <p>问题到这里你以为会是你想要的效果了，NO。完全不是</p>
 <ul>

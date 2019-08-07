@@ -87,12 +87,12 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="最近看了AR相关的知识，大体上可以将ar技术总结为：  基于标记的AR 基于地理位置的AR  这里先介绍一下两个技术的不同点，AR增强现实技术是结合设备摄像头完成的虚拟现实。比如在一个指定的目标上增加一张图片，这样的例子就属于基于标记的AR,这个标记就是指定的目标了。设备需要扫描这个目标来确定目标通过摄像头反馈到屏幕的位置，再在这个位置上添加虚拟的图片。这样的例子有很多，例如Nike球鞋展示，国内">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2017/02/23/2017-02-23-基于标记的AR/%3C!--%EF%BF%BC0--%3E/images/arMark.gif">
-<meta property="og:updated_time" content="2018-08-25T17:33:44.000Z">
+<meta property="og:image" content="http://yoursite.com/images/arMark.gif">
+<meta property="og:updated_time" content="2019-08-07T13:23:50.435Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于标记的AR">
 <meta name="twitter:description" content="最近看了AR相关的知识，大体上可以将ar技术总结为：  基于标记的AR 基于地理位置的AR  这里先介绍一下两个技术的不同点，AR增强现实技术是结合设备摄像头完成的虚拟现实。比如在一个指定的目标上增加一张图片，这样的例子就属于基于标记的AR,这个标记就是指定的目标了。设备需要扫描这个目标来确定目标通过摄像头反馈到屏幕的位置，再在这个位置上添加虚拟的图片。这样的例子有很多，例如Nike球鞋展示，国内">
-<meta name="twitter:image" content="http://yoursite.com/2017/02/23/2017-02-23-基于标记的AR/%3C!--%EF%BF%BC0--%3E/images/arMark.gif">
+<meta name="twitter:image" content="http://yoursite.com/images/arMark.gif">
 
 
 
@@ -332,7 +332,7 @@
 <p>这里先介绍一下两个技术的不同点，AR增强现实技术是结合设备摄像头完成的虚拟现实。比如在一个指定的目标上增加一张图片，这样的例子就属于基于标记的AR,这个标记就是指定的目标了。设备需要扫描这个目标来确定目标通过摄像头反馈到屏幕的位置，再在这个位置上添加虚拟的图片。这样的例子有很多，例如Nike球鞋展示，国内的应用视+…基于地理位置的AR参考点是目标物与当前位置的方位角。这样的例子就更多了，QQ AR红包，支付宝红包等等。这里首先来看一下效果：</p>
 <a id="more"></a>
 
-<p><img src="%3C!--%EF%BF%BC0--%3E/images/arMark.gif" alt></p>
+<p><img src="/images/arMark.gif" alt></p>
 <p>接下来讲述的就是通过ios设备来完成简单的基于标记的AR的开发，我们都知道ios是可以在拍照的时候识别人脸的，其实可以更加细致到识别到人的左眼，右眼，嘴巴的位置…这次参考的标记就是人的眼睛和嘴巴。</p>
 <p>知道了需要做的事情之后，需要来确定用什么技术能分析到脸部的信息。我这里选用的是AVFoundation中的AVCaptureDevice来录制前置摄像头的影像。下面的代码是初始化摄像机</p>
 <pre><code>#import &quot;CameraView.h&quot;
