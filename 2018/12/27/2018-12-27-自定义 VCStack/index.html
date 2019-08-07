@@ -87,14 +87,14 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="背景介绍最近开发的几个工程使用的都是系统的VCStack，即UITabbarController + UINavigationController的方式。这是一个经典的组合，在现实的开发场景中基本已经能够满足需求。但是，最近几期UI稿和UE稿的设计规则，有点超出了这个既有框架的能力  遮罩全屏的半浮层 出栈入栈复杂的动画 跨VC堆栈的pop和push操作  在现有的UITabbarControll">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1420881-b23b478b7cef34e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1420881-3b1aed376aa69e20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1420881-e1174a23cd508df8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-08-07T13:15:26.495Z">
+<meta property="og:image" content="http://yoursite.com/images/VCStack-01.png">
+<meta property="og:image" content="http://yoursite.com/images/VCStack-02.png">
+<meta property="og:image" content="http://yoursite.com/images/VCStack-03.png">
+<meta property="og:updated_time" content="2019-08-07T13:37:36.213Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 自定义 VCStack">
 <meta name="twitter:description" content="背景介绍最近开发的几个工程使用的都是系统的VCStack，即UITabbarController + UINavigationController的方式。这是一个经典的组合，在现实的开发场景中基本已经能够满足需求。但是，最近几期UI稿和UE稿的设计规则，有点超出了这个既有框架的能力  遮罩全屏的半浮层 出栈入栈复杂的动画 跨VC堆栈的pop和push操作  在现有的UITabbarControll">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1420881-b23b478b7cef34e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="http://yoursite.com/images/VCStack-01.png">
 
 
 
@@ -362,7 +362,7 @@
 <p>1、vc生命周期的一致<br>2、手势操作<br>3、动画接入</p>
 <p>对整个想做的事情有了一定的了解了之后，下面是一些实现中的细节</p>
 <h4 id="逐个击破"><a href="#逐个击破" class="headerlink" title="逐个击破"></a>逐个击破</h4><h6 id="视图层级-布局原点"><a href="#视图层级-布局原点" class="headerlink" title="视图层级 + 布局原点"></a>视图层级 + 布局原点</h6><p>自定义VCStack不会再有TopLayout和BottomLayout这种预置依赖，所有的View的布局都将从window的（0，0）点开始布局。<code>navigationBar</code>和<code>TabBar</code>也将会被CustomView代替以此抹平层级间Z轴差距过大导致的遮罩问题<br>[图片上传中…(系统navigation层级.png-6d0e8b-1545878789170-0)]</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1420881-b23b478b7cef34e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="自定义层级.png"></p>
+<p><img src="/images/VCStack-01.png" alt></p>
 <p>当Window的整个区域都有权限去管理之后，层级和布局原点的问题就已经不是问题了，但是这样又引入了其他问题：</p>
 <ol>
 <li>自定义navigationBar增加了每个页面开发的成本</li>
@@ -386,7 +386,7 @@
 <li>operation</li>
 </ul>
 <p>关键点出在了operation，这是系统的枚举类型，和业务场景中的契合度不是很高，限制了动画的类型。这相当于找到了这个动画支持的痛点，现在讲一下我的思路：</p>
-<p>在自定义的VCStack中将动画完全交出去，以实例的形式交出去，这看起来有点难以理解。如何统一实例的api？这就用到了协议。所有的animation实例是继承AnimationProtocol的，由这个协议来约束api,使得所有实例的调度一致。结构如下：<br><img src="https://upload-images.jianshu.io/upload_images/1420881-3b1aed376aa69e20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Animation设计.png"></p>
+<p>在自定义的VCStack中将动画完全交出去，以实例的形式交出去，这看起来有点难以理解。如何统一实例的api？这就用到了协议。所有的animation实例是继承AnimationProtocol的，由这个协议来约束api,使得所有实例的调度一致。结构如下：<br><img src="/images/VCStack-02.png" alt></p>
 <p>下面是实例的生成api,在实际的使用中每个独具特色的动画协议都是这么写的，他们的具体实现放在了集成的协议中</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@interface HDVCStackAnimation : NSObject &lt;HDVCStackAnimationProtocol&gt;</span><br><span class="line">+ (instancetype)defaultAnimation;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 
@@ -407,7 +407,7 @@
 </ul>
 <p>但是这里的animationInstance实现的空间大大增加，他只要继承自AnimationProtocol，具体的animation如何实现已经完全交给了业务层。如果在业务层的设计上适配几套符合当前场景的animation，这样的抽象也会被简化到为数不多的Animation实例中。满足了我们的要求，拓展性和逻辑抽象</p>
 <h6 id="getTopVC-交叉影响"><a href="#getTopVC-交叉影响" class="headerlink" title="getTopVC + 交叉影响"></a>getTopVC + 交叉影响</h6><p>在完全接手了VCStack之后，对于操作的每个细节都在开发者的掌握之中，当任务触达的时候，可以追加AnimationCompletionHandle的处理，来让这个逻辑更加健壮。同样的交叉影响的存在也被开发人员决定，只有设计中存在这种交叉影响，才会在使用中存在这样的逻辑。设计的节点已经被开发人员管控，需不需要这种逻辑交互已经不再是一个黑盒</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1420881-e1174a23cd508df8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="getTopVC+交叉影响.png"></p>
+<p><img src="/images/VCStack-03.png" alt></p>
 <h6 id="指定VC的跳转"><a href="#指定VC的跳转" class="headerlink" title="指定VC的跳转"></a>指定VC的跳转</h6><p>这个功能在实际的业务中会经常遇到，在系统Navigation的基础上的实现如下</p>
 <p>1、遍历navigationController.viewControllers<br>2、找到匹配的VC实例<br>3、执行popToVC操作</p>
 <p>前面两步基本不可避免，导致在实际的落地式往往一堆一堆代码的存在，对于代码简洁来说不是一个很好的方案。考虑到这样的需求场景，VCStack中集成了一套快捷的跳转API,覆盖了常见的业务场景</p>
