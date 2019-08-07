@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Objective-C,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在开发程序的过程中，简单的将图片加载到当前绘制的界面中，这可以解决大部分的问题，当工程的size不是很大的情况下。一旦工程的size达到了一定的值，就需要在各个方面来做瘦身，例如： 删除重复文件 删除不被使用的文件 ...这是最最开始我们应该想到的，当将工程中的这些未被调用的文件以及重复的文件删除了之后，size还是没有达到我们预料的要求，这时可能需要  简化API 压缩图片 提取公共的API 删">
+<meta name="keywords" content="Objective-C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图片">
+<meta property="og:url" content="http://yoursite.com/2016/10/21/2016-10-21-图片/index.html">
+<meta property="og:site_name" content="chiery&#39;blog">
+<meta property="og:description" content="在开发程序的过程中，简单的将图片加载到当前绘制的界面中，这可以解决大部分的问题，当工程的size不是很大的情况下。一旦工程的size达到了一定的值，就需要在各个方面来做瘦身，例如： 删除重复文件 删除不被使用的文件 ...这是最最开始我们应该想到的，当将工程中的这些未被调用的文件以及重复的文件删除了之后，size还是没有达到我们预料的要求，这时可能需要  简化API 压缩图片 提取公共的API 删">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-25T17:34:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图片">
+<meta name="twitter:description" content="在开发程序的过程中，简单的将图片加载到当前绘制的界面中，这可以解决大部分的问题，当工程的size不是很大的情况下。一旦工程的size达到了一定的值，就需要在各个方面来做瘦身，例如： 删除重复文件 删除不被使用的文件 ...这是最最开始我们应该想到的，当将工程中的这些未被调用的文件以及重复的文件删除了之后，size还是没有达到我们预料的要求，这时可能需要  简化API 压缩图片 提取公共的API 删">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/21/2016-10-21-图片/">
+
+
+
+
+
+  <title>图片 | chiery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chiery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/21/2016-10-21-图片/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chiery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">图片</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-21T12:04:23+08:00">
+                2016-10-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/效率/" itemprop="url" rel="index">
+                    <span itemprop="name">效率</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在开发程序的过程中，简单的将图片加载到当前绘制的界面中，这可以解决大部分的问题，当工程的size不是很大的情况下。一旦工程的size达到了一定的值，就需要在各个方面来做瘦身，例如：</p>
+<pre><code>删除重复文件
+删除不被使用的文件
+...</code></pre><p>这是最最开始我们应该想到的，当将工程中的这些未被调用的文件以及重复的文件删除了之后，size还是没有达到我们预料的要求，这时可能需要</p>
+<ul>
+<li>简化API</li>
+<li>压缩图片</li>
+<li>提取公共的API</li>
+<li>删除过期的业务活动代码</li>
+<li>…</li>
+</ul>
+<a id="more"></a>
+
+<p>简化API和提取API是一项细心的活。压缩图片却是一项技术活，在这之前你需要了解图片的组成，以及图片压缩产生的效果。在工程中，使用最多的图片格式莫过于这类图片</p>
+<ul>
+<li>png</li>
+<li>jpg</li>
+<li>jpeg</li>
+</ul>
+<p>那么了解图片的压缩的原理就显得尤为的重要，我们要清楚图片压缩压缩的是什么，压缩后产生的变化是什么。在这个问题上建议去看参考文章，讲解的非常的详细。在看了参考文章之后，需要补充的概念有：</p>
+<h3 id="压缩原理"><a href="#压缩原理" class="headerlink" title="压缩原理"></a>压缩原理</h3><h4 id="有损压缩"><a href="#有损压缩" class="headerlink" title="有损压缩"></a>有损压缩</h4><p>有损压缩可以减少图像在内存和磁盘中占用的空间，在屏幕上观看图像时，不会发现它对图像的外观产生太大的不利影响。因为人的眼睛对光线比较敏感，光线对景物的作用比颜色的作用更为重要，这就是有损压缩技术的基本依据。</p>
+<h4 id="无损压缩"><a href="#无损压缩" class="headerlink" title="无损压缩"></a>无损压缩</h4><p>无损压缩的基本原理是相同的颜色信息只需保存一次。压缩图像的软件首先会确定图像中哪些区域是相同的，哪些是不同的。包括了重复数据的图像(如蓝天) 就可以被压缩，只有蓝天的起始点和终结点需要被记录下来。但是蓝色可能还会有不同的深浅，天空有时也可能被树木、山峰或其他的对象掩盖，这些就需要另外记录。从本质上看，无损压缩的方法可以删除一些重复数据，大大减少要在磁盘上保存的图像尺寸。但是，无损压缩的方法并不能减少图像的内存占用量，这是因为，当从磁盘上读取图像时，软件又会把丢失的像素用适当的颜色信息填充进来。如果要减少图像占用内存的容量，就必须使用有损压缩方法。</p>
+<h3 id="压缩优缺点"><a href="#压缩优缺点" class="headerlink" title="压缩优缺点"></a>压缩优缺点</h3><h4 id="有损压缩-1"><a href="#有损压缩-1" class="headerlink" title="有损压缩"></a>有损压缩</h4><p>有损压缩的特点是保持颜色的逐渐变化，删除图像中颜色的突然变化。生物学中的大量实验证明，人类大脑会利用与附近最接近的颜色来填补所丢失的颜色。例如，对于蓝色天空背景上的一朵白云，有损压缩的方法就是删除图像中景物边缘的某些颜色部分。当在·屏幕上看这幅图时，大脑会利用在景物上看到的颜色填补所丢失的颜色部分。利用有损压缩技术，某些数据被有意地删除了，而被取消的数据也不再恢复。<br>无可否认，利用有损压缩技术可以大大地压缩文件的数据，但是会影响图像质量。如果使用了有损压缩的图像仅在屏幕上显示，可能对图像质量影响不太大，至少对于人类眼睛的识别程度来说区别不大。可是，如果要把一幅经过有损压缩技术处理的图像用高分辨率打印机打印出来，那么图像质量就会有明显的受损痕迹。</p>
+<h4 id="无损压缩-1"><a href="#无损压缩-1" class="headerlink" title="无损压缩"></a>无损压缩</h4><p>无损压缩方法的优点是能够比较好地保存图像的质量，但是相对来说这种方法的压缩率比较低。但是，如果需要把图像用高分辨率的打印机打印出来，最好还是使用无损压缩几乎所有的图像文件都采用各自简化的格式名作为文件扩展名。从扩展名就可知道这幅图像是按什么格式存储的，应该用什么样的软件去读/写等等。</p>
+<h3 id="透明通道"><a href="#透明通道" class="headerlink" title="透明通道"></a>透明通道</h3><p>即图片的alpha值，不同的图片类型留有的图片通道的bit位是不同的，例如gif的透明通道就只有1bit</p>
+<h2 id="领悟"><a href="#领悟" class="headerlink" title="领悟"></a>领悟</h2><p>认真的看完了两篇参考，可以从源头处来处理图片。在应用中的小图标可以使用png格式来做相应的配置优点在于：</p>
+<ul>
+<li>失真小</li>
+<li>完美的支持透明通道</li>
+<li>没有锯齿</li>
+</ul>
+<p>这里需要注意的就是，在使用png之前，可以使用tinyPNG（压缩比是目前最高的）做图片的压缩，tinyPNG采用了类似gif那样的颜色索引表对png进行压缩，这会导致颜色鲜艳的图片丢失一部分细节，只要UI可以接受，也是一个很好的方案。</p>
+<p>在应用详情页使用图片详情的时候，展示的图片往往会是很大的图片。这种图片最好使用jpg/jpeg这种格式的。采用有损压缩来控制图片size，在有损压缩时，可以参考UI的意见来确定最好的压缩比。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://blog.ibireme.com/2015/11/02/mobile_image_benchmark/" target="_blank" rel="noopener">移动端图片格式调研</a></li>
+<li><a href="http://blog.ibireme.com/2015/11/02/ios_image_tips/" target="_blank" rel="noopener">iOS 处理图片的一些小 Tip</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Objective-C/" rel="tag"># Objective-C</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/31/2016-08-31-Network/" rel="next" title="Network">
+                <i class="fa fa-chevron-left"></i> Network
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/11/2016-11-11-宫崎骏作品/" rel="prev" title="宫崎骏作品年表">
+                宫崎骏作品年表 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">持续、专注</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#压缩原理"><span class="nav-number">1.</span> <span class="nav-text">压缩原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#有损压缩"><span class="nav-number">1.1.</span> <span class="nav-text">有损压缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#无损压缩"><span class="nav-number">1.2.</span> <span class="nav-text">无损压缩</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#压缩优缺点"><span class="nav-number">2.</span> <span class="nav-text">压缩优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#有损压缩-1"><span class="nav-number">2.1.</span> <span class="nav-text">有损压缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#无损压缩-1"><span class="nav-number">2.2.</span> <span class="nav-text">无损压缩</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#透明通道"><span class="nav-number">3.</span> <span class="nav-text">透明通道</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#领悟"><span class="nav-number"></span> <span class="nav-text">领悟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

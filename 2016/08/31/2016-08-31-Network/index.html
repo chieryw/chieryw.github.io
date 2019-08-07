@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Network,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一个好的网络框架的设计是很复杂的，抛开设计本身，一个好的网络框架的设计应该包含如下几种特性： 尽可能多的传输请求的数据。 避免失效 大流量传输的需要配备UE 适当的错误处理 适当的处理网络状况受限 选择该任务的API 小心谨慎的设计软件，避免风险">
+<meta name="keywords" content="Network">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Network">
+<meta property="og:url" content="http://yoursite.com/2016/08/31/2016-08-31-Network/index.html">
+<meta property="og:site_name" content="chiery&#39;blog">
+<meta property="og:description" content="一个好的网络框架的设计是很复杂的，抛开设计本身，一个好的网络框架的设计应该包含如下几种特性： 尽可能多的传输请求的数据。 避免失效 大流量传输的需要配备UE 适当的错误处理 适当的处理网络状况受限 选择该任务的API 小心谨慎的设计软件，避免风险">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2016/08/31/2016-08-31-Network/%3C!--%EF%BF%BC0--%3E/images/Network-1.png">
+<meta property="og:updated_time" content="2018-08-25T17:34:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Network">
+<meta name="twitter:description" content="一个好的网络框架的设计是很复杂的，抛开设计本身，一个好的网络框架的设计应该包含如下几种特性： 尽可能多的传输请求的数据。 避免失效 大流量传输的需要配备UE 适当的错误处理 适当的处理网络状况受限 选择该任务的API 小心谨慎的设计软件，避免风险">
+<meta name="twitter:image" content="http://yoursite.com/2016/08/31/2016-08-31-Network/%3C!--%EF%BF%BC0--%3E/images/Network-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/08/31/2016-08-31-Network/">
+
+
+
+
+
+  <title>Network | chiery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chiery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/31/2016-08-31-Network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chiery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Network</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-31T15:13:33+08:00">
+                2016-08-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Network/" itemprop="url" rel="index">
+                    <span itemprop="name">Network</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一个好的网络框架的设计是很复杂的，抛开设计本身，一个好的网络框架的设计应该包含如下几种特性：</p>
+<pre><code>尽可能多的传输请求的数据。
+避免失效
+大流量传输的需要配备UE
+适当的错误处理
+适当的处理网络状况受限
+选择该任务的API
+小心谨慎的设计软件，避免风险</code></pre><a id="more"></a>
+
+<h3 id="考虑网络使用的真实环境"><a href="#考虑网络使用的真实环境" class="headerlink" title="考虑网络使用的真实环境"></a>考虑网络使用的真实环境</h3><p>在理想环境下，网络应该是稳定的，高速传输的，低延迟的。但是在现实使用的环境中，网络经常在一些不可思议的环境下出错：</p>
+<ul>
+<li>中断或是重新加载的网络经常丢失包信息</li>
+<li>当网络线路趋于饱和的时候，路由就会在传输数据的同时缓存数据以免数据丢失，导致了网络延迟</li>
+<li>局域网络经常拦截HTTP请求，弹出一个登录页面。</li>
+<li>防火墙的存在组织了客户端向服务端的请求，或阻止了部分请求</li>
+<li>防火墙的存在使得服务器阻值了部分端口，或是部分设备</li>
+<li>第三方防火墙的存在，使得当前网络需要认证</li>
+</ul>
+<p>所以在设计网络框架的时候，需要从多方面考虑网络的性能。核心的目的就是减少用户的损失，这些损失可能是：</p>
+<ul>
+<li>金钱</li>
+<li>设备的使用寿命</li>
+</ul>
+<h3 id="电池和带宽高效利用"><a href="#电池和带宽高效利用" class="headerlink" title="电池和带宽高效利用"></a>电池和带宽高效利用</h3><p>最需要在写网络框架时考虑的事情是：更新或是下载数据，都在消耗用户的时间和金钱。</p>
+<p>网络操作浪费用户的时间：</p>
+<ul>
+<li>用户需要等待网络任务完成才能继续后续的操作</li>
+<li>传输数据消耗了大量的电力，减少了用户使用手机的时间</li>
+</ul>
+<p>消耗了用户的金钱</p>
+<ul>
+<li>电力。无线设备，网络耗时越长，所消耗的电力也是越多的</li>
+<li>虚拟数据收费</li>
+<li>带宽。数据传输越快，用户所付出的费用越高，无论是月租还是包流量</li>
+</ul>
+<p>所以，作为一个网络框架的开发者，减少电力的消耗，以及带宽的使用都是义不容辞的责任</p>
+<h3 id="批量传输数据，利用程序的空闲时间"><a href="#批量传输数据，利用程序的空闲时间" class="headerlink" title="批量传输数据，利用程序的空闲时间"></a>批量传输数据，利用程序的空闲时间</h3><p>在做网络数据传输的时候，尽量一次传输或接收多的数据。例如：</p>
+<ul>
+<li>如果应用做了一个数据流的服务，尽可能多的下载这个视屏的资源。取代每次只下载很小的资源</li>
+<li>如果应用中包含广告资源，尽量一次性下载完广告资源，取代使用到的时候才去下载的方案</li>
+<li>如果应用中使用到了邮件的功能，尽量一次下载多个邮件信息，以便用户回去查看这些信息，取代每次只下载一条信息</li>
+</ul>
+<p>WHY,因为当用户每次都下载一个很小的资源的，这样会产生两个问题：</p>
+<ul>
+<li>造成当前应用延迟网络敏感，表现是网络减速，视频卡顿</li>
+<li>浪费电力，尤其是在蜂窝网络状态下的通讯的时候(碎片网络数量的增加，导致了网络没有空闲的状态)</li>
+</ul>
+<h3 id="尽量下载最小的资源文件，并缓存他们"><a href="#尽量下载最小的资源文件，并缓存他们" class="headerlink" title="尽量下载最小的资源文件，并缓存他们"></a>尽量下载最小的资源文件，并缓存他们</h3><p>下载数据伴随着很多消耗，电池、性能、虚拟数据的传输…所以，应该在满足也无需求的情况下，尽量的下载最小的资源文件。例如，有一个图片管理的项目，需要下载一系列很大的图片，并且用一个缩略图的形式展示。真正点击这个缩略图的时候才会展示这个图片的大图信息。那么为了更好的网络设计，应该在后台渲染出这个缩略图，在应用显示缩略图的界面，只是请求这个缩略图就好了。当用户点击查看图片详情的时候，再去请求这个图片的完整版。而不是在app中做这些工作。这样做带来的优点：</p>
+<ul>
+<li>减少电力的消耗</li>
+<li>减少用户金钱的消耗，该用户可能正在使用蜂窝数据请求数据</li>
+</ul>
+<p>在应用中，会请求大量的图片，这是不可避免的。针对这类重复使用的资源。一个好的缓存方案是必不可少的。缓存方案的利用可以有效的减少资源的消耗。这个目标似乎和之前的目标是冲突的，但是，处于不同维度的考虑。他们其实是不冲突的，最终目的都是为减少设备的消耗，减少用户金钱的消耗</p>
+<h2 id="处理网络错误"><a href="#处理网络错误" class="headerlink" title="处理网络错误"></a>处理网络错误</h2><p>在高速发展的今天，一切都在变化中。作为一个开发者，需要制定好方案来应对这些问题。</p>
+<p>可变网络接口的设计，在ios中，可变网络接口的变化是有规律可循的：</p>
+<ul>
+<li>在地铁中，到站信号就会重新建立，离站信号就会失去。</li>
+<li>远离WIFI</li>
+<li>关闭WIFI或是打开飞行模式</li>
+<li>拔出网线</li>
+</ul>
+<p>所以针对这些网络问题，做好防范措施，显得尤为重要。这些防范措施可以是预先规划好的，也可以是根据网络状态做出的一个决定。</p>
+<p>如下是在用户的操作下做出的请求的出现问题的处理</p>
+<ul>
+<li>总是尝试建立连接。不要去猜测网络是否可达，不要缓存当前的请求</li>
+<li>如果网络错误，用<code>SCNetworkReachability</code>API去检测当前网络的状态，分析出错的原因，之后<ul>
+<li>如果只是一个小小的网络卡顿，try again</li>
+<li>如果是主机无法到达，可以<code>SCNetworkReachability</code>利用这个API做轮询，当主机可达的时候，再做请求。（用户主动取消当前请求除外）</li>
+</ul>
+</li>
+<li>尝试去展示网络出错的信息(非模态的方式)。但是这个对话界面做好不要影响到网络重新链接，当主机可达的时候。也可以设计成当主机可达的时候，就dismiss这个对话。</li>
+</ul>
+<p>在background状态下做出的请求</p>
+<ul>
+<li>总是尝试建立连接。如果有需要，可以检测当前的网络状态，避免在不必要的请求，例如检测当前环境是否是蜂窝传输，来规避大量数据。（但是利用<code>reachability</code>检测的状态未必就能保证app不再蜂窝状态下不传输数据）</li>
+<li>网络出现错误了，等待<code>SCNetworkReachability</code>变得可达了，再重新建立连接。（这个过程可能需要增加一个轮询）</li>
+<li>不要显示对话。用户在后台模式是不关心网络是否正常的</li>
+<li>避免轮询过快的问题。（这样比较浪费资源，apple给出的参考时间是15min）</li>
+</ul>
+<p>针对网络变化的问题，可以在UE设计的时候，增加一个网络的交互。及时的告知用户。（这个也是用<code>SCNetworkReachability</code>来做）</p>
+<h3 id="多变的网络速度"><a href="#多变的网络速度" class="headerlink" title="多变的网络速度"></a>多变的网络速度</h3><p>无论是WIFI还是蜂窝网络，网速都是变化的。针对网速变化，需要结合应用的特性，来做出相应的调整，例如，一个视屏缓存的业务，那么不仅要为用户考虑当前的网络是否为WIFI来为用户节省开销，还要考虑当前网络的速度，即便在wifi下，也有被限速的时候，所以当网络一直处于一个速度很慢的下载时，可以暂停这个网络。等到一个好的网络时静默缓存。</p>
+<h3 id="网络高延迟"><a href="#网络高延迟" class="headerlink" title="网络高延迟"></a>网络高延迟</h3><p>网络延迟也是网络请求中不可避免的问题，主要造成的原因有</p>
+<ul>
+<li>路由过多。即便光和点在物质中传输速度极快，但是路由器转发包的时间确实不可忽略的，本地到服务器路由过多的话，网络延迟就会越明显</li>
+<li>带宽不够</li>
+<li>处理带宽不够。服务器高并发处理能力弱</li>
+</ul>
+<p>同时网络延时也是可以叠加的，例如，有多个请求，每个请求的参数来源，都来自于上一个请求的响应数据。那么，最后一个数据的网络延时就是所有网络请求网络延时的总和。需要从网络设计上就规避这中增加网络延时的设计。</p>
+<h3 id="多个条件下验收"><a href="#多个条件下验收" class="headerlink" title="多个条件下验收"></a>多个条件下验收</h3><p>Xcode提供这样一个工具（Network Link Conditioner）可以在simulater下设置网络的各种条件，其中包括：</p>
+<ul>
+<li>减少带宽</li>
+<li>增加网络延迟</li>
+<li>DNS延迟</li>
+<li>包丢失 …</li>
+</ul>
+<p>如果在应用中使用了<code>NSURLConnection</code>API做网络请求，可以开启<code>setHTTPShouldUsePipelining:</code>设置，可以提升这种顺序的网络请求的速度。但是如果服务器不支持处理管道网络请求的话，表现上还是没有变化。</p>
+<h2 id="衡量网络需求"><a href="#衡量网络需求" class="headerlink" title="衡量网络需求"></a>衡量网络需求</h2><p>在选择网络API之前，先看一下网络家族的API</p>
+<p><img src="%3C!--%EF%BF%BC0--%3E/images/Network-1.png" alt></p>
+<p>OSX和ios提供了三个主要的用户端的API layer,前两个是Foundation和CFNetwork(依附于Core Foundation)，是特殊的框架对于OSX和ios.底层的API设计，POSIX，与UNIX和LINUX操作系统是一样的。可以使用Foundation完成客户端的网络设计，如果有特别的需求，可以使用底层的API.</p>
+<h3 id="常见的网络任务"><a href="#常见的网络任务" class="headerlink" title="常见的网络任务"></a>常见的网络任务</h3><p>在选择网络API之前，需要清楚app所需的网络任务</p>
+<ul>
+<li>支持点到点的游戏网络请求。在ios中，GameKit支持这种点到点的网络请求，包括全网和本地。可以用GameKit去完成一些网络任务<ul>
+<li>提供多玩家的网络信息传输</li>
+<li>提供语音传输</li>
+</ul>
+</li>
+<li>支持点到点的网络信息传输给其他应用。在ios中，<code>Multipeer Connectivity framework</code>支持这种点到点信息传输。</li>
+<li>连接到web服务器。为发送和接受标准的HTTP/HTTPS做准备，使用标准的HTTP协议，可以减少大量的服务端和客户端的工作量，HTTP协议也更好的支持了网络框架向HTTPS框架的迁移，只需要在服务端增加一个证书，客户端增加几行代码就可以了</li>
+<li>支持文件传输。除非必须这么做，FTP协议是一个很古老的协议，这个协议存在严重的安全问题（数据和密码都是通过明文的形式传输）。更复杂的FTP可以去<code>CFNetwork Programming Guide.</code>学习更多</li>
+<li>发现和推广网络服务。OSX和ios提供DNS Service Discovery，通过这个服务可以为自己的服务定义一个名称，也可以发现周边的服务。例如，可以使用这个技术发现周边的打印机…</li>
+<li>解决DNS主机名问题。OSX和ios提供Core-Foundation-layer and POSIX-layer来解析ip地址</li>
+<li>使用sockets。如果不想使用顶层的API，可以使用Scokets做网络请求。</li>
+<li>连接安全。OSX和ios支持TSL协议，同时支持SSL协议</li>
+</ul>
+<h2 id="发现和推广网络服务"><a href="#发现和推广网络服务" class="headerlink" title="发现和推广网络服务"></a>发现和推广网络服务</h2><p>OS X和ios提供四个API来发现和推广网络服务</p>
+<ul>
+<li>NSNetService。顶层OC API,大部分开发使用该API</li>
+<li>CFNetService。顶层C API,使用Core Foundation时使用</li>
+<li>DNS Service Discovery。底层C API，提供了更好的柔韧性</li>
+<li>Game Kit framework。顶层OC API。</li>
+</ul>
+<p>为了增加这个API,ios增加了Multipeer Connectivity Framework，这个framework增加了发现和推广的API，利用点到点的WIFI,或是蓝牙设备。但是，在游戏应用中，还是要是用GameKit去做点到点的工作。其他的应用，ios7之后可以使用Multipeer Connectivity Framework。在ios7之前可以使用前两个API处理</p>
+<h3 id="优秀的服务概述"><a href="#优秀的服务概述" class="headerlink" title="优秀的服务概述"></a>优秀的服务概述</h3><p>一个好的服务宣传应该包含下面三个部分：</p>
+<ul>
+<li>服务名称。此名称必须是唯一的一个特定的计算机上运行程序的特定实例。</li>
+<li>服务类型。这必须和程序的所有实例相同，并应向互联网编号分配机构（IANA ）注册。</li>
+<li>服务域名。如果域值为空，主机选择适当的域名，在其中发布或浏览。</li>
+</ul>
+<p>当一个app浏览一个网络服务的时候，会向服务器匹配特殊域名下的特殊类型。之后，返回一个服务列表，选择相应的服务，进行连接。</p>
+<h3 id="发布一个网络服务"><a href="#发布一个网络服务" class="headerlink" title="发布一个网络服务"></a>发布一个网络服务</h3><p>Bonjour是一种0配置的网络推广服务，例如打印机以及文件同步系统。有三种方式来推广一个网络服务：</p>
+<ul>
+<li>针对OC/CoreFoundation编程，推荐的方式是<code>CFNetServices</code>API</li>
+<li>针对移植性更好的C设计的代码，目的运行在不同的操作系统中，推荐使用DNS Service Discovery C的API</li>
+</ul>
+<p>可以根据下面的步骤推广网络服务</p>
+<ol>
+<li>创建一个Socket来监听网络连接状态。</li>
+<li>创建一个服务对象，提供一个端口给socket,domain,type<ul>
+<li>如果使用的是Foundation，使用<code>NSNetService</code>对象<code>initWithDomain:type:name:port:</code>创建</li>
+<li>如果使用的是Core Foundation，使用<code>CFNetServiceRef</code>对象<code>CFNetServiceCreate</code>创建</li>
+<li>如果使用的是DNS Service Discovery API，使用<code>DNSServiceRegister</code>来获取对象<code>DNSServiceRef</code></li>
+</ul>
+</li>
+<li>指派一个代理/callBack<ul>
+<li>如果使用的是Foundation，指派一个代理给<code>NSNetService</code>对象</li>
+<li>如果使用的是Core Foundation，指派一个客户端的callBack给<code>CFNetServiceRef</code>对象用<code>CFNetServiceSetClient</code></li>
+<li>如果使用的是DNS Service Discovery API，应该传递一个callBack给<code>DNSServiceRegister</code>当处理完成的时候handle这个CallBack</li>
+</ul>
+</li>
+<li>计划或在必要时重新安排服务</li>
+<li>发布服务</li>
+</ol>
+<p>当服务发布之后，可以通过socket检测网络状态，传输数据。</p>
+<pre><code>如果使用的代理是自定义类型的，那么配套的网络服务类型也应该是自定义类型的，但是这个自定义类型的网络服务必须符合IANA协议</code></pre><h3 id="浏览-连接网络服务"><a href="#浏览-连接网络服务" class="headerlink" title="浏览/连接网络服务"></a>浏览/连接网络服务</h3><p>这个过程和发布网络的工程一样简单，用OC的编辑代码来浏览一个服务，首先用<code>NSNetServiceBrowser</code>创建一个对象，并分配一个代理给这个对象，在<code>NSNetServiceBrowser</code>中调用<code>searchForServicesOfType:inDomain:</code>这个函数，<code>netServiceBrowser:didFindService:moreComing:</code>将会被响应，当发现服务的时候。更多的函数调用，可自行尝试。</p>
+<h3 id="解决网络服务"><a href="#解决网络服务" class="headerlink" title="解决网络服务"></a>解决网络服务</h3><p>在网络服务遇到问题的时时候，可以先叫停这个网络服务，之后利用<code>NSNetService</code>提供的<code>resolveWithTimeout:</code>来检测网络出错的原因。在这个delegate中有一系列的方法来解决网络问题。</p>
+<h3 id="多点链接"><a href="#多点链接" class="headerlink" title="多点链接"></a>多点链接</h3><p>Multipeer Connectivity Framework提供一个顶层的服务传输信息的服务，可以通过wifi,蓝牙等。通过这个服务，可以发现附近的设备，可以和附近的设备建立连接。</p>
+<h2 id="展示网络和多媒体内容"><a href="#展示网络和多媒体内容" class="headerlink" title="展示网络和多媒体内容"></a>展示网络和多媒体内容</h2><p>对于展示这些内容，ios和OSX推出了顶层的API，不用考虑之前提到的网络API.</p>
+<h3 id="默认APP展示网页或多媒体信息"><a href="#默认APP展示网页或多媒体信息" class="headerlink" title="默认APP展示网页或多媒体信息"></a>默认APP展示网页或多媒体信息</h3><ul>
+<li>ios中可以使用<code>openURL</code></li>
+<li>OS X中使用<code>LSOpenCFURLRef or LSOpenFromURLSpec f</code></li>
+</ul>
+<h3 id="在应用内部展示网页"><a href="#在应用内部展示网页" class="headerlink" title="在应用内部展示网页"></a>在应用内部展示网页</h3><ul>
+<li>ios中使用webView展示</li>
+</ul>
+<h3 id="应用中展示媒体流信息"><a href="#应用中展示媒体流信息" class="headerlink" title="应用中展示媒体流信息"></a>应用中展示媒体流信息</h3><ul>
+<li>ios中使用Media Player Framework来展示简单的媒体流信息，使用AVFoundation展示复杂的数据流信息。</li>
+<li>OSX中使用QTKit Framework 来展示简单的媒体流信息，使用AVFoundation展示复杂的数据流信息。</li>
+</ul>
+<h2 id="建立HTTP-HTTPS请求"><a href="#建立HTTP-HTTPS请求" class="headerlink" title="建立HTTP/HTTPS请求"></a>建立HTTP/HTTPS请求</h2><p>ios和OSX提供了一系列的网络请求给开发人员使用，利用已有的API，可以下载网络数据，发出简单的网络请求等</p>
+<p>在选择网络传输的API之前，需要了解网络应用需求</p>
+<ul>
+<li><p>如果是一个报刊应用，需要结合<code>NKAssetDownload</code>API在background模式下，下载数据</p>
+</li>
+<li><p>如果需要下载文件，可以结合<code>NSURLDownload</code>来使用</p>
+</li>
+<li><p>使用<code>CFHTTPStream</code>API,如果满足了如下需求</p>
+<ul>
+<li>禁止使用OC</li>
+<li>重写协议</li>
+<li>兼容非标准的服务器</li>
+</ul>
+</li>
+<li><p>除此之外，还需要了解<code>NSURLSession</code>和<code>NSURLConnection</code>相关的API</p>
+<pre><code>如果有特殊的需求，可以使用更底层的Socket API来设计客户端的网络</code></pre></li>
+</ul>
+<h3 id="用Foundation框架搭建网络"><a href="#用Foundation框架搭建网络" class="headerlink" title="用Foundation框架搭建网络"></a>用Foundation框架搭建网络</h3><h4 id="用非代理的方式获取数据"><a href="#用非代理的方式获取数据" class="headerlink" title="用非代理的方式获取数据"></a>用非代理的方式获取数据</h4><p>如果只是简单的通过一个URL来获取数据，并当得到数据的时候，处理接下来的事项。可以考虑使用这种方式，现在支持的API有<code>NSURLSession</code>和<code>NSURLConnection</code></p>
+<p>可以使用NSURLSession的两个方法<code>dataTaskWithRequest:completionHandler</code>/<code>dataTaskWithURL:completionHandler:</code>或是NSURLConnection的方法<code>sendAsynchronousRequest:queue:completionHandler:</code>。在使用这两个方法之前，需要如下准备</p>
+<ul>
+<li>一个适当的网络请求对象，可以是一个URL,可以是一个NSURLRequest,body…</li>
+<li>一个网络完成的处理操作，无论网络回调是成功还是失败</li>
+<li>对于<code>NSURLConnection</code>,一个操作队列</li>
+</ul>
+<p>当网络请求成功，会返回一个NSData对象来承接网络请求的结果，一个response来描述网络状态。如果失败，返回Error对象，可以对error做解析找到正真的错误。</p>
+<h4 id="用代理的方式获取数据"><a href="#用代理的方式获取数据" class="headerlink" title="用代理的方式获取数据"></a>用代理的方式获取数据</h4><p>如果想更多地参与到网络的请求中，例如请求调度变更，例如增加网络验证，例如分段接收数据等。可以自定义一个代理方法，实现更多的功能。</p>
+<p><code>NSURLSession</code>和<code>NSURLConnection</code>在顶层的API设计上大部分都是相似的，但是也有不同点</p>
+<ul>
+<li>NSURLSession中的下载任务的网络请求和<code>NSURLConnection</code>的NSURLDownload很是相似</li>
+<li>在NSURLSession中可以定义一个公用的配置信息，而NSURLConnection则做不到这一点，需要每一个请求单独配置</li>
+<li>NSURLConnection管理一个单独的请求和后续请求，NSURLSession管理多个任务，每个任务相当于一个单独的请求或后续请求</li>
+<li>NSURLConnection每个请求对应一个代理，NSURLSession每个session对应一个代理，这个代理被多个任务公用着</li>
+</ul>
+<p>当初始化了一个NSURLConnection或是一个NSURLSession，这个对象就会被安排到当前的runLoop的默认模式中。</p>
+<p>通过代理<code>URLSession:dataTask:didReceiveData:</code>/<code>connection:didReceiveData:</code>来接受网络数据，接受规则中应该具有：</p>
+<ul>
+<li>如果数据可以分块处理，获得数据的时候就处理，例如，利用XMLParser</li>
+<li>接受的数据比较小，利用NSMutableData拼接</li>
+<li>接受的数据比较大，间数据写入文件</li>
+</ul>
+<p>当<code>connectionDidFinishLoading</code>或是<code>URLSession:task:didCompleteWithError:</code>被触发，代表这个请求已经完成。</p>
+<h4 id="从给定的URL中下载文件到磁盘"><a href="#从给定的URL中下载文件到磁盘" class="headerlink" title="从给定的URL中下载文件到磁盘"></a>从给定的URL中下载文件到磁盘</h4><p>在ios7/OSX10.9之后，如果想通过一个URL下载数据并保存到磁盘，可以使用NSURLSession,它提供了直接将文件网络文件下载到本地磁盘的API，（代替之前将网络文件下载到当前缓存中，再从缓存中将文件写入磁盘的操作），它还可以做到：</p>
+<ul>
+<li><p>暂停下载</p>
+</li>
+<li><p>恢复下载</p>
+</li>
+<li><p>重新启动失败的下载</p>
+</li>
+<li><p>继续下载当应用暂停使用，奔溃，或是其他方式导致的不能运行</p>
+</li>
+<li><p>可以在background模式下启动网络下载任务，可以根据自己的需要，完成特殊的任务。</p>
+<pre><code>之前的NSURLConnection不能在background模式下完成任何网络任务，也不能直接将网络文件直接下载到磁盘中，只能通过先将网络文件下载到缓存中，再将缓存中的文件移动到磁盘中去</code></pre></li>
+</ul>
+<p>用<code>NSURLSession</code>做下载任务，代码必须遵守如下规则:</p>
+<ul>
+<li>创建一个Session和一个自定义的代理以及可选的配置方案：<ul>
+<li>如果希望应用可以在background模式下进行网络请求，需要提供一个background Session Configuaration(独一无二的key)</li>
+<li>如果不关心background模式下的情况，可以指定任意类型的configuration type</li>
+</ul>
+</li>
+<li>创建或是恢复一个下载任务用一个session</li>
+<li>必须实现网络处理完成的代理</li>
+</ul>
+<h4 id="创建POST请求"><a href="#创建POST请求" class="headerlink" title="创建POST请求"></a>创建POST请求</h4><p>创建一个HTTP/HTTPS请求在和普通的URL请求也是很相似的，区别在于必须配置一个NSMutablRequest，并实现<code>initWithRequest:delegate:</code>方法。</p>
+<p>除了上述的一些配置之外，还需要构建一个body对象，可以在下面的三个方案中，选择其中的一个构建。</p>
+<ul>
+<li>对于小的数据上传，像内存数据，可以将已有的数据片段URLCode。</li>
+<li>对于文件数据的传输，可以在NSMutable指定输入流的来源<code>setHTTPBodyStream:</code>。</li>
+<li>对于大量数据的传输，可以先创建一个<code>CFStreamCreateBoundPair</code>对象，并用<code>setHTTPBodyStream:</code>指定上传的数据来自于这个对象。</li>
+</ul>
+<p>用<code>setValue:forHTTPHeaderField:</code>方法特殊定义了文件传输类型的话， 需要确认body内的数据是遵守了该编码协议的。对于大量数据的上传，需要管理文件的上传进度，可以实现这个<code>connection:didSendBodyData:totalBytesWritten:totalBytesExpectedToWrite:</code>代理方法，及时查看</p>
+<h4 id="管理权限"><a href="#管理权限" class="headerlink" title="管理权限"></a>管理权限</h4><p>管理<code>NSURLConnection</code>或是<code>NSURLSession</code>的验证相对简单，主要依赖于使用的网络类和当前目标。</p>
+<p>对于使用NSURLSession的网络验证，实现代理<code>URLSession:task:didReceiveChallenge:completionHandler:</code>,当任何需要验证的网络请求都会经过这个代理，这个时候需要加载一个验证对象给completionHandler继续后续的操作</p>
+<p>对于使用NSURLConnection的网络验证：</p>
+<ul>
+<li>ios5/OSX7之后实现<code>connection:willSendRequestForAuthenticationChallenge:</code>完成验证</li>
+<li>更早之前的系统需要实现 <code>connection:canAuthenticateAgainstProtectionSpace:</code>和<code>connection:didReceiveAuthenticationChallenge:</code>两个代理方法<ul>
+<li>其中<code>connection:didReceiveAuthenticationChallenge:</code>方法相当于ios5之后的代理方法</li>
+<li><code>connection:canAuthenticateAgainstProtectionSpace:</code>必须返回YES当[protectionSpace authenticationMethod]是这其中的任何一个指时：<code>NSURLAuthenticationMethodDefault</code>,<code>NSURLAuthenticationMethodHTTPBasic</code>,<code>NSURLAuthenticationMethodHTTPDigest</code>,<code>NSURLAuthenticationMethodHTMLForm</code>,<code>NSURLAuthenticationMethodHTMLForm</code>,<code>NSURLAuthenticationMethodNTLM</code></li>
+</ul>
+</li>
+</ul>
+<h5 id="可能通过验证回去到回调的方案"><a href="#可能通过验证回去到回调的方案" class="headerlink" title="可能通过验证回去到回调的方案"></a>可能通过验证回去到回调的方案</h5><p>忽视选择网络实现类的方案，当网络需要验证的时候，必须提供一个网络凭证给URL加载系统</p>
+<ul>
+<li>为了提供一个网络凭证，通过NSURLSessionAuthChallengeUseCredential（for NSURLSession）或是<code>useCredential:forAuthenticationChallenge:</code>来创建一个网络凭证对象</li>
+<li>为了在不提供网络凭证还可以继续网络请求，可以传递一个nil值给NSURLSessionAuthChallengeUseCredential来创建一个凭证（for NSURLSession）,或者在NSURLConnection中调用<code>continueWithoutCredentialForAuthenticationChallenge:</code>  </li>
+<li>如果取消验证，在NSURLSession中调用<code>NSURLSessionAuthChallengeCancelAuthenticationChallenge</code>,或是在NSURLConnection中调用<code>cancelAuthenticationChallenge</code>，但是造成的问题是，这个网络代理会立即报错。</li>
+<li>告诉网络用系统通用的方式处理网路认证，在NSURLSession中使用<code>NSURLSessionAuthChallengePerformDefaultHandling</code>,在NSURLConnection中使用<code>performDefaultHandlingForAuthenticationChallenge:</code>。如果设置了这种处理方式，系统会从凭证缓存池中匹配一个合适的发送出去</li>
+<li>拒绝莫以特殊身份的验证，在NSURLSession中使用<code>NSURLSessionAuthChallengeRejectProtectionSpace</code>,在NSURLConnection中使用<code>rejectProtectionSpaceAndContinueWithChallenge:</code>     </li>
+</ul>
+<h5 id="创建一个身份认证对象"><a href="#创建一个身份认证对象" class="headerlink" title="创建一个身份认证对象"></a>创建一个身份认证对象</h5><p>在代理方法<code>connection:willSendRequestForAuthenticationChallenge:</code>或是<code>connection:didReceiveAuthenticationChallenge:</code>被调用的时候，应该提供一个<code>NSURLCredential</code>验证对象，在这个凭证对象中包含虚拟的验证信息</p>
+<ul>
+<li>例如简单的用户名/密码验证。可以使用<code>credentialWithUser:password:persistence:</code></li>
+<li>例如证书认证。可以<code>credentialWithIdentity:certificates:persistence:</code>创建一个<code>SecIdentityRef</code>对象（通常这个对象的获取可以通过系统的KeyChain）</li>
+</ul>
+<h4 id="利用Core-Foundation来创建请求"><a href="#利用Core-Foundation来创建请求" class="headerlink" title="利用Core Foundation来创建请求"></a>利用Core Foundation来创建请求</h4><p>从实现来说，底层的实现和顶层实现的目标都是一样的，所以理解了如何在Foundation框架上实现构建网络对于底层网络的立即也是有帮助的。但是Apple给出的理念是在顶层API可以完成的网络构建时，尽量不要使用Core Foundation来构建网络，除非</p>
+<ul>
+<li>足够熟悉CoreFoundation中的C API</li>
+<li>不满足当前需求，例如，需要在请求中更改网络协议</li>
+</ul>
+<p>否则，使用顶层的Foundation网络吧！！！！CoreFoundation太复杂了</p>
+<h4 id="网络服务处理"><a href="#网络服务处理" class="headerlink" title="网络服务处理"></a>网络服务处理</h4><p>如果在OS X程序整合客户端Web服务通信，可以采取一些技术优势：</p>
+<ul>
+<li>NSJSONSerialization可以帮助解析Json文件</li>
+<li>NSXMLParser 可以帮助解析XML文件</li>
+<li>引用libxml2库可以帮助解析多类型的XML文件</li>
+<li>NSXMLDocument支持解析DOM节点XML   </li>
+</ul>
+<p>除此之外，还有很多的第三方库可以使用。利用好第三方资源，可以大大的增加工作效率。</p>
+<h2 id="使用套接字"><a href="#使用套接字" class="headerlink" title="使用套接字"></a>使用套接字</h2><p>Socket的使用场景是用户希望可以自定义一些网络协议。如果没有这方面的需求可以使用Founfation提供的顶层的API来构建网络。</p>
+<h3 id="选择API"><a href="#选择API" class="headerlink" title="选择API"></a>选择API</h3><p>在网络的所有层面，大致可以分为两个部分：客户端和服务端。如果使用顶层的API设计，整个网络逻辑就会比较清晰，这样的设计一般都是纯粹的客户端采用的方案。如果使用底层的API,网络逻辑可能没有顶层API的逻辑清晰，这样的设计可以在服务端中出现。</p>
+<p>套接字和数据流编程一般分为以下几大类：</p>
+<ul>
+<li>基于数据包的请求，程序在同一时间操作一个包数据，监测传输来的数据，发送包作为返回。这种方案的客户端与服务端的不同在于传递数据本身内容的不同，编码处理的方式都是相同的</li>
+<li>基于数据流的请求，利用TCP的传输协议发送和接受数据流信息在两个数据流上，其中一个是双工的。</li>
+</ul>
+<p>API的选择的依据是：是想建立一个服务器连接或是获取一个服务器连接，同时也依附于：使用TCP数据流或是自定义网络协议。这里有一些因素可供参考：</p>
+<ul>
+<li><p>在OSX系统中，如果选择了非APP平台共享的代码，可以选择POSIX C网络协议继续网络编码。如果程序基于CoreFoundation或是Foundation，可以使用CoreFoundation的CFStream整合到POSIX网络中去，如果使用的GCD，可以将Socket作为一个网络资源发放出去。</p>
+<pre><code>在ios系统中POSIX协议是不可行的，在使用蜂窝网络或是VPN的时候，POSIX就会变得不友好，基本不支持上述两种请求方式，所以还是使用顶层的API来代替</code></pre></li>
+<li><p>对于一个端口上侦听守护程序和服务，或者是一个非TCP协议的网络请求，可以使用POSIX或是CoreFoundationAPI</p>
+</li>
+<li><p>对于用OC语言设计的客户端代码，可以使用FoundationAPI，顶层的API设计提供了方便的网络管理，Socket管理，网络服务支持，以及一些网络任务的管理。同时他还是一个非UI的框架，提供运行循环，字符串处理，集合对象，文件访问服务。</p>
+</li>
+<li><p>对于用C语言设计的客户端网络服务，可以使用CoreFoundation来设计API，</p>
+</li>
+</ul>
+<h2 id="网络安全"><a href="#网络安全" class="headerlink" title="网络安全"></a>网络安全</h2><p>如果在写一个银行的app或是一个游戏的app,一旦使用到了网络，必须保证的数据安全。总体来说，简单的，琐碎的数据是不可能通过软件监控来得知数据是安全还是存在风险的，但是，当获得了大量数据，这个时候数据的规律就会便可清晰，这个时候用户数据就会被泄露出去。</p>
+<p>为了保证数据的安全性，希望用户获取的没一条信息都是经过网络验证了的。</p>
+<p>这里有一些网络攻击的手段：</p>
+<ul>
+<li>网络窥视。来自于网络传输时，第三方的网络窥视</li>
+<li>中间人攻击。穿插在用户和服务器中间的攻击方式。这种方式包含：<ul>
+<li>窥视网络内容/伪装服务器。创建一个错误的服务，或是伪装成一个合法的服务</li>
+<li>截取篡改数据。在用户和服务器交互的时候，截取或是篡改网络服务数据</li>
+<li>劫持session。伪造当前session,可以欺骗服务器</li>
+</ul>
+</li>
+<li>植入攻击。这是一种特殊手段，可以使得用户或是服务器执行额外的任务。但是使用的场景往往也是比较特殊的，例如在服务器下发的更改客户端数据库的时候，植入SQL命令。</li>
+<li>地址攻击。一种特殊手段，可以使得程序执行非指定代码的地址。这个地址中可能存在可执行代码，来读写用户的私人信息。</li>
+</ul>
+<p>这一节主要讲述的就是如何避免上述的攻击。</p>
+<h3 id="支持TSL-SSL协议"><a href="#支持TSL-SSL协议" class="headerlink" title="支持TSL/SSL协议"></a>支持TSL/SSL协议</h3><p>TLS（Transport Layer Security）协议是基于socket的网络传输协议，通过服务器验证或是客户端验证来防止网络攻击。ios/OSX系统支持SSL（Secure Socket Layer）协议.TLS协议本身就是SSL协议的前身，如果支持SSL协议的话，TSL协议默认也是支持的。</p>
+<h4 id="建立一个安全的URL连接"><a href="#建立一个安全的URL连接" class="headerlink" title="建立一个安全的URL连接"></a>建立一个安全的URL连接</h4><p>创建一个简单的安全的URL连接使用TLS协议，显得不必要，配置工作太繁杂了。直接使用HTTPS协议可以使用O配置的网络TLS协议，默认使用HTTPS协议就是指TLS协议的。</p>
+<h4 id="建立一个网络流连接"><a href="#建立一个网络流连接" class="headerlink" title="建立一个网络流连接"></a>建立一个网络流连接</h4><p>可以在建立网络连接流的使用为NSStream对象设置<code>setProperty:forKey:</code>,设置value为 NSStreamSocketSecurityLevelNegotiatedSSL，key为 NSStreamSocketSecurityLevelKey ，如果想更多的解析出现的bug，可以增加网络配置，NSStreamSocketSecurityLevelTLSv1</p>
+<h4 id="利用BSD-Sockets建立一个安全的连接"><a href="#利用BSD-Sockets建立一个安全的连接" class="headerlink" title="利用BSD Sockets建立一个安全的连接"></a>利用BSD Sockets建立一个安全的连接</h4><p>当建立一个安全连接的时候，如果可以的话使用上面的NSStream来创建连接代替使用Socket。如果必须使用BSD Socket来创建连接，必须使用SSL/TLS来加密会解密。根据使用场景，这里有两种方式：</p>
+<ul>
+<li>在OSX或是ios5之后的设备，可以参考Secure Transport API来处理SSL/TLS的握手操作。</li>
+<li>在ios/OSX，可以下载SSL/TLS的第三方实现，例如OpenSSL，可以将第三方的可执行文件下载当前的bundle中。但是在使用的时候必须确认当前的可执行文件是有许可的。</li>
+</ul>
+<h3 id="在OSX中使用其他的协议"><a href="#在OSX中使用其他的协议" class="headerlink" title="在OSX中使用其他的协议"></a>在OSX中使用其他的协议</h3><p>为了使用默认TLS网络加密的协议，在OSX中可以使用，如下的网络协议作参考。</p>
+<ul>
+<li>The Kerberos protocol is available via the Kerberos framework.</li>
+<li>The Secure Shell (SSH) protocol is available.</li>
+<li>The OpenSSL implementation of TLS is available                    </li>
+</ul>
+<h3 id="简单错误"><a href="#简单错误" class="headerlink" title="简单错误"></a>简单错误</h3><p>这里是一些开发者在开发程序的时候可以造成的错误。这里列举了一些建议的方法来规避这些错误。</p>
+<h4 id="认清你可以信任的对象"><a href="#认清你可以信任的对象" class="headerlink" title="认清你可以信任的对象"></a>认清你可以信任的对象</h4><p>当你发送或是接受敏感信息的时候，必需验证服务确保信息没有被篡改，必须在服务端验证用户的身份，一面伪造的用户身份发送有害的信息。同事必须确认网络连接建立在一个适合的加密方案上。</p>
+<p>同样，要确保你只在必要时存储数据，并仅提供执行任务所必需的最低限度。例如，要最大限度地提高用户隐私的个人信息，你可以存储你的web服务器到单独的服务器，接受SQL查询只从你的网络服务器，并与有限的连接到互联网作为一个整体的数据库。换句话说，正确的分离特权</p>
+<h4 id="认清可以信赖的数据"><a href="#认清可以信赖的数据" class="headerlink" title="认清可以信赖的数据"></a>认清可以信赖的数据</h4><p>当程序接受到了伪造的数据，或是攻击数据的时候都将不安全。尤其是当程序获取到了不被信任的服务器数据，或是，获取到了不被信任的数据即便这个数据是来自可以信任的服务器（网络拦截）。</p>
+<p>为了避免这种类型的错误，客户端需要检测获取到的网络数据的安全性，只要存在一点点的差别，就不在执行网络下载的数据。</p>
+<h4 id="懂得千里之堤毁于蚁穴的道理"><a href="#懂得千里之堤毁于蚁穴的道理" class="headerlink" title="懂得千里之堤毁于蚁穴的道理"></a>懂得千里之堤毁于蚁穴的道理</h4><p>谨记在使用网络数据的时候，确认数据的安全性。即便他看起来是无害的，但有可能在某次网络请求结束的时候，获取到了足够的数据，组装到了一起，后悔晚矣。这些数据甚至不需要是目的性很强的数据，但是从这些数据中可以分析出一个用户的习惯，根据这些习惯可以知道这个用户接下来可能做什么，谁又知道接下来的事件中不会被人做了手脚了。所以保证用户信息的安全是一个APP应该首要考虑的事情。</p>
+<h4 id="安装正确的证书"><a href="#安装正确的证书" class="headerlink" title="安装正确的证书"></a>安装正确的证书</h4><p>在基于TLS/SSL建立网络连接的时候，经常受到证书错误，或是未知的验证机构。这往往说明你的证书丢失或是不完整。</p>
+<p>当你的服务器接受使用TLS或SSL加密的连接，它提供了两件事情：服务器的SSL证书和SSL证书的完整链条，从你的服务器的证书开始，由受信任证书之一签名的证书截止。如果在你的环节中缺少证书，就会出现证书丢失的错误，因为证书的验证需要通过证书连接来验证通过。</p>
+<h4 id="不要将证书验证的功能关闭（除非已经手动验证）"><a href="#不要将证书验证的功能关闭（除非已经手动验证）" class="headerlink" title="不要将证书验证的功能关闭（除非已经手动验证）"></a>不要将证书验证的功能关闭（除非已经手动验证）</h4><p>关闭证书验证的功能将使得之前使用证书验证的好处都被废弃。导致的问题有</p>
+<ul>
+<li>网络连接不安全</li>
+<li>网络传输不被保护，攻击者可以看到传递信息的明文</li>
+<li>可以任意的更改信息</li>
+</ul>
+<p>如果已经使用了证书验证的功能，那就安装正确的证书即可。同时可以将证书存储在KeyChain中加以应用。</p>
+<h2 id="避免简单的网络错误"><a href="#避免简单的网络错误" class="headerlink" title="避免简单的网络错误"></a>避免简单的网络错误</h2><p>当开发者使用软件构建项目的时候，难免会在设计上或是使用上考虑不全而产生一些隐藏的bug,有可能会对性能造成影响。这一章节主要讲述的就是如何避免常见的bug。</p>
+<h3 id="清楚网络连接"><a href="#清楚网络连接" class="headerlink" title="清楚网络连接"></a>清楚网络连接</h3><p>TCP网络连接在当前任务没有被明确关闭或是没有过时操作的时候是一直处于打开的状态的。除非你是需要将这个连接一直处于打开状态，否则，还是关闭的好。但是这里需要介绍网络过时产生的条件：网络任务中等待将数据发出，却由于某种原因导致一直没有分发下去。这个状态是随机的，不可控的。当没有将网络明确关闭的时候，TCP连接还是一直建立的状态。</p>
+<h3 id="在ios避免使用POSIX-Socket和CFSocket"><a href="#在ios避免使用POSIX-Socket和CFSocket" class="headerlink" title="在ios避免使用POSIX Socket和CFSocket"></a>在ios避免使用POSIX Socket和CFSocket</h3><p>使用POSIX Socket有其好处也有其坏处，相对于使用顶层API来说。主要的好处在于：</p>
+<ul>
+<li>在非Apple平台的使用时更简单的网络编码方式</li>
+<li>可以支持其他的网络协议，（可以避免使用默认的TCP协议）</li>
+</ul>
+<p>主要的不可取之处：</p>
+<ul>
+<li>Socket相对于顶层的API来说更加的复杂，这也就意味着：在完成一个任务的同时，编辑了更多的代码，带来的更多出错的风险。</li>
+<li>在ios系统中使用POSIX Socket或是使用CFSocket默认情况下不支持蜂窝数据和VPN传输</li>
+</ul>
+<p>所以使用Socket的场景大多是在跨平台支持的时候。普通状况下，还是建议使用顶层的API</p>
+<h3 id="避免在主线程调用同步网络连接"><a href="#避免在主线程调用同步网络连接" class="headerlink" title="避免在主线程调用同步网络连接"></a>避免在主线程调用同步网络连接</h3><p>如果你在主线程上调用网络请求，最好使用异步的方式调用。首先，网络请求本身就是一个延时的操作，一个网络请求的发出，DNS解析就有可能花费30秒以上的时间，加上网络本身可能会小号更多的时间。如果在主线程上调用这个网络请求，在网络回调没有完成之前，整个app将陷入不可操作的状态。</p>
+<p>如果这是在OSX系统下的GUI应用中，应用将一直等待鼠标的出现。或者按钮选项点击不响应，延迟或是操作任务丢失。这将使你的用户相当的恼火。</p>
+<p>在ios系统中，应用会被watchdog杀死，当这个应用不能响应用户的操作超出了规定的时间的时候。如果你在主线程上调用网络请求，网络延时往往大于watchdog默认的时长。所以，经常收到<code>0x8badfood</code>这样的crash报告，这种地址的报错，说明你的程序中存在响应超时的行为。</p>
+<h4 id="使用cocoa-Foundation-和CFNetwork-Core-Foundation-编程"><a href="#使用cocoa-Foundation-和CFNetwork-Core-Foundation-编程" class="headerlink" title="使用cocoa(Foundation)和CFNetwork(Core Foundation)编程"></a>使用cocoa(Foundation)和CFNetwork(Core Foundation)编程</h4><p>最早时期的网络请求的异步方式是将当前网络请求的线程加入到runloop中。所用的Foundation和CFNetwork子对象在编译的时候都是被整合到当前的runloop中去的。这些方法往往都有自己的callback对象。如果使用网络获取大量的数据，可以将这个网络分配到一个单独的线程中去。NSOperation可以很好的支持此类操作。</p>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><p>Apple给出的<code>Reachability</code>的使用场景是，当网络链接出错的时候，利用<code>SCNetworkReachability</code>分析出错的原因。并不是要让<code>SCNetworkReachability</code>API承担网络检索状态的任务，这个任务还是在建立链接的时候去判断的。</p>
+<p>TSL协议和SSL协议只是为客户端服务类型做的网络协议，如果想用它来做P2P的网络加密，这个就比较困难了。</p>
+<p>在使用第三方OpenSSL库文件的时候，必须了解该库文件的功能，避免版本的不同导致的功能不适用。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://developer.apple.com/library/ios/documentation/NetworkingInternetWeb/Conceptual/NetworkingOverview/Introduction/Introduction.html#//apple_ref/doc/uid/TP40010220-CH12-BBCFIHFH" target="_blank" rel="noopener">Networking Overview</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Network/" rel="tag"># Network</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/18/2016-08-18-安全方案/" rel="next" title="安全方案">
+                <i class="fa fa-chevron-left"></i> 安全方案
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/21/2016-10-21-图片/" rel="prev" title="图片">
+                图片 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">持续、专注</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#考虑网络使用的真实环境"><span class="nav-number">1.</span> <span class="nav-text">考虑网络使用的真实环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电池和带宽高效利用"><span class="nav-number">2.</span> <span class="nav-text">电池和带宽高效利用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#批量传输数据，利用程序的空闲时间"><span class="nav-number">3.</span> <span class="nav-text">批量传输数据，利用程序的空闲时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尽量下载最小的资源文件，并缓存他们"><span class="nav-number">4.</span> <span class="nav-text">尽量下载最小的资源文件，并缓存他们</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#处理网络错误"><span class="nav-number"></span> <span class="nav-text">处理网络错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多变的网络速度"><span class="nav-number">1.</span> <span class="nav-text">多变的网络速度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络高延迟"><span class="nav-number">2.</span> <span class="nav-text">网络高延迟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多个条件下验收"><span class="nav-number">3.</span> <span class="nav-text">多个条件下验收</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#衡量网络需求"><span class="nav-number"></span> <span class="nav-text">衡量网络需求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的网络任务"><span class="nav-number">1.</span> <span class="nav-text">常见的网络任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发现和推广网络服务"><span class="nav-number"></span> <span class="nav-text">发现和推广网络服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优秀的服务概述"><span class="nav-number">1.</span> <span class="nav-text">优秀的服务概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布一个网络服务"><span class="nav-number">2.</span> <span class="nav-text">发布一个网络服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览-连接网络服务"><span class="nav-number">3.</span> <span class="nav-text">浏览/连接网络服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决网络服务"><span class="nav-number">4.</span> <span class="nav-text">解决网络服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多点链接"><span class="nav-number">5.</span> <span class="nav-text">多点链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#展示网络和多媒体内容"><span class="nav-number"></span> <span class="nav-text">展示网络和多媒体内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#默认APP展示网页或多媒体信息"><span class="nav-number">1.</span> <span class="nav-text">默认APP展示网页或多媒体信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在应用内部展示网页"><span class="nav-number">2.</span> <span class="nav-text">在应用内部展示网页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用中展示媒体流信息"><span class="nav-number">3.</span> <span class="nav-text">应用中展示媒体流信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立HTTP-HTTPS请求"><span class="nav-number"></span> <span class="nav-text">建立HTTP/HTTPS请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用Foundation框架搭建网络"><span class="nav-number">1.</span> <span class="nav-text">用Foundation框架搭建网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用非代理的方式获取数据"><span class="nav-number">1.1.</span> <span class="nav-text">用非代理的方式获取数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用代理的方式获取数据"><span class="nav-number">1.2.</span> <span class="nav-text">用代理的方式获取数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从给定的URL中下载文件到磁盘"><span class="nav-number">1.3.</span> <span class="nav-text">从给定的URL中下载文件到磁盘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建POST请求"><span class="nav-number">1.4.</span> <span class="nav-text">创建POST请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#管理权限"><span class="nav-number">1.5.</span> <span class="nav-text">管理权限</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#可能通过验证回去到回调的方案"><span class="nav-number">1.5.1.</span> <span class="nav-text">可能通过验证回去到回调的方案</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建一个身份认证对象"><span class="nav-number">1.5.2.</span> <span class="nav-text">创建一个身份认证对象</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用Core-Foundation来创建请求"><span class="nav-number">1.6.</span> <span class="nav-text">利用Core Foundation来创建请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#网络服务处理"><span class="nav-number">1.7.</span> <span class="nav-text">网络服务处理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用套接字"><span class="nav-number"></span> <span class="nav-text">使用套接字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#选择API"><span class="nav-number">1.</span> <span class="nav-text">选择API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络安全"><span class="nav-number"></span> <span class="nav-text">网络安全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#支持TSL-SSL协议"><span class="nav-number">1.</span> <span class="nav-text">支持TSL/SSL协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#建立一个安全的URL连接"><span class="nav-number">1.1.</span> <span class="nav-text">建立一个安全的URL连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#建立一个网络流连接"><span class="nav-number">1.2.</span> <span class="nav-text">建立一个网络流连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用BSD-Sockets建立一个安全的连接"><span class="nav-number">1.3.</span> <span class="nav-text">利用BSD Sockets建立一个安全的连接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在OSX中使用其他的协议"><span class="nav-number">2.</span> <span class="nav-text">在OSX中使用其他的协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单错误"><span class="nav-number">3.</span> <span class="nav-text">简单错误</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#认清你可以信任的对象"><span class="nav-number">3.1.</span> <span class="nav-text">认清你可以信任的对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#认清可以信赖的数据"><span class="nav-number">3.2.</span> <span class="nav-text">认清可以信赖的数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#懂得千里之堤毁于蚁穴的道理"><span class="nav-number">3.3.</span> <span class="nav-text">懂得千里之堤毁于蚁穴的道理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装正确的证书"><span class="nav-number">3.4.</span> <span class="nav-text">安装正确的证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不要将证书验证的功能关闭（除非已经手动验证）"><span class="nav-number">3.5.</span> <span class="nav-text">不要将证书验证的功能关闭（除非已经手动验证）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免简单的网络错误"><span class="nav-number"></span> <span class="nav-text">避免简单的网络错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#清楚网络连接"><span class="nav-number">1.</span> <span class="nav-text">清楚网络连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在ios避免使用POSIX-Socket和CFSocket"><span class="nav-number">2.</span> <span class="nav-text">在ios避免使用POSIX Socket和CFSocket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#避免在主线程调用同步网络连接"><span class="nav-number">3.</span> <span class="nav-text">避免在主线程调用同步网络连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用cocoa-Foundation-和CFNetwork-Core-Foundation-编程"><span class="nav-number">3.1.</span> <span class="nav-text">使用cocoa(Foundation)和CFNetwork(Core Foundation)编程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Note"><span class="nav-number"></span> <span class="nav-text">Note</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

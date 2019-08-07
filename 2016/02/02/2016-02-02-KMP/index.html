@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="算法,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="KMP 算法在简单的字符串匹配算法中我们一般会使用这样的匹配demo去做处理,返回子串T在主串S，pos之后的位置,这里子串在主串中重复的情况。 int Index(SSTring S,SSTring T, int pos) {     if (!S || !T) return     if (!(pos &amp;gt;=0 &amp;amp;&amp;amp; pos &amp;lt; S.length)) return">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KMP算法">
+<meta property="og:url" content="http://yoursite.com/2016/02/02/2016-02-02-KMP/index.html">
+<meta property="og:site_name" content="chiery&#39;blog">
+<meta property="og:description" content="KMP 算法在简单的字符串匹配算法中我们一般会使用这样的匹配demo去做处理,返回子串T在主串S，pos之后的位置,这里子串在主串中重复的情况。 int Index(SSTring S,SSTring T, int pos) {     if (!S || !T) return     if (!(pos &amp;gt;=0 &amp;amp;&amp;amp; pos &amp;lt; S.length)) return">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-25T17:39:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="KMP算法">
+<meta name="twitter:description" content="KMP 算法在简单的字符串匹配算法中我们一般会使用这样的匹配demo去做处理,返回子串T在主串S，pos之后的位置,这里子串在主串中重复的情况。 int Index(SSTring S,SSTring T, int pos) {     if (!S || !T) return     if (!(pos &amp;gt;=0 &amp;amp;&amp;amp; pos &amp;lt; S.length)) return">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/02/02/2016-02-02-KMP/">
+
+
+
+
+
+  <title>KMP算法 | chiery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chiery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/02/02/2016-02-02-KMP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chiery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">KMP算法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-02-02T16:04:23+08:00">
+                2016-02-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/KMP/" itemprop="url" rel="index">
+                    <span itemprop="name">KMP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="KMP-算法"><a href="#KMP-算法" class="headerlink" title="KMP 算法"></a>KMP 算法</h2><p>在简单的字符串匹配算法中我们一般会使用这样的匹配demo去做处理,返回子串T在主串S，pos之后的位置,这里子串在主串中重复的情况。</p>
+<pre><code>int Index(SSTring S,SSTring T, int pos) {
+    if (!S || !T) return
+    if (!(pos &gt;=0 &amp;&amp; pos &lt; S.length)) return
+    int i = pos; j = 0;
+    while(i &lt; S.lenth &amp;&amp; j &lt; T.length) {
+        if (S[i] == T[j]) j++;
+        else j = 0;
+        i++;
+    } 
+    if (j &gt; T.length) return i - T.length;
+    else return 0;
+}</code></pre><a id="more"></a>
+
+<p>这就是我们在想字符串匹配的时候，会第一个想起来的算法。当我们哪一个子串去匹配一个主串的时候，首先看字符串是否相等，当字符串不相等时，将主串向后移动一个位置，同时将子串的匹配部分直接指到子串的第一个位置。当字符串相等的时候，将子串和主串同时向后移动一个位置，在做匹配。</p>
+<p>这里举两个例子：</p>
+<pre><code>// 主串S
+afheiahiehiahdsifhaiefhiadshifhaueufaudsfaeaklkfghjkl
+
+// 子串
+kfghjkl</code></pre><p>在这种情况下的算法复杂度是O(m+n),m和n分别是子串和主串的长度。算法效率上还是比较能保障的。</p>
+<p>但是如果在这样的例子中的话，算法的复杂度就变成了O(m*n),时间消耗就会大大的增加。</p>
+<pre><code>// 主串S
+00000000000000000000000000000000000000001
+
+// 子串
+000000001</code></pre><p>你可能会说，我只是做一个简单的字符串的对比，没必要在算法上要求那么高。但是如果有一天，你被分配了一个处理文本编辑器的工作，你会不会想着优化一下用户在文本编辑器中的搜索速度。这个时候一个优秀的算法设计就显得格外的重要。</p>
+<p>科学的发展总是迅速的，总有人会去将人类进化史上的坎坷磨平。在这样的背景之下，KMP（Knuth-Morris-Pratt算法）算法应运而生。下面我们就来了解一下KMP算法。</p>
+<p>这里我们定义主串<code>BBCABCDABABCDABCDABDE</code>子串 <code>ABCDABD</code><br>那么比较这个子串，就会出现</p>
+<pre><code>BBCABCDABABCDABCDABDE
+|
+ABCDABD</code></pre><p>首先，字符串”BBC ABCDAB ABCDABCDABDE”的第一个字符与搜索词”ABCDABD”的第一个字符，进行比较。因为B与A不匹配，所以搜索词后移一位。</p>
+<pre><code>BBCABCDABABCDABCDABDE
+ |
+ ABCDABD</code></pre><p>因为B与A不匹配，搜索词再往后移。</p>
+<pre><code>BBCABCDABABCDABCDABDE
+   |
+   ABCDABD</code></pre><p>就这样，直到字符串有一个字符，与搜索词的第一个字符相同为止。接着比较字符串和搜索词的下一个字符，还是相同。</p>
+<pre><code>BBCABCDABABCDABCDABDE
+         |
+   ABCDABD</code></pre><p>直到字符串有一个字符，与搜索词对应的字符不相同为止。</p>
+<pre><code>BBCABCDABABCDABCDABDE
+     |
+     ABCDABD</code></pre><p>这时，最自然的反应是，将搜索词整个后移一位，再从头逐个比较。这样做虽然可行，但是效率很差，因为你要把”搜索位置”移到已经比较过的位置，重比一遍。</p>
+<p>一个基本事实是，当空格与D不匹配时，你其实知道前面六个字符是”ABCDAB”。KMP算法的想法是，设法利用这个已知信息，不要把”搜索位置”移回已经比较过的位置，继续把它向后移，这样就提高了效率。</p>
+<pre><code> 索引     1 2 3 4 5 6 7
+搜索串   A B C D A B D
+匹配值   0    0 0 0 1 2 0</code></pre><p><a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html" target="_blank" rel="noopener">阮一峰博客</a>中给出了一个很好偶的解释，但是感觉还是有点问题，仅做参考。”部分匹配值”就是”前缀”和”后缀”的最长的共有元素的长度。以”ABCDABD”为例</p>
+<pre><code>&quot;A&quot;的前缀和后缀都为空集，共有元素的长度为0；
+&quot;AB&quot;的前缀为[A]，后缀为[B]，共有元素的长度为0；
+&quot;ABC&quot;的前缀为[A, AB]，后缀为[BC, C]，共有元素的长度0；
+&quot;ABCD&quot;的前缀为[A, AB, ABC]，后缀为[BCD, CD, D]，共有元素的长度为0；
+&quot;ABCDA&quot;的前缀为[A, AB, ABC, ABCD]，后缀为[BCDA, CDA, DA, A]，共有元素为&quot;A&quot;，长度为1；
+&quot;ABCDAB&quot;的前缀为[A, AB, ABC, ABCD, ABCDA]，后缀为[BCDAB, CDAB, DAB, AB, B]，共有元素为&quot;AB&quot;，长度为2；
+&quot;ABCDABD&quot;的前缀为[A, AB, ABC, ABCD, ABCDA, ABCDAB]，后缀为[BCDABD, CDABD, DABD, ABD, BD, D]，共有元素的长度为0。</code></pre><p>这就是KMP算法的核心所在，根据子串中的匹配值来减少字符匹配的时间复杂度。</p>
+<pre><code>移动位数 = 已匹配的字符数 - 对应的部分匹配值</code></pre><p>得知了KMP字串中的匹配值，在得知A与D不匹配时</p>
+<pre><code>BBCABCDABABCDABCDABDE
+         |
+   ABCDABD</code></pre><p>利用字串中的信息，子串匹配到了第6位，第六位的匹配值位2，6-4=2，则只要将子串向后移动4位即可，记得到下面的样式</p>
+<pre><code>BBCABCDABABCDABCDABDE
+         |
+       ABCDABD</code></pre><p>这个时候的A和C也是不匹配的，所以重复上面的操作，可以得到2-0=2，子串再次向后移动2位</p>
+<pre><code>BBCABCDABABCDABCDABDE
+         |
+         ABCDABD</code></pre><p>重复上面的操作，知道找到对应的匹配为止</p>
+<pre><code>BBCABCDABABCDABCDABDE
+             |
+             ABCDABD</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/27/2016-01-27-二叉树/" rel="next" title="二叉树">
+                <i class="fa fa-chevron-left"></i> 二叉树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/23/2016-02-23-iterm替代terminal/" rel="prev" title="iterm替代terminal">
+                iterm替代terminal <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">持续、专注</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#KMP-算法"><span class="nav-number">1.</span> <span class="nav-text">KMP 算法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

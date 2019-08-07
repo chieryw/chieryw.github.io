@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Objective-C,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="CoreAudioCoreAudio提供了一套软件技术来方便开发者实现audio的一些特性，其中就包含了录制，播放，音效处理，定位，格式转换，文件流处理，同时包含： * 可以在应用中使用内嵌的平衡器和混响器 * 自动获取音频的IO * 将电话设备的信息应用到应用中 * 在不干扰音效的情况下减少或是延长电池寿命CoreAudio包含了C和OC的API，从而可以通过灵活的编程环境来保持一个低延迟音频信">
+<meta name="keywords" content="Objective-C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CoreAudio">
+<meta property="og:url" content="http://yoursite.com/2016/05/03/2016-05-03-AudioCore/index.html">
+<meta property="og:site_name" content="chiery&#39;blog">
+<meta property="og:description" content="CoreAudioCoreAudio提供了一套软件技术来方便开发者实现audio的一些特性，其中就包含了录制，播放，音效处理，定位，格式转换，文件流处理，同时包含： * 可以在应用中使用内嵌的平衡器和混响器 * 自动获取音频的IO * 将电话设备的信息应用到应用中 * 在不干扰音效的情况下减少或是延长电池寿命CoreAudio包含了C和OC的API，从而可以通过灵活的编程环境来保持一个低延迟音频信">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2016/05/03/2016-05-03-AudioCore/%3C!--%EF%BF%BC0--%3E/images/CoreAudio-1.png">
+<meta property="og:image" content="http://yoursite.com/2016/05/03/2016-05-03-AudioCore/%3C!--%EF%BF%BC1--%3E/images/CoreAudio-5.png">
+<meta property="og:image" content="http://yoursite.com/2016/05/03/2016-05-03-AudioCore/%3C!--%EF%BF%BC2--%3E/images/CoreAudio-4.png">
+<meta property="og:updated_time" content="2018-08-25T17:38:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CoreAudio">
+<meta name="twitter:description" content="CoreAudioCoreAudio提供了一套软件技术来方便开发者实现audio的一些特性，其中就包含了录制，播放，音效处理，定位，格式转换，文件流处理，同时包含： * 可以在应用中使用内嵌的平衡器和混响器 * 自动获取音频的IO * 将电话设备的信息应用到应用中 * 在不干扰音效的情况下减少或是延长电池寿命CoreAudio包含了C和OC的API，从而可以通过灵活的编程环境来保持一个低延迟音频信">
+<meta name="twitter:image" content="http://yoursite.com/2016/05/03/2016-05-03-AudioCore/%3C!--%EF%BF%BC0--%3E/images/CoreAudio-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/05/03/2016-05-03-AudioCore/">
+
+
+
+
+
+  <title>CoreAudio | chiery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chiery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/03/2016-05-03-AudioCore/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chiery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CoreAudio</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-03T12:04:23+08:00">
+                2016-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ios/" itemprop="url" rel="index">
+                    <span itemprop="name">ios</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="CoreAudio"><a href="#CoreAudio" class="headerlink" title="CoreAudio"></a>CoreAudio</h2><p>CoreAudio提供了一套软件技术来方便开发者实现audio的一些特性，其中就包含了录制，播放，音效处理，定位，格式转换，文件流处理，同时包含：</p>
+<pre><code>* 可以在应用中使用内嵌的平衡器和混响器
+* 自动获取音频的IO
+* 将电话设备的信息应用到应用中
+* 在不干扰音效的情况下减少或是延长电池寿命</code></pre><p>CoreAudio包含了C和OC的API，从而可以通过灵活的编程环境来保持一个低延迟音频信号链。</p>
+<a id="more"></a>
+
+<p>整个参考文档是很长的，Core Audio Essentials章节中主要讲述的是Core Audio的组成，以及每个组成可以做到的事情。</p>
+<p>首先介绍API的结构：</p>
+<p><img src="%3C!--%EF%BF%BC0--%3E/images/CoreAudio-1.png" alt></p>
+<p>顺带介绍每个层的每个api的功能，例如底层结构中：</p>
+<ul>
+<li>I/Okit主要适合驱动做交互</li>
+<li>Audio HAL（The audio hardware abstraction layer）提供一个与设备无关的，与驱动器无关的硬件接口。</li>
+<li>Core MIDI提供音乐流和设备的软件接口</li>
+<li>Host time Servies提供进入设备的权限</li>
+</ul>
+<p>剩下的中层和顶层的接口，从英文定义上应该可以理解其对应的功能，如果不是很明白，可以参考文档<a href="https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/CoreAudioOverview/CoreAudioEssentials/CoreAudioEssentials.html#//apple_ref/doc/uid/TP40003577-CH10-SW1" target="_blank" rel="noopener">Core Audio Essentials</a></p>
+<p>下面讲解的是在使用相关功能的时候，需要引入的framework,这个是比较重要的，CoreAudio并不是仅仅引入CoreAudio.framework就可以使用所有的api的，为了功能化的考虑，苹果将Framework拆成了多个，在使用的时候，才需要引入，即便动态库在存储结构中只会存在一份。根据需要参考<a href="https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/CoreAudioOverview/CoreAudioEssentials/CoreAudioEssentials.html#//apple_ref/doc/uid/TP40003577-CH10-SW1" target="_blank" rel="noopener">Core Audio Essentials</a></p>
+<p>接下来就是说音频文件的播放设置了，在文档中你可以了解到，其实每个播放文件在生成的时候，就被赋予了一个ID，这个id就是这个播放对象的协议对象，每个播放流播放的都是这个id协议对象。系统层中也包含了一些协议id对象，所以在播放音频的时候，尽量使用一个自定义的id，一面播放的声音和给定的声音不一致。</p>
+<p>在播放声音文件的时候，一般需要几个步骤：</p>
+<ul>
+<li>设置播放文件的property</li>
+<li>完成播放文件的回调</li>
+</ul>
+<p>这两个是播放音频中必须知道的，一些常用的设置如：</p>
+<pre><code>struct AudioStreamBasicDescription {
+    mSampleRate       = 44100.0;
+    mFormatID         = kAudioFormatLinearPCM;
+    mFormatFlags      = kAudioFormatFlagsAudioUnitCanonical;
+    mBytesPerPacket   = 1 * sizeof (AudioUnitSampleType);    // 8
+    mFramesPerPacket  = 1;
+    mBytesPerFrame    = 1 * sizeof (AudioUnitSampleType);    // 8
+    mChannelsPerFrame = 2;
+    mBitsPerChannel   = 8 * sizeof (AudioUnitSampleType);    // 32
+    mReserved         = 0;
+};</code></pre><p>记住这些基础的设置还是相当的有用的。讲完了基本的播放设置，接下来讲解数据传输，这里数据传输包含了两个方面：</p>
+<ul>
+<li>magic cookie</li>
+<li>Packets</li>
+</ul>
+<p>这两中数据流的传输，都是为了能有效的保护数据，解析的时候能够拿到指定size的文件播放。</p>
+<p>传输中数据结构讲解完成了之后，就是传输完成之后的处理，或是容错环节，这个环节是相当重要的：</p>
+<ul>
+<li>例如，中途播放声音的时候接入一个电话</li>
+<li>例如中途播放声音的时候，来了一个系统声音</li>
+</ul>
+<p>使用顶层的API audio session可以更好的处理这些中断操作。</p>
+<p>接下来就是一下实例了，使用AVAudioPlayer播放文件，System Sound Servie播放声音，Recorder等等。但是这些都是有自己的独立章节去讲述的。</p>
+<h2 id="Audio-Queue-Servies"><a href="#Audio-Queue-Servies" class="headerlink" title="Audio Queue Servies"></a>Audio Queue Servies</h2><p>当你接触了网络流播放，必然要去了解Audio Queue Servies相关的信息，那么AudioQueue到底是做什么的？先看图</p>
+<p><img src="%3C!--%EF%BF%BC1--%3E/images/CoreAudio-5.png" alt> </p>
+<p>上图中描述的是录制声音的主要流程，流程中有三个缓冲buffer,当收到外界的数据来源的时候，先填充第一个buffer缓冲池，缓冲池填充满之后，就会触发callBack函数，处理完成了之后，将这个缓冲池放回队列中。这就形成了一个循环。</p>
+<p><img src="%3C!--%EF%BF%BC2--%3E/images/CoreAudio-4.png" alt></p>
+<p>上图中的播放队列也是一样的逻辑。可以参考这个<a href="http://msching.github.io/blog/categories/ios/" target="_blank" rel="noopener">博客</a>,写的非常的详细.</p>
+<p>上面的博客中已经详细的介绍了相应对象的功能以及原理，看完了之后会获益良多：</p>
+<ul>
+<li>AudioStreamFile支持获取文件流信息，为文件播放做准备</li>
+<li>AudioFile也是同样的作用，但是在支持流媒体播放的时候需要AudioStreamFile的帮助，确定文件是否可读</li>
+<li>AudioQueueServie在拿到数据流之后，可以播放buffer中流数据</li>
+<li>AudioSessionServie可以检测音频播放终端的各种case，例如接入一个电话，完毕之后恢复播放</li>
+<li>AVAudioPlayer播放本地音乐，或是缓存了一段长度的流音乐</li>
+<li>AVAudioRecorder录制声音</li>
+<li>MPMusicPlayer播放系统库的音乐，顶层API，高度封装</li>
+</ul>
+<p>这里也给出我自己写的一段AudioQueueServie的录制和播放本地文件的代码：</p>
+<p>Recorder.h</p>
+<pre><code>#import &lt;Foundation/Foundation.h&gt;
+@interface MMAudioCoreRecorder : NSObject
+@property (nonatomic, readonly) CGFloat volume;
+- (void)startRecording;
+- (void)stopRecording;
+@end</code></pre><p>Recorder.m</p>
+<pre><code>#import &quot;MMAudioCoreRecorder.h&quot;
+#import &lt;AVFoundation/AVFoundation.h&gt;
+#import &quot;MMASBFormat.h&quot;
+
+static const int kNumberBuffers = 3;
+typedef struct {
+    AudioStreamBasicDescription  mDataFormat;                   // 2 文件格式描述
+    AudioQueueRef                mQueue;                        // 3 The recording audio queue created by your application.
+    AudioQueueBufferRef          mBuffers[kNumberBuffers];      // 4 An array holding pointers to the audio queue buffers managed by the audio queue.
+    AudioFileID                  mAudioFile;                    // 5 An audio file object representing the file into which your program records audio data.
+    UInt32                       bufferByteSize;                // 6 The size, in bytes, for each audio queue buffer. This value is calculated in these examples in the DeriveBufferSize function, after the audio queue is created and before it is started
+    SInt64                       mCurrentPacket;                // 7 The packet index for the first packet to be written from the current audio queue buffer.
+    bool                         mIsRunning;                    // 8 A Boolean value indicating whether or not the audio queue is running.
+
+} AQRecorderState;
+
+
+@interface MMAudioCoreRecorder (){
+    AQRecorderState recordState;
+}
+
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, readwrite) CGFloat volume;
+
+@end
+
+@implementation MMAudioCoreRecorder
+
+static void HandleInputBuffer (void                                 *aqData,
+                               AudioQueueRef                        inAQ,
+                               AudioQueueBufferRef                  inBuffer,
+                               const AudioTimeStamp                 *inStartTime,
+                               UInt32                               inNumPackets,
+                               const AudioStreamPacketDescription   *inPacketDesc) {
+    AQRecorderState *pAqData = (AQRecorderState *) aqData;
+
+    if (inNumPackets == 0 &amp;&amp;
+        pAqData-&gt;mDataFormat.mBytesPerPacket != 0)
+        inNumPackets =
+        inBuffer-&gt;mAudioDataByteSize / pAqData-&gt;mDataFormat.mBytesPerPacket;
+
+    // 计算文件写入的标记位
+    if (AudioFileWritePackets (pAqData-&gt;mAudioFile,
+                               false,
+                               inBuffer-&gt;mAudioDataByteSize,
+                               inPacketDesc,
+                               pAqData-&gt;mCurrentPacket,
+                               &amp;inNumPackets,
+                               inBuffer-&gt;mAudioData
+                               ) == noErr) {
+        pAqData-&gt;mCurrentPacket += inNumPackets;
+    }
+    if (pAqData-&gt;mIsRunning == 0) return;
+
+    // 使用完成将buffer回传
+    AudioQueueEnqueueBuffer (pAqData-&gt;mQueue,
+                             inBuffer,
+                             0,
+                             NULL
+                             );
+}
+
+// 计算每个buffer缓冲区域的最大的size
+void DeriveBufferSize (AudioQueueRef                audioQueue,
+                       AudioStreamBasicDescription  ASBDescription,
+                       Float64                      seconds,
+                       UInt32                       *outBufferSize) {
+    static const int maxBufferSize = 0x50000;
+
+    int maxPacketSize = ASBDescription.mBytesPerPacket;
+    if (maxPacketSize == 0) {
+        UInt32 maxVBRPacketSize = sizeof(maxPacketSize);
+        AudioQueueGetProperty (audioQueue,
+                               kAudioQueueProperty_MaximumOutputPacketSize,
+                               &amp;maxPacketSize,
+                               &amp;maxVBRPacketSize);
+    }
+
+    Float64 numBytesForTime =
+    ASBDescription.mSampleRate * maxPacketSize * seconds;
+    *outBufferSize = (UInt32)(numBytesForTime &lt; maxBufferSize ? numBytesForTime : maxBufferSize);
+}
+
+// 为文件设置magic cookie，这个常用与MPEG 4 ACC
+OSStatus SetMagicCookieForFile (AudioQueueRef inQueue,
+                                AudioFileID   inFile) {
+    OSStatus result = noErr;
+    UInt32 cookieSize;
+
+    if (AudioQueueGetPropertySize (inQueue,
+                                   kAudioQueueProperty_MagicCookie,
+                                   &amp;cookieSize) == noErr) {
+        char* magicCookie =(char *) malloc (cookieSize);
+        if (AudioQueueGetProperty (inQueue,
+                                   kAudioQueueProperty_MagicCookie,
+                                   magicCookie,
+                                   &amp;cookieSize) == noErr)
+            result =    AudioFileSetProperty (inFile,
+                                              kAudioFilePropertyMagicCookieData,
+                                              cookieSize,
+                                              magicCookie);
+        free (magicCookie);
+    }
+    return result;
+}
+
+- (void)dealloc {
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
+// 初始化对象
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self initSelf];
+    }
+    return self;
+}
+
+// 初始化基础对象
+- (void)initSelf {
+    [MMASBFormat configASBFormat:&amp;recordState.mDataFormat];
+    [self createAudioSaveFile];
+}
+
+// 使用存在的ASB信息
+- (void)existenseABSFormat {
+    UInt32 dataFormatSize = sizeof (recordState.mDataFormat);
+
+    AudioQueueGetProperty (recordState.mQueue,
+                           kAudioQueueProperty_StreamDescription,
+                           &amp;recordState.mDataFormat,
+                           &amp;dataFormatSize);
+}
+
+// 创建文件路径
+- (NSString *)getSavePath {
+    NSString *urlStr=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    urlStr=[urlStr stringByAppendingPathComponent:@&quot;tempAudioRecord.mp3&quot;];
+    NSLog(@&quot;文件录制的路径地址:%@&quot;,urlStr);
+    return urlStr;
+}
+
+// 创建文件路径，用来存储音频数据
+- (void)createAudioSaveFile {
+
+    CFURLRef audioFileURL =
+    CFURLCreateFromFileSystemRepresentation (NULL,
+                                             (const UInt8 *)[[self getSavePath] UTF8String],
+                                             strlen ([[self getSavePath] UTF8String]),
+                                             false);
+
+    AudioFileCreateWithURL (audioFileURL,
+                            kAudioFileAIFFType,
+                            &amp;recordState.mDataFormat,
+                            kAudioFileFlags_EraseFile,
+                            &amp;recordState.mAudioFile);
+    CFRelease(audioFileURL);
+}
+
+- (NSTimer *)timer {
+    if (!_timer) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:0.02 block:^(NSTimer * _Nonnull timer) {
+            [self readVolume];
+        } repeats:YES];
+    }
+    return _timer;
+}
+
+- (void)readVolume {
+
+}
+
+- (void)startRecording {
+    recordState.mCurrentPacket = 0;
+
+    OSStatus status;
+    status = AudioQueueNewInput(&amp;recordState.mDataFormat,
+                                HandleInputBuffer,
+                                &amp;recordState,
+                                CFRunLoopGetCurrent(),
+                                kCFRunLoopCommonModes,
+                                0,
+                                &amp;recordState.mQueue);
+
+    if (status == 0) {
+        DeriveBufferSize(recordState.mQueue, recordState.mDataFormat, 0.5, &amp;recordState.bufferByteSize);
+        for (int i = 0; i &lt; kNumberBuffers; i++) {
+            AudioQueueAllocateBuffer(recordState.mQueue, recordState.bufferByteSize, &amp;recordState.mBuffers[i]);
+            AudioQueueEnqueueBuffer(recordState.mQueue, recordState.mBuffers[i], 0, nil);
+        }
+
+        recordState.mIsRunning = true;
+        status = AudioQueueStart(recordState.mQueue, NULL);
+
+        if (status == 0) {
+            NSLog(@&quot;当前录制对象已经开始&quot;);
+        }
+    }
+}
+
+- (void)stopRecording {
+    NSLog(@&quot;当前录制已经结束！！！&quot;);
+    recordState.mIsRunning = false;
+
+    AudioQueueStop(recordState.mQueue, true);
+
+    for (int i = 0; i &lt; kNumberBuffers; i++) {
+        AudioQueueFreeBuffer(recordState.mQueue, recordState.mBuffers[i]);
+    }
+
+    AudioQueueDispose(recordState.mQueue, true);
+    AudioFileClose(recordState.mAudioFile);
+}
+
+@end</code></pre><p>对应的Player.h</p>
+<pre><code>#import &lt;Foundation/Foundation.h&gt;
+
+@interface MMAudioCorePlayer : NSObject
+
+@property (nonatomic, assign) CGFloat volume;
+@property (nonatomic, assign) CGFloat progress;
+
+- (void)play;
+- (void)pause;
+- (void)stop;
+
+@end</code></pre><p>Player.m</p>
+<pre><code>#import &quot;MMAudioCorePlayer.h&quot;
+#import &lt;AVFoundation/AVFoundation.h&gt;
+#import &quot;MMASBFormat.h&quot;
+
+static const int kNumberBuffers = 3;                              // 1
+typedef struct {
+    AudioStreamBasicDescription   mDataFormat;                    // 2
+    AudioQueueRef                 mQueue;                         // 3
+    AudioQueueBufferRef           mBuffers[kNumberBuffers];       // 4
+    AudioFileID                   mAudioFile;                     // 5
+    UInt32                        bufferByteSize;                 // 6
+    SInt64                        mCurrentPacket;                 // 7
+    UInt32                        mNumPacketsToRead;              // 8
+    AudioStreamPacketDescription  *mPacketDescs;                  // 9
+    bool                          mIsRunning;                     // 10
+}AQPlayerState;
+
+@interface MMAudioCorePlayer () {
+    AQPlayerState playerState;
+}
+
+@end
+
+@implementation MMAudioCorePlayer
+
+static void HandleOutputBuffer (void                *aqData,
+                                AudioQueueRef       inAQ,
+                                AudioQueueBufferRef inBuffer) {
+    AQPlayerState *pAqData = (AQPlayerState *) aqData;
+    if (pAqData-&gt;mIsRunning == 0) return;
+    UInt32 numBytesReadFromFile;
+    UInt32 numPackets = pAqData-&gt;mNumPacketsToRead;
+    AudioFileReadPacketData (pAqData-&gt;mAudioFile,
+                          false,
+                          &amp;numBytesReadFromFile,
+                          pAqData-&gt;mPacketDescs,
+                          pAqData-&gt;mCurrentPacket,
+                          &amp;numPackets,
+                          inBuffer-&gt;mAudioData);
+    if (numPackets &gt; 0) {
+        inBuffer-&gt;mAudioDataByteSize = numBytesReadFromFile;
+        AudioQueueEnqueueBuffer (pAqData-&gt;mQueue,
+                                 inBuffer,
+                                 (pAqData-&gt;mPacketDescs ? numPackets : 0),
+                                 pAqData-&gt;mPacketDescs);
+        pAqData-&gt;mCurrentPacket += numPackets;
+    } else {
+        AudioQueueStop (pAqData-&gt;mQueue,
+                        false);
+        pAqData-&gt;mIsRunning = false; 
+    }
+}
+
+void DeriveBufferSize (AudioStreamBasicDescription ASBDesc,
+                       UInt32                      maxPacketSize,
+                       Float64                     seconds,
+                       UInt32                      *outBufferSize,
+                       UInt32                      *outNumPacketsToRead) {
+    static const int maxBufferSize = 0x50000;
+    static const int minBufferSize = 0x4000;
+
+    if (ASBDesc.mFramesPerPacket != 0) {
+        Float64 numPacketsForTime =
+        ASBDesc.mSampleRate / ASBDesc.mFramesPerPacket * seconds;
+        *outBufferSize = numPacketsForTime * maxPacketSize;
+    } else {
+        *outBufferSize =
+        maxBufferSize &gt; maxPacketSize ?
+        maxBufferSize : maxPacketSize;
+    }
+
+    if (*outBufferSize &gt; maxBufferSize &amp;&amp;
+        *outBufferSize &gt; maxPacketSize)
+        *outBufferSize = maxBufferSize;
+    else {
+        if (*outBufferSize &lt; minBufferSize)
+            *outBufferSize = minBufferSize;
+    }
+
+    *outNumPacketsToRead = *outBufferSize / maxPacketSize;           
+}
+
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self initSelf];
+    }
+    return self;
+}
+
+- (void)initSelf {
+    [MMASBFormat configASBFormat:&amp;playerState.mDataFormat];
+    [self openAudioFileForPlayback];
+    [self settingPlaybackAudioQueueBufferSizeAndNumberOfPacketsToRead];
+}
+
+#pragma mark - Property setter
+- (void)setVolume:(CGFloat)volume {
+    _volume = volume;
+
+    if ([self prepareForPlay]) {
+        if (AudioQueueSetParameter(playerState.mQueue, kAudioQueueParam_Volume, volume) == 0) {
+            NSLog(@&quot;设置音效成功！&quot;);
+        }
+    }
+}
+
+// 创建文件路径
+- (NSString *)getSavePath {
+    NSString *urlStr=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    urlStr=[urlStr stringByAppendingPathComponent:@&quot;tempAudioRecord.mp3&quot;];
+    return urlStr;
+}
+
+- (void)openAudioFileForPlayback {
+
+    CFURLRef audioFileURL =
+    CFURLCreateFromFileSystemRepresentation (NULL,
+                                             (const UInt8 *)[[self getSavePath] UTF8String],
+                                             strlen ([[self getSavePath] UTF8String]),
+                                             false);
+
+    OSStatus result = AudioFileOpenURL (audioFileURL,
+                      kAudioFileReadPermission,
+                      0,
+                      &amp;playerState.mAudioFile
+                      );
+    if (result == 0) {
+        NSLog(@&quot;文件读取成功！！！可以准备播放了&quot;);
+    }
+
+    CFRelease (audioFileURL);
+}
+
+- (void)settingPlaybackAudioQueueBufferSizeAndNumberOfPacketsToRead {
+    UInt32 maxPacketSize;
+    UInt32 propertySize = sizeof (maxPacketSize);
+    AudioFileGetProperty (playerState.mAudioFile,
+                          kAudioFilePropertyPacketSizeUpperBound,
+                          &amp;propertySize,
+                          &amp;maxPacketSize);
+
+    DeriveBufferSize (playerState.mDataFormat,
+                      maxPacketSize,
+                      0.5,
+                      &amp;playerState.bufferByteSize,
+                      &amp;playerState.mNumPacketsToRead);
+}
+
+- (BOOL)prepareForPlay {
+    OSStatus status;
+    status = AudioQueueNewOutput(&amp;playerState.mDataFormat,
+                                 HandleOutputBuffer,
+                                 &amp;playerState,
+                                 CFRunLoopGetCurrent(),
+                                 kCFRunLoopCommonModes,
+                                 0,
+                                 &amp;playerState.mQueue);
+
+    if (status == 0) return YES;
+    return NO;
+}
+
+- (void)play {
+    playerState.mCurrentPacket = true;
+
+    if ([self prepareForPlay]) {
+        for (int i = 0; i &lt; kNumberBuffers; ++i) {
+            AudioQueueAllocateBuffer (playerState.mQueue,
+                                      playerState.bufferByteSize,
+                                      &amp;playerState.mBuffers[i]);
+
+            HandleOutputBuffer (&amp;playerState,
+                                playerState.mQueue,
+                                playerState.mBuffers[i]);
+        }
+
+
+        playerState.mIsRunning = true;
+        OSStatus status = AudioQueueStart(playerState.mQueue, NULL);
+
+        if (status == 0) {
+            NSLog(@&quot;当前录制对象已经开始&quot;);
+        }
+    }
+}
+
+- (void)stop {
+    playerState.mIsRunning = false;
+
+    AudioQueueStop(playerState.mQueue, true);
+
+    for (int i = 0; i &lt; kNumberBuffers; i++) {
+        AudioQueueFreeBuffer(playerState.mQueue, playerState.mBuffers[i]);
+    }
+
+    AudioQueueDispose(playerState.mQueue, true);
+    AudioFileClose(playerState.mAudioFile);
+}
+
+- (void)pause {
+    AudioQueuePause(playerState.mQueue);
+}
+@end</code></pre><p>上面的代码存在不完善的地方，持续更新中。</p>
+<p>##参考:</p>
+<p><a href="http://msching.github.io/blog/categories/ios/" target="_blank" rel="noopener">码农人生</a></p>
+<p><a href="https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/CoreAudioOverview/CoreAudioEssentials/CoreAudioEssentials.html#//apple_ref/doc/uid/TP40003577-CH10-SW1" target="_blank" rel="noopener">Core Audio Essentials</a></p>
+<p><a href="https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/CoreAudioOverview/WhatisCoreAudio/WhatisCoreAudio.html#//apple_ref/doc/uid/TP40003577-CH3-SW1" target="_blank" rel="noopener">What Is Core Audio?</a></p>
+<p><a href="https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/AudioQueueProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40005343" target="_blank" rel="noopener">Audio Queue Services Programming Guide</a></p>
+<p><a href="https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40007875" target="_blank" rel="noopener">Audio Session Programming Guide</a></p>
+<p><a href="http://teragonaudio.com/article/How-to-do-realtime-recording-with-effect-processing-on-iOS.html" target="_blank" rel="noopener">Audio instance1</a></p>
+<p><a href="https://books.google.com.hk/books?id=EERo5M5utZ8C&pg=PT929&lpg=PT929&dq=ios+record+Handle+InputBuffer&source=bl&ots=K1e0NkrMY_&sig=O6LLgnpGx_u43ogdXJ4BzMjJBb0&hl=zh-CN&sa=X&redir_esc=y#v=onepage&q=ios%20record%20Handle%20InputBuffer&f=false" target="_blank" rel="noopener">google book</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Objective-C/" rel="tag"># Objective-C</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/22/2016-04-22-ios中各种锁的对比/" rel="next" title="ios中各种锁的对比">
+                <i class="fa fa-chevron-left"></i> ios中各种锁的对比
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/01/2016-06-01-JSPatch补充/" rel="prev" title="为JSPatch添加NSInteger,BOOL,CGFloat,double类型的地址传递解析">
+                为JSPatch添加NSInteger,BOOL,CGFloat,double类型的地址传递解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">持续、专注</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CoreAudio"><span class="nav-number">1.</span> <span class="nav-text">CoreAudio</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Audio-Queue-Servies"><span class="nav-number">2.</span> <span class="nav-text">Audio Queue Servies</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

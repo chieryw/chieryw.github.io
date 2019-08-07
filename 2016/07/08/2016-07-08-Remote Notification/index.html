@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="APNs,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="remote Notification在做远程推送的时候，需要向apple申请证书上的支持。首先介绍如何完成远程推送的前期准备，主要是证书的申请和制作，这里只做简单介绍。主要的操作都是在macOS系统上完成的，跟着操作一步一步来，就可以生成测试使用的证书：  登录到 iPhone Developer Connection Portal 并点击 App IDs 创建一个不使用通配符的 App ID">
+<meta name="keywords" content="APNs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Remote Notification">
+<meta property="og:url" content="http://yoursite.com/2016/07/08/2016-07-08-Remote Notification/index.html">
+<meta property="og:site_name" content="chiery&#39;blog">
+<meta property="og:description" content="remote Notification在做远程推送的时候，需要向apple申请证书上的支持。首先介绍如何完成远程推送的前期准备，主要是证书的申请和制作，这里只做简单介绍。主要的操作都是在macOS系统上完成的，跟着操作一步一步来，就可以生成测试使用的证书：  登录到 iPhone Developer Connection Portal 并点击 App IDs 创建一个不使用通配符的 App ID">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2016/07/08/2016-07-08-Remote%20Notification/%3C!--%EF%BF%BC0--%3E/images/remoteNotification-1.png">
+<meta property="og:image" content="http://yoursite.com/2016/07/08/2016-07-08-Remote%20Notification/%3C!--%EF%BF%BC1--%3E/images/remoteNotification-2.png">
+<meta property="og:image" content="http://yoursite.com/2016/07/08/2016-07-08-Remote%20Notification/%3C!--%EF%BF%BC2--%3E/images/remoteNotification-3.png">
+<meta property="og:image" content="http://yoursite.com/2016/07/08/2016-07-08-Remote%20Notification/%3C!--%EF%BF%BC3--%3E/images/remoteNotification-4.png">
+<meta property="og:image" content="http://yoursite.com/2016/07/08/2016-07-08-Remote%20Notification/%3C!--%EF%BF%BC4--%3E/images/remoteNotification-5.png">
+<meta property="og:updated_time" content="2018-08-25T17:35:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Remote Notification">
+<meta name="twitter:description" content="remote Notification在做远程推送的时候，需要向apple申请证书上的支持。首先介绍如何完成远程推送的前期准备，主要是证书的申请和制作，这里只做简单介绍。主要的操作都是在macOS系统上完成的，跟着操作一步一步来，就可以生成测试使用的证书：  登录到 iPhone Developer Connection Portal 并点击 App IDs 创建一个不使用通配符的 App ID">
+<meta name="twitter:image" content="http://yoursite.com/2016/07/08/2016-07-08-Remote%20Notification/%3C!--%EF%BF%BC0--%3E/images/remoteNotification-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/07/08/2016-07-08-Remote Notification/">
+
+
+
+
+
+  <title>Remote Notification | chiery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chiery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/08/2016-07-08-Remote Notification/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chiery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Remote Notification</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-08T16:04:23+08:00">
+                2016-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/APNs/" itemprop="url" rel="index">
+                    <span itemprop="name">APNs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="remote-Notification"><a href="#remote-Notification" class="headerlink" title="remote Notification"></a>remote Notification</h2><p>在做远程推送的时候，需要向apple申请证书上的支持。首先介绍如何完成远程推送的前期准备，主要是证书的申请和制作，这里只做简单介绍。主要的操作都是在macOS系统上完成的，跟着操作一步一步来，就可以生成测试使用的证书：</p>
+<ul>
+<li>登录到 iPhone Developer Connection Portal 并点击 App IDs</li>
+<li>创建一个不使用通配符的 App ID 。通配符 ID 不能用于推送通知服务。例如，我们的iPhone程序ID像这样：  AB123346CD.com.serverdensity.iphone</li>
+<li>点击App ID旁的“Configure”，然后按下按钮生产 推送通知许可证。根据“向导”指导的步骤生成一个签名并上传，最后下载生成的许可证。此步骤在 Apple文档中 也有谈到。</li>
+<li>通过双击.cer文件将你的 aps_developer_identity.cer 引入Keychain中。</li>
+<li>在Mac上启动 Keychain助手，然后在login keychain中选择 Certificates分类。你将看到一个可扩展选项“Apple Development Push Services”</li>
+<li>扩展此选项然后右击“Apple Development Push Services” &gt; Export “Apple Development Push Services ID123”。保存为 apns-dev-cert.p12 文件。</li>
+<li>扩展“Apple Development Push Services” 对“Private Key”做同样操作，保存为 apns-dev-key.p12 文件。</li>
+<li>需要通过终端命令将这些文件转换为PEM格式：</li>
+</ul>
+<a id="more"></a>
+
+<pre><code>openssl pkcs12 -clcerts -nokeys -out apns-dev-cert.pem -in apns-dev-cert.p12</code></pre><ul>
+<li><p>转换得到key的pem：</p>
+<pre><code>openssl pkcs12 -nocerts -out apns-dev-key.pem -in apns-dev-cert.p12</code></pre></li>
+<li><p>如果你想要移除密码，要么在导出/转换时不要设定或者执行：</p>
+<pre><code>openssl rsa -in apns-dev-key.pem -out apns-dev-key-noenc.pem</code></pre></li>
+<li><p>最后，你需要将键和许可文件合成为apns-dev.pem文件，此文件在连接到APNS时需要使用：</p>
+<pre><code>cat apns-dev-cert.pem apns-dev-key-noenc.pem &gt; apns-dev.pem  
+或者使用有密码的: 
+cat apns-dev-cert.pem apns-dev-key.pem &gt; ck.pem</code></pre></li>
+</ul>
+<p>将此文件保存为一个易记的名字，你有可能以后会用到它。上述步骤同样适合于生成产品许可证。</p>
+<p>注：以上使用的证书转换成p12证书使用的密码都是<code>1234</code></p>
+<p>检验证书是否正确的方法：</p>
+<pre><code>telnet gateway.sandbox.push.apple.com 2195
+
+上面的命令执行的返回
+
+Trying 17.172.232.226…
+
+Connected to gateway.sandbox.push-apple.com.akadns.net.
+
+Escape character is ‘^]’.</code></pre><p>它将尝试发送一个规则的，不加密的连接到APNS服务。如果你看到上面的反馈，那说明你的MAC能够到达APNS。按下Ctrl C 关闭连接。如果得到一个错误信息，那么你需要确保你的防火墙允许2195端口。</p>
+<p>然后再次连接，这次用我们的SSL证书和私钥来设置一个安全的连接：</p>
+<pre><code>openssl s_client -connect gateway.sandbox.push.apple.com:2195 -cert apns-dev-cert.pem -key apns-dev-key.pem</code></pre><p>当你看到反馈的最下方returnCode=0就成功了</p>
+<p>这里给出一个简单的pushme.php文件</p>
+<pre><code>&lt;?php
+    /**
+    {
+        &quot;aps&quot;:{
+            &quot;alert&quot;:&quot;此处有两个服务器需要选择，如果是开发测试用，选择第二名sandbox的服务器并使用Dev的pem证书，如果是正是发布，使用Product的pem并选用正式的服务器&quot;,     //消息首页展示内容
+            &quot;badge&quot;:10,                    //icon上未读消息标示个数
+            &quot;sound&quot;:&quot;default&quot;,            //推送听到的铃声
+            &quot;data&quot;:{                    //推送消息主体，供程序启动时做相应处理
+                &quot;tid&quot;:1000001,            //通知Id 做设备打开通知上报数据使用
+                &quot;id&quot;:101,                //跳转id [可为课程id/计划id/文章id/ 是web页面默认为0]
+                &quot;type&quot;:0,    // 0 系统通知[默认] 1 好友新消息  2 新用户注册  3好友请求 4课程更新
+                &quot;systype&quot;:1,  //1 课程 2计划 3文章 4活动 5web页面跳转
+                &quot;url&quot;:&quot;http://www.imooc.com/abc.html&quot; //为4web页面跳转使用 |非4web页面清除url字段
+            },
+            &quot;category&quot;=&gt;&quot;CATEGORY_ID&quot;     //用来快捷处理消息唯一标示
+        }
+    }
+
+    */
+    $deviceToken= &apos;ef92d3d412bd4c95d65b07c66170be8*******a6c25e54d643f3f3c707&apos;; //没有空格
+    $body = [];
+    $type = 5;  //1 课程 2计划 3文章 4活动 5web页面跳转 控制推送内容
+
+    ///拼接推送字符串
+    switch ($type) {
+        case 1:
+            $content = &apos;从搭建Golang开发环境开始， 一步步介绍Golang系统库之输入输出的功能及特性。结合行数统计及图片读取，在实战中扎扎实实的学习Golang&apos;;
+            $body = array(&quot;aps&quot; =&gt; array(&quot;alert&quot; =&gt; $content,&quot;badge&quot; =&gt; 10,&quot;sound&quot;=&gt;&apos;default&apos;,&apos;data&apos;=&gt;array(&apos;tid&apos;=&gt;10000,&apos;id&apos;=&gt;492,&apos;type&apos;=&gt;0,&apos;systype&apos;=&gt;$type)));
+            break;
+        case 2:
+            $content = &apos;随着互联网的发展速度迅猛，前端工程师职业越来越火热，想学习Web前端技能吗 ? 该路径从基础知识到实战案例演练，一步步带您快速掌握如何搭建网站静态页面、开发网站交互特效，为您打开WEB前端工程师大门。还在等什么？快来学习吧!&apos;;
+            $body = array(&quot;aps&quot; =&gt; array(&quot;alert&quot; =&gt; $content,&quot;badge&quot; =&gt; 11,&quot;sound&quot;=&gt;&apos;default&apos;,&apos;data&apos;=&gt;array(&apos;tid&apos;=&gt;10001,&apos;id&apos;=&gt;32,&apos;type&apos;=&gt;0,&apos;systype&apos;=&gt;$type)));
+            break;
+        case 3:
+            $content = &apos;CodeStriker CodeStriker是一个免费&amp;开源的Web应用程序，可以帮助开发人员基于Web的代码审查。它不但允许开发人员将问题、意见和决定记录在数据库中，还为实际执行代码审查提供了一个舒适的工作区域。 官方网站：http://codestriker.sourceforge.net/index.html 2）RhodeCode Rhode&apos;;
+            $body = array(&quot;aps&quot; =&gt; array(&quot;alert&quot; =&gt; $content,&quot;badge&quot; =&gt; 12,&quot;sound&quot;=&gt;&apos;default&apos;,&apos;data&apos;=&gt;array(&apos;tid&apos;=&gt;10002,&apos;id&apos;=&gt;2493,&apos;type&apos;=&gt;0,&apos;systype&apos;=&gt;$type)));
+            break;
+        case 4:
+            $content = &apos;高薪捉拿程序大拿&apos;;
+            $body = array(&quot;aps&quot; =&gt; array(&quot;alert&quot; =&gt; $content,&quot;badge&quot; =&gt; 12,&quot;sound&quot;=&gt;&apos;default&apos;,&apos;data&apos;=&gt;array(&apos;tid&apos;=&gt;27820,&apos;id&apos;=&gt;2493,&apos;type&apos;=&gt;0,&apos;systype&apos;=&gt;$type,&apos;url&apos;=&gt;&apos;http://t.imooc.com&apos;)));
+            break;
+        case 5:
+            $alertBody = &apos;我是整个alert的标题&apos;;
+            $title = &apos;我是一个主标题&apos;;
+            $subtitle = &apos;我是一个副标题&apos;;
+            $body = array(&quot;aps&quot; =&gt; array(&quot;alert&quot; =&gt;array(&quot;body&quot;=&gt;$alertBody,&quot;title&quot;=&gt;$title,&quot;subtitle&quot;=&gt;$subtitle),&quot;mutable-content&quot;=&gt;1,&quot;badge&quot; =&gt; 13,&quot;sound&quot;=&gt;&apos;default&apos;,&apos;data&apos;=&gt;array(&apos;tid&apos;=&gt;10003,&apos;id&apos;=&gt;0,&apos;type&apos;=&gt;0,&apos;systype&apos;=&gt;$type,&apos;url&apos;=&gt;&apos;http://t.imooc.com&apos;,&quot;helloKey&quot;=&gt;&quot;helloValue&quot;),&quot;category&quot;=&gt;&quot;CATEGORY_ID&quot;),&quot;my-attachment&quot;=&gt;&quot;http://newpic.jxnews.com.cn/003/001/209/00300120964_fab36aec.jpg&quot;);
+            break;
+        default:
+            # code...
+            break;
+    }
+
+    $ctx = stream_context_create();
+    //如果在Windows的服务器上，寻找pem路径会有问题，路径修改成这样的方法：
+    //$pem = dirname(__FILE__) . &apos;/&apos; . &apos;apns-dev.pem&apos;;
+    //linux 的服务器直接写pem的路径即可
+    stream_context_set_option($ctx,&quot;ssl&quot;,&quot;local_cert&quot;,&quot;ck.pem&quot;);
+    $pass = &quot;1234&quot;;
+    stream_context_set_option($ctx, &apos;ssl&apos;, &apos;passphrase&apos;, $pass);
+    //此处有两个服务器需要选择，如果是开发测试用，选择第二名sandbox的服务器并使用Dev的pem证书，如果是正是发布，使用Product的pem并选用正式的服务器
+    // $fp = stream_socket_client(&quot;ssl://gateway.push.apple.com:2195&quot;, $err, $errstr, 60, STREAM_CLIENT_CONNECT, $ctx);
+    $fp = stream_socket_client(&quot;ssl://gateway.sandbox.push.apple.com:2195&quot;, $err, $errstr, 60, STREAM_CLIENT_CONNECT, $ctx);
+    if (!$fp) {
+    echo &quot;Failed to connect $err $errstrn&quot;;
+    return;
+    }
+    print &quot;Connection OK\\n&quot;;
+    $payload = json_encode($body);
+    $msg = chr(0) . pack(&quot;n&quot;,32) . pack(&quot;H*&quot;, str_replace(&apos; &apos;, &apos;&apos;, $deviceToken)) . pack(&quot;n&quot;,strlen($payload)) . $payload;
+    echo &quot;sending message :&quot; . $payload .&quot;\\n&quot;;
+    fwrite($fp, $msg);
+    fclose($fp);
+?&gt;</code></pre><p>直接从网上找到的，没有改太多，但是很好用就是了。当你将ck.pem和pushme.php文件放在同一个文件夹下的时候，修改文件中的token和密码就可以发送到测试手机了。</p>
+<p>如下是一个推送Notification打印的时候包含的所有信息</p>
+<pre><code>{
+UNNotificationResponse: 0x17022b800; 
+actionIdentifier: com.apple.UNNotificationDefaultActionIdentifier, 
+notification: {
+            UNNotification: 0x17022b960; date: 2016-07-25 10:06:13 +0000, 
+            request: {
+                    UNNotificationRequest: 0x174022a60; 
+                    identifier: 802B986C-928B-40E9-8AC9-B6649DE5BC2C,
+                     content: {
+                            UNNotificationContent: 0x1740e9780; 
+                            title: 我是一个主标题, 
+                            subtitle: 我是一个副标题, 
+                            body: 我是整个alert的标题, 
+                            categoryIdentifier: CATEGORY_ID, 
+                            launchImageName: , 
+                            peopleIdentifiers: (), 
+                            threadIdentifier: , 
+                            attachments: (), 
+                            badge: 13, 
+                            sound: {
+                                    UNNotificationSound: 0x1740bde20
+                                      }, 
+                            hasDefaultAction: YES, 
+                            shouldAddToNotificationsList: YES, 
+                            shouldAlwaysAlertWhileAppIsForeground: NO, 
+                            shouldLockDevice: NO, 
+                            shouldPauseMedia: NO, 
+                            isSnoozeable: NO, 
+                            fromSnooze: NO, 
+                            darwinNotificationName: (null), 
+                            darwinSnoozedNotificationName: (null), 
+                            trigger: {
+                                    UNPushNotificationTrigger: 0x170000ff0; 
+                                    contentAvailable: NO, 
+                                    mutableContent: YES
+                                    }
+                            }
+        }
+}</code></pre><p>从打印信息中我们没有看到自定义的信息，是不是出了问题。打一下断点调试一下，原来userInfo没有打印出来，Why,应该被打印的信息为什么被省略了。如下图</p>
+<p><img src="%3C!--%EF%BF%BC0--%3E/images/remoteNotification-1.png" alt></p>
+<p>在上面的图片中就包含了我们自定义的信息。但是这里有一个问题，就是NotificationContent对象会向UserInfo这个对象中做检索，将里面对应key的信息提取到上层中直接展示。这一点在代码处理上也得到了验证。</p>
+<p>到目前为止，工程已经调试完毕了。但是现在想尝试一下NotificationServie是如何被触发的，这样就可以自定义相关的notification第一个界面的展示了。在此之前 你需要做如下的操作，</p>
+<ul>
+<li>target中增加notificationServieExtension</li>
+<li>将主工程的target和extension的target中的capabilities中的push Notification通知打开。 这里需要注意的一点是。这里使用的证书必须是同一个teamID下的</li>
+</ul>
+<p><img src="%3C!--%EF%BF%BC1--%3E/images/remoteNotification-2.png" alt></p>
+<p>测试的文件有image,gif,movie，但这些资源文件都是本地的（文件添加在extension中的bundle中）。刚才又测试了一下网络的数据传输，发现一个坑。在Apple的attachment附件api定义中附件的展示是一个url,也就是说当我拿到了一个例如网络图片的data数据的时候还是不能直接展示，需要将data存在在一个文件夹下生成对应的url，才能展示。但是extension不能操作APP的沙河，存储数据就只能写在APP group这个数据共享中，但简单的存储数据违背了app group共享数据的初衷。还有就是现在beta测试中不能同时打开push notification和App group两个capabilities，否则远程推送不能送达。</p>
+<pre><code>@available(iOS 10.0, *)
+public class UNNotificationAttachment : NSObject, NSCopying, NSSecureCoding {
+
+
+    // The identifier of this attachment
+    public var identifier: String { get }
+
+
+    // The URL to the attachment&apos;s data. If you have obtained this attachment from UNUserNotificationCenter then the URL will be security-scoped.
+    public var url: URL { get }
+
+
+    // The UTI of the attachment.
+    public var type: String { get }
+
+
+    // Creates an attachment for the data at URL with an optional options dictionary. URL must be a file URL. Returns nil if the data at URL is not supported.
+    public convenience init(identifier: String, url URL: URL, options: [NSObject : AnyObject]? = [:]) throws
+}
+
+// Key to manually provide a type hint for the attachment. If not set the type hint will be guessed from the attachment&apos;s file extension. Value must be an NSString.
+@available(iOS 10.0, *)
+public let UNNotificationAttachmentOptionsTypeHintKey: String
+
+// Key to specify if the thumbnail for this attachment is hidden. Defaults to NO. Value must be a boolean NSNumber.
+@available(iOS 10.0, *)
+public let UNNotificationAttachmentOptionsThumbnailHiddenKey: String
+
+// Key to specify a normalized clipping rectangle to use for the attachment thumbnail. Value must be a CGRect encoded using CGRectCreateDictionaryRepresentation.
+@available(iOS 10.0, *)
+public let UNNotificationAttachmentOptionsThumbnailClippingRectKey: String
+
+// Key to specify the animated image frame number or the movie time to use as the thumbnail.
+// An animated image frame number must be an NSNumber. A movie time must either be an NSNumber with the time in seconds or a CMTime encoded using CMTimeCopyAsDictionary.
+@available(iOS 10.0, *)
+public let UNNotificationAttachmentOptionsThumbnailTimeKey: String</code></pre><p>增加一个resourceData会更好，我是这样想的。这也是后话了，现在我使用的是Xcode beta 3和ios 10 beta 3。希望在之后会有改进</p>
+<p>先让我们看一下资源文件在notification中是怎样的变现。这里根据WWDC的视屏，在target中添加了</p>
+<ul>
+<li>image</li>
+<li>gif</li>
+<li>movie</li>
+</ul>
+<p><img src="%3C!--%EF%BF%BC2--%3E/images/remoteNotification-3.png" alt></p>
+<p>三个样式的资源，让我们看一下实现。</p>
+<pre><code>override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler:(UNNotificationContent) -&gt; Void) {
+        self.contentHandler = contentHandler
+        bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
+
+        if let bestAttemptContent = bestAttemptContent {
+            // Modify the notification content here...
+            bestAttemptContent.title = &quot;\(bestAttemptContent.title) [modified]&quot;
+//            let path = Bundle.main.pathForResource(&quot;tempImage&quot;, ofType: &quot;png&quot;)
+//            let path = Bundle.main.pathForResource(&quot;hello&quot;, ofType: &quot;gif&quot;)
+            let path = Bundle.main.pathForResource(&quot;tempVideo&quot;, ofType: &quot;mov&quot;)
+            let pathURL = URL.init(fileURLWithPath: path!)
+
+            do {
+                let attachment = try UNNotificationAttachment(identifier: &quot;movie&quot;,url: pathURL,options: nil)
+                bestAttemptContent.attachments = [ attachment ]
+            } catch {
+                print(&quot;出错了&quot;)
+                print(error)
+            }
+            contentHandler(bestAttemptContent)
+        }
+    }</code></pre><p>下面看一下展示</p>
+<p><img src="%3C!--%EF%BF%BC3--%3E/images/remoteNotification-4.png" alt></p>
+<p><img src="%3C!--%EF%BF%BC4--%3E/images/remoteNotification-5.png" alt></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/APNs/" rel="tag"># APNs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/05/2016-07-05-locationNotification实践/" rel="next" title="locationNotification实践">
+                <i class="fa fa-chevron-left"></i> locationNotification实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/17/2016-08-17-CoreText实现添加标签/" rel="prev" title="CoreText实现添加标签">
+                CoreText实现添加标签 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">持续、专注</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#remote-Notification"><span class="nav-number">1.</span> <span class="nav-text">remote Notification</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

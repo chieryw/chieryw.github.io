@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="AR,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="随着支付宝，QQ AR技术的应用，越来越多的团队开始认识到AR的价值，可以说2016年AR技术离我们又进了一步。再往前倒一年，你会发现，其实双11会场也是做过AR红包的，但是当时的红包效果确实不怎么地，界面抖动的太厉害（没有对感应器做深层次的了解）。随之还有QQ火炬接力，当时没有记错的话，QQ的AR是好像2d的，设备要求在水平放置时，才能展示更好的效果。随着研究的深入，产品的效果也是越来越理想，这">
+<meta name="keywords" content="AR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于地理位置的AR增强现实">
+<meta property="og:url" content="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/index.html">
+<meta property="og:site_name" content="chiery&#39;blog">
+<meta property="og:description" content="随着支付宝，QQ AR技术的应用，越来越多的团队开始认识到AR的价值，可以说2016年AR技术离我们又进了一步。再往前倒一年，你会发现，其实双11会场也是做过AR红包的，但是当时的红包效果确实不怎么地，界面抖动的太厉害（没有对感应器做深层次的了解）。随之还有QQ火炬接力，当时没有记错的话，QQ的AR是好像2d的，设备要求在水平放置时，才能展示更好的效果。随着研究的深入，产品的效果也是越来越理想，这">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/%3C!--%EF%BF%BC0--%3E/images/LocationAR01.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/%3C!--%EF%BF%BC1--%3E/images/LocationAR02.jpeg">
+<meta property="og:image" content="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/%3C!--%EF%BF%BC2--%3E/images/compass.gif">
+<meta property="og:image" content="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/%3C!--%EF%BF%BC3--%3E/images/LocationAR-03.gif">
+<meta property="og:image" content="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/%3C!--%EF%BF%BC4--%3E/images/LocationAR-04.gif">
+<meta property="og:image" content="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/%3C!--%EF%BF%BC5--%3E/images/LocationAR-05.gif">
+<meta property="og:updated_time" content="2018-08-25T17:33:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于地理位置的AR增强现实">
+<meta name="twitter:description" content="随着支付宝，QQ AR技术的应用，越来越多的团队开始认识到AR的价值，可以说2016年AR技术离我们又进了一步。再往前倒一年，你会发现，其实双11会场也是做过AR红包的，但是当时的红包效果确实不怎么地，界面抖动的太厉害（没有对感应器做深层次的了解）。随之还有QQ火炬接力，当时没有记错的话，QQ的AR是好像2d的，设备要求在水平放置时，才能展示更好的效果。随着研究的深入，产品的效果也是越来越理想，这">
+<meta name="twitter:image" content="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/%3C!--%EF%BF%BC0--%3E/images/LocationAR01.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/">
+
+
+
+
+
+  <title>基于地理位置的AR增强现实 | chiery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chiery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/06/2017-03-06-基于地理位置的AR增强现实/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chiery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于地理位置的AR增强现实</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-06T18:36:23+08:00">
+                2017-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/基于地理位置的AR增强现实/" itemprop="url" rel="index">
+                    <span itemprop="name">基于地理位置的AR增强现实</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>随着支付宝，QQ AR技术的应用，越来越多的团队开始认识到AR的价值，可以说2016年AR技术离我们又进了一步。再往前倒一年，你会发现，其实双11会场也是做过AR红包的，但是当时的红包效果确实不怎么地，界面抖动的太厉害（没有对感应器做深层次的了解）。随之还有QQ火炬接力，当时没有记错的话，QQ的AR是好像2d的，设备要求在水平放置时，才能展示更好的效果。随着研究的深入，产品的效果也是越来越理想，这里介绍两个国内的AR产品。“视+”,基于标记的AR技术，逼格很高，也拥有了很庞大的用户群。”随便走“基于地理位置的AR技术，下面来几张截图：</p>
+<p><img src="%3C!--%EF%BF%BC0--%3E/images/LocationAR01.jpeg" alt><img src="%3C!--%EF%BF%BC1--%3E/images/LocationAR02.jpeg" alt></p>
+<p>这次的主题也是基于地理位置的AR实现。</p>
+<a id="more"></a>
+
+<h2 id="前期分析"><a href="#前期分析" class="headerlink" title="前期分析"></a>前期分析</h2><p>在做这个产品之前，要明确我们要做什么，之前也说了，就是类似于”随便走“的效果的AR技术，但是不需要他的导航的这样的产品。那么就是这样的产品中包含哪些技术实现</p>
+<ul>
+<li>后置摄像头取景</li>
+<li>方向的获取</li>
+<li>手机抬起的角度</li>
+</ul>
+<h2 id="后置摄像头的获取"><a href="#后置摄像头的获取" class="headerlink" title="后置摄像头的获取"></a>后置摄像头的获取</h2><p>这个技术倒是不难，直接使用UIImagePickerController就可以拿到后置摄像头录制的界面。同样使用AVFoundation也是可以拿到后置摄像头的信息的，这次的实现就是使用了AVFoudation来获取后置摄像头的信息。</p>
+<p>.h文件</p>
+<pre><code>#import &lt;UIKit/UIKit.h&gt;
+
+typedef NS_ENUM(NSInteger, QARViewState) {
+    QARViewStateStartRunning,
+    QARViewStateStopRunning,
+    QARViewStateError
+};
+
+typedef void(^QARCompletionHandle) (NSError *error);
+
+@interface QARView : UIView
+
+@property (nonatomic, copy) QARCompletionHandle completionHandle;
+@property (nonatomic, assign, readonly) QARViewState state;
+
+- (instancetype)initWithFrame:(CGRect)frame completionHandle:(QARCompletionHandle)completionHandle;
+
+@end</code></pre><p>.m 文件的实现</p>
+<pre><code>#import &quot;QARView.h&quot;
+#import &lt;AVFoundation/AVFoundation.h&gt;
+
+
+@interface QARView ()
+
+@property (nonatomic, strong) AVCaptureSession *captureSession;
+@property (nonatomic, strong) AVCaptureDeviceInput *captureDeviceInput;
+@property (nonatomic, strong) AVCaptureVideoPreviewLayer *captureVideoPreviewLayer;
+@property (nonatomic, readwrite) QARViewState state;
+
+@end
+
+@implementation QARView
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.captureSession stopRunning];
+    self.completionHandle = nil;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self initSelf];
+        [self.captureSession startRunning];
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self initSelf];
+        [self.captureSession startRunning];
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame completionHandle:(QARCompletionHandle)completionHandle {
+    self = [super initWithFrame:frame];
+    if (self) {
+        _completionHandle = completionHandle;
+        [self initSelf];
+        [self.captureSession startRunning];
+    }
+    return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.backgroundColor = [UIColor whiteColor];
+    self.captureVideoPreviewLayer.frame = self.layer.bounds;
+}
+
+- (void)initSelf {
+    [self addDeviceInput];
+    [self.layer addSublayer:self.captureVideoPreviewLayer];
+    [self addNotification];
+}
+
+- (void)addNotification {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionRuntimeError) name:AVCaptureSessionRuntimeErrorNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionStartRunning) name:AVCaptureSessionDidStartRunningNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionStopRunning) name:AVCaptureSessionDidStopRunningNotification object:nil];
+}
+
+- (void)addDeviceInput {
+    if ([self.captureSession canAddInput:self.captureDeviceInput])
+        [self.captureSession addInput:self.captureDeviceInput];
+    else {
+        NSError *error = [[NSError alloc] initWithDomain:@&quot;com.qunar.ar.error&quot; code:-1002 userInfo:@{@&quot;message&quot;:@&quot;会话没有输入源&quot;}];
+        if (self.completionHandle) {
+            self.completionHandle(error);
+        }
+        self.state = QARViewStateError;
+    }
+}
+
+- (AVCaptureSession *)captureSession {
+    if (!_captureSession) {
+        _captureSession = [[AVCaptureSession alloc] init];
+    }
+    return _captureSession;
+}
+
+- (AVCaptureDevice *)captureDevicePositionBack {
+    return [self getCameraDeviceWithPosition:AVCaptureDevicePositionBack]?:nil;
+}
+
+-(AVCaptureDevice *)getCameraDeviceWithPosition:(AVCaptureDevicePosition )position{
+    NSArray *cameras= [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    for (AVCaptureDevice *camera in cameras) {
+        if ([camera position]==position) {
+            return camera;
+        }
+    }
+    return nil;
+}
+
+#pragma mark - Property init
+
+- (AVCaptureInput *)captureDeviceInput {
+    if (!_captureDeviceInput) {
+        NSError *error;
+        _captureDeviceInput = [[AVCaptureDeviceInput alloc] initWithDevice:[self captureDevicePositionBack] error:&amp;error];
+        if (error) return nil;
+    }
+    return _captureDeviceInput;
+}
+
+- (AVCaptureVideoPreviewLayer *)captureVideoPreviewLayer {
+    if (!_captureVideoPreviewLayer) {
+        _captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession];
+        _captureVideoPreviewLayer.backgroundColor = [[UIColor whiteColor] CGColor];
+        _captureVideoPreviewLayer.videoGravity=AVLayerVideoGravityResizeAspectFill;
+    }
+    return _captureVideoPreviewLayer;
+}
+
+-(void)sessionRuntimeError{
+    NSError *error = [[NSError alloc] initWithDomain:@&quot;com.qunar.ar.error&quot; code:-1001 userInfo:@{@&quot;message&quot;:@&quot;QAR录制会话运行出错&quot;}];
+    if (self.completionHandle) {
+        self.completionHandle(error);
+    }
+    self.state = QARViewStateError;
+}
+
+- (void)sessionStartRunning {
+    if (self.completionHandle) {
+        self.completionHandle(nil);
+    }
+    [self setState:QARViewStateStartRunning];
+}
+
+- (void)sessionStopRunning {
+    if (self.completionHandle) {
+        self.completionHandle(nil);
+    }
+    self.state = QARViewStateStopRunning;
+}
+
+@end</code></pre><p>使用AVFoudation来获取后置摄像头的好处就是，AVFoundation更加接近底层，不必要做过多的封装开销，同时能更好的做容错处理。比如接听电话中断的处理..</p>
+<h2 id="方向的获取"><a href="#方向的获取" class="headerlink" title="方向的获取"></a>方向的获取</h2><p>我觉得这是整个工程中最大的难点！！！！！下面就来介绍，为什么这是最大的难点。首先我们可以从下面的方案中获取当前的方向</p>
+<ul>
+<li>CLLocation 中的 Heading</li>
+<li>CoreMotion 中的 magneticField</li>
+<li>CoreMotion 中的 Attitude（欧拉角） 中的 quaternion（四元素）</li>
+</ul>
+<p>正如你能理解到的，可以从定位信息中（这里也是陀螺仪传递的信息，但是经过了矫正）拿到当前的指南针的角度，同时可以从陀螺仪感应器中拿到磁场在x,y,z三轴上的分量。这应该是正常人首先能想到的方法了。但是这两种方法都存在致命的缺陷，</p>
+<pre><code>首先说一下CLLocation中的trueHeading获取到的指南针的信息不受设备空间位置的影响
+这个是很优秀的也是我们想要的结果
+但是拿到的值不稳地(下面的红色的箭头)，会出现很大幅度的抖动。
+可能在简单的界面中看不是很直观，如果把这个值放在了AR目标物上.
+这个目标物就会在横向不停的抖动。即便做了卡尔曼滤波，做了低通滤波
+
+接下来说CoreMotion中magneticField磁场信息获取到的指南针的角度
+你会发现绿色和蓝色箭头和红色箭头会存在很大的夹角，这个夹角是在设备抬起的时候导致的。
+在现有的资料查询和实验后没有找到一个标准的公式，能将CoreMotion中的磁场信息转化成稳定的指南针信息
+保留这个磁场的计算</code></pre><p><img src="%3C!--%EF%BF%BC2--%3E/images/compass.gif" alt></p>
+<p>上面的代码来自<a href="http://stackoverflow.com/questions/15380632/in-ios-what-is-the-difference-between-the-magnetic-field-values-from-the-core-l" target="_blank" rel="noopener">stackoverflow</a>这里讲解了CoreMotion中的magneticField和CLLocation中的trueHeading的不同点。</p>
+<p>同样尝试的还有CoreMotion中的欧拉角中的YAW，测试中发现这是一个不确定的值，没有参考系。所以导致设备找不着北（这个不清楚是个例还是真的就是这样）。使用欧拉角可能会存在万向节死锁的问题（这里如果只是使用欧拉角中的一个值的话，应该不会出现死锁）。</p>
+<p>最后摸索的四元素，如果你去查资料，估计也很难明白它是什么作用。首先看一下他的结构</p>
+<pre><code>typedef struct
+{
+    double x, y, z, w;
+} CMQuaternion;</code></pre><p>给出的解释是在xyz向量中旋转的角度是w，他是一个四维的空间，很难讲的清楚。这里需要知道的就是，从这四个分量中可以拿到需要的pitch和compass角度，计算方法是：</p>
+<pre><code>// 用四元素来计算方向和旋转角度
+CMQuaternion quat = motion.attitude.quaternion;
+// 这个值在这里没有什么用处
+// double myRoll = atan2(2*(quat.y*quat.w - quat.x*quat.z), 1 - 2*quat.y*quat.y - 2*quat.z*quat.z) ;
+double myPitch = atan2(2*(quat.x*quat.w + quat.y*quat.z), 1 - 2*quat.x*quat.x - 2*quat.y*quat.y);
+// yaw这个值来自正北
+double myYaw = degreesConvert(atan2(2*(quat.z*quat.w + quat.x*quat.y), 1 - 2*quat.y*quat.y - 2*quat.z*quat.z));</code></pre><p>拿到的Yaw的角度，经过测试是参考的指南针的方向，得到的值也很稳定。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>这里先来看一下成果</p>
+<p><img src="%3C!--%EF%BF%BC3--%3E/images/LocationAR-03.gif" alt> <img src="%3C!--%EF%BF%BC4--%3E/images/LocationAR-04.gif" alt> <img src="%3C!--%EF%BF%BC5--%3E/images/LocationAR-05.gif" alt></p>
+<p>上面的gif就是完成之后的效果图了，为什么会是三份呢，在计算位置变化和绘制界面上采用了不同的方案。这也是一个渐变的过程，随着对AR技术了解的深入渐渐的趋向于用矩阵来计算目标物的位置移动，之后接触到了GLKit和sceneKit</p>
+<p>UIView绘制目标并做位置移动。这里存在的优点和缺点是</p>
+<ul>
+<li>学习和接入成本低</li>
+<li>同样的计算方法UIView表现上很生硬，动画不流畅</li>
+</ul>
+<p>下面是代码实现：</p>
+<pre><code>@interface QARViewManager ()
+@end
+@implementation QARViewManager
+- (void)startMotion {
+    __weak typeof(self) weakSelf = self;
+    self.motion.motionCallback = ^(double zDegrees,double compassDegrees,double decareCompassDegrees, double xyTheta,NSError *error) {
+        if (error) {
+            [weakSelf excuteFailCallBack:error];
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                if (strongSelf) {
+                    [strongSelf.radioView setRotate:compassDegrees];
+
+                    QARModel *model = (QARModel *)(strongSelf.data[0]);
+                    UIView *view = (UIView *)(strongSelf.visibleViews[0]);
+                    double pointX = screenWidthHalf()*3.2*cos(M_PI_2 - (decareCompassDegrees - model.decareDegrees));
+                    double pointY = screenHeightHalf()*2*sin(zDegrees);
+
+                    model.point2dx = screenWidthHalf() + pointX;
+                    model.point2dy = screenHeightHalf() - pointY;
+
+                    view.center = CGPointMake(model.point2dx, model.point2dy);
+                }
+            });
+        }
+    };
+    [self.motion updateMotion];
+}
+@end</code></pre><p>GLKit绘制目标并做位置移动。这里存在的优点和缺点是</p>
+<ul>
+<li>学习和接入的成本高</li>
+<li>同样的计算方法UIView表现上很生硬，动画流畅</li>
+<li>接口设计复杂</li>
+<li>目标位置需要额外计算</li>
+</ul>
+<p>下面是代码实现：</p>
+<pre><code>@interface QARViewManager ()
+@end
+@implementation QARViewManager
+- (void)startMotion {
+    __weak typeof(self) weakSelf = self;
+    self.motion.motionCallback = ^(double zDegrees,double compassDegrees,double decareCompassDegrees, double xyTheta,NSError *error) {
+        if (error) {
+            [weakSelf excuteFailCallBack:error];
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                if (strongSelf) {
+                    [strongSelf.radioView setRotate:compassDegrees];
+                    QARModel *model = (QARModel *)(strongSelf.data[0]);
+                    GLKMatrix4 modelViewMatrix = GLKMatrix4Translate(GLKMatrix4Identity, 6.0 * cos(M_PI_2 - (decareCompassDegrees - model.decareDegrees)), 6.0*sin(zDegrees), -3.0f);
+                    // 将modelView矩阵赋值给需要做旋转的实例
+                    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, M_PI-xyTheta, 0.0, 0.0, 1.0);
+
+                    strongSelf.glkView.effect.transform.modelviewMatrix = modelViewMatrix;
+                    [strongSelf.glkView setNeedsDisplay];
+                }
+            });
+        }
+    };
+    [self.motion updateMotion];
+}
+
+@end</code></pre><p>SceneKit绘制目标并做位置移动。这里存在的优点和缺点是</p>
+<ul>
+<li>学习和接入的成本一般</li>
+<li>同样的计算方法UIView表现上很生硬，动画流畅</li>
+</ul>
+<p>下面是代码实现：</p>
+<pre><code>@interface QARViewManager ()
+@end
+@implementation QARViewManager
+- (void)startMotion {
+    __weak typeof(self) weakSelf = self;
+    self.motion.motionCallback = ^(double zDegrees,double compassDegrees,double decareCompassDegrees, double xyTheta,NSError *error) {
+        if (error) {
+            [weakSelf excuteFailCallBack:error];
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                if (strongSelf) {
+                    [strongSelf.radioView setRotate:compassDegrees];                        
+                    QARModel *model = (QARModel *)(strongSelf.data[0]);
+                    SCNMatrix4 mat = SCNMatrix4MakeTranslation(3.0 * cos(M_PI_2 - (decareCompassDegrees - model.decareDegrees)), 3.6*sin(zDegrees), -3.0);
+                    mat = SCNMatrix4Rotate(mat, M_PI-xyTheta, 0.0, 0.0, 1.0);
+                    strongSelf.boxNode.transform = mat;
+                }
+            });
+        }
+    };
+    [self.motion updateMotion];
+}
+
+@end</code></pre><h2 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h2><p>当前界面中只是对单个目标物做位置的更新，所以三个方案中Animation检测都达到了60fs，随着目标物的增加，<br>UIView做位置的转化就会使得当前的帧率下降。GLKit和SceneKit的优势也会凸现出来，GLKit中存在剪裁的逻辑，减少了不在当前视窗的目标物的计算。</p>
+<h2 id="准备知识"><a href="#准备知识" class="headerlink" title="准备知识"></a>准备知识</h2><p>下面是我在AR调研时学习和准备的知识</p>
+<ul>
+<li>CoreMotion陀螺仪</li>
+<li>AVFoundation获取后置摄像头</li>
+<li>矩阵转换</li>
+<li>OpenGLES绘制目标物</li>
+<li>GLKit</li>
+<li>GameKit</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AR/" rel="tag"># AR</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/01/2017-03-01-MapView实践记录/" rel="next" title="MapView适配版本记录实践记录">
+                <i class="fa fa-chevron-left"></i> MapView适配版本记录实践记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/12/2018-08-11-iOS Crash 一/" rel="prev" title="iOS Crash 一">
+                iOS Crash 一 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">持续、专注</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前期分析"><span class="nav-number">1.</span> <span class="nav-text">前期分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后置摄像头的获取"><span class="nav-number">2.</span> <span class="nav-text">后置摄像头的获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方向的获取"><span class="nav-number">3.</span> <span class="nav-text">方向的获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">4.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能分析"><span class="nav-number">5.</span> <span class="nav-text">性能分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备知识"><span class="nav-number">6.</span> <span class="nav-text">准备知识</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

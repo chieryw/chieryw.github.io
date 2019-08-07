@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Crash,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前两章说了crash文件解析的方法和crash文件中包含的内容，基于的条件是拿到当前奔溃的手机，再拿到手机中对应的日志。或者，用户打开了日志上报的功能，统计到的日志被apple收集了。这两种方式都比较被动，而且没有筛选的功能。对于监测app状态来说不是很准确，定位的过程也比较长。 自定义一个crash 收集工具上面已经介绍了背景，接下来开始自定义工具，先画一个逻辑图来阐述工具具备的功能  一步一步">
+<meta name="keywords" content="Crash">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS Crash 三">
+<meta property="og:url" content="http://yoursite.com/2018/08/14/2018-08-14-iOS Crash 三/index.html">
+<meta property="og:site_name" content="chiery&#39;blog">
+<meta property="og:description" content="前两章说了crash文件解析的方法和crash文件中包含的内容，基于的条件是拿到当前奔溃的手机，再拿到手机中对应的日志。或者，用户打开了日志上报的功能，统计到的日志被apple收集了。这两种方式都比较被动，而且没有筛选的功能。对于监测app状态来说不是很准确，定位的过程也比较长。 自定义一个crash 收集工具上面已经介绍了背景，接下来开始自定义工具，先画一个逻辑图来阐述工具具备的功能  一步一步">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2018/08/14/2018-08-14-iOS%20Crash%20三/%3C!--%EF%BF%BC0--%3E/images/crash-9.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/14/2018-08-14-iOS%20Crash%20三/%3C!--%EF%BF%BC1--%3E/images/crash-10.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/14/2018-08-14-iOS%20Crash%20三/%3C!--%EF%BF%BC2--%3E/images/crash-11.png">
+<meta property="og:updated_time" content="2018-08-25T17:32:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS Crash 三">
+<meta name="twitter:description" content="前两章说了crash文件解析的方法和crash文件中包含的内容，基于的条件是拿到当前奔溃的手机，再拿到手机中对应的日志。或者，用户打开了日志上报的功能，统计到的日志被apple收集了。这两种方式都比较被动，而且没有筛选的功能。对于监测app状态来说不是很准确，定位的过程也比较长。 自定义一个crash 收集工具上面已经介绍了背景，接下来开始自定义工具，先画一个逻辑图来阐述工具具备的功能  一步一步">
+<meta name="twitter:image" content="http://yoursite.com/2018/08/14/2018-08-14-iOS%20Crash%20三/%3C!--%EF%BF%BC0--%3E/images/crash-9.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/14/2018-08-14-iOS Crash 三/">
+
+
+
+
+
+  <title>iOS Crash 三 | chiery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chiery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/14/2018-08-14-iOS Crash 三/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chiery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS Crash 三</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-14T18:36:23+08:00">
+                2018-08-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS-Crash/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS Crash</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前两章说了crash文件解析的方法和crash文件中包含的内容，基于的条件是拿到当前奔溃的手机，再拿到手机中对应的日志。或者，用户打开了日志上报的功能，统计到的日志被apple收集了。这两种方式都比较被动，而且没有筛选的功能。对于监测app状态来说不是很准确，定位的过程也比较长。</p>
+<h3 id="自定义一个crash-收集工具"><a href="#自定义一个crash-收集工具" class="headerlink" title="自定义一个crash 收集工具"></a>自定义一个crash 收集工具</h3><p>上面已经介绍了背景，接下来开始自定义工具，先画一个逻辑图来阐述工具具备的功能</p>
+<p><img src="%3C!--%EF%BF%BC0--%3E/images/crash-9.png" alt></p>
+<p>一步一步来，首先在客户端收集crash,收集的方式包含两种：</p>
+<ul>
+<li>NSSetUncaughtExceptionHandler</li>
+<li>handleSignal</li>
+</ul>
+<p>至于hook Unix信号还是 mac内核信号，这个<a href="http://www.cocoachina.com/cms/wap.php?action=article&id=12301" target="_blank" rel="noopener">地址</a>中给出了详细的介绍，这里就不在赘述了。工程中的函数如下：</p>
+<a id="more"></a>
+
+<pre><code>需要include对应的头文件
+#include &lt;signal.h&gt;
+#include &lt;execinfo.h&gt;
+
+- (void)crashHandler {
+    signal(SIGHUP, signalHandler);
+    signal(SIGINT, signalHandler);
+    signal(SIGQUIT, signalHandler);
+
+    signal(SIGABRT, signalHandler);
+    signal(SIGILL, signalHandler);
+    signal(SIGSEGV, signalHandler);
+    signal(SIGFPE, signalHandler);
+    signal(SIGBUS, signalHandler);
+    signal(SIGPIPE, signalHandler);
+
+    //异常时调用的函数
+    NSSetUncaughtExceptionHandler(&amp;handleExceptions);
+}
+
+void handleExceptions(NSException *exception) {
+    NSLog(@&quot;exception = %@&quot;,exception);
+    NSString *callStackString = [[exception callStackSymbols] componentsJoinedByString:@&quot;\n&quot;];
+    NSLog(@&quot;callStackSymbols = %@&quot;,callStackString);
+    NSLog(@&quot;path: %@&quot;, realPath);
+
+    // 当前将这个数据做文件保存
+    NSDictionary *dict = @{
+                           @&quot;name&quot;: exception.name ? : @&quot;unknown&quot;,
+                           @&quot;reson&quot;: exception.reason ? : @&quot;unknown&quot;,
+                           @&quot;userInfo&quot;: exception.userInfo ? : @&quot;unknown&quot;,
+                           @&quot;callStackReturnAddresses&quot;: exception.callStackReturnAddresses ? : @&quot;unknown&quot;,
+                           @&quot;callStackSymbols&quot;: callStackString ? : @&quot;unknown&quot;
+                           };
+
+    NSLog(@&quot;dict: %@&quot;,dict);
+    // 将文件写入对应的地址
+    NSLog(@&quot;%@&quot;, realPath);
+    if ([dict writeToFile:realPath atomically:YES]) {
+        NSLog(@&quot;写入数据成功&quot;);
+    }
+
+    for (NSInteger i = 0; i &lt; 100; i ++) {
+        NSLog(@&quot;index : %ld&quot;, (long)i);
+    }
+}
+
+NSString *signalMessageBy(int sig) {
+    switch (sig) {
+        case SIGHUP:
+            return @&quot;SIGHUP (hangup)&quot;;
+            break;
+        case SIGINT:
+            return @&quot;SIGINT (interrupt)&quot;;
+            break;
+        case SIGQUIT:
+            return @&quot;SIGQUIT (quit)&quot;;
+            break;
+        case SIGABRT:
+            return @&quot;SIGABRT (abort())&quot;;
+            break;
+        case SIGILL:
+            return @&quot;SIGILL (illegal instruction (not reset when caught))&quot;;
+            break;
+        case SIGSEGV:
+            return @&quot;SIGSEGV (segmentation violation)&quot;;
+            break;
+        case SIGFPE:
+            return @&quot;SIGFPE (floating point exception)&quot;;
+            break;
+        case SIGBUS:
+            return @&quot;SIGBUS (bus error)&quot;;
+            break;
+        case SIGPIPE:
+            return @&quot;SIGPIPE (write on a pipe with no one to read it)&quot;;
+            break;
+
+        default:
+            return @&quot;unknown&quot;;
+            break;
+    }
+}
+
+void signalHandler(int sig) {
+    NSMutableString *mstr = [[NSMutableString alloc] init];
+    [mstr appendString:@&quot;Stack:\n&quot;];
+    void* callstack[128];
+    int i, frames = backtrace(callstack, 128);
+    char** strs = backtrace_symbols(callstack, frames);
+    for (i = 0; i &lt;frames; ++i) {
+        [mstr appendFormat:@&quot;%s\n&quot;, strs[i]];
+    }
+
+    // 这里在测试的时候是不会断点到的，所以需要存储在文件中
+    // 当前将这个数据做文件保存
+    NSDictionary *dict = @{
+                           @&quot;name&quot;: @&quot;UncaughtExceptionHandlerSignalExceptionName&quot;,
+                           @&quot;reson&quot;: [NSString stringWithFormat:@&quot;Signal %@ was raised.&quot;, signalMessageBy(sig)],
+                           @&quot;userInfo&quot;: @{ @&quot;UncaughtExceptionHandlerSignalKey&quot; : @(sig) },
+                           @&quot;callStackReturnAddresses&quot;: @&quot;unknown&quot;,
+                           @&quot;callStackSymbols&quot;: mstr ? : @&quot;unknown&quot;
+                           };
+
+    NSLog(@&quot;dict: %@&quot;,dict);
+    // 将文件写入对应的地址
+    NSLog(@&quot;%@&quot;, signCrashPath);
+    if ([dict writeToFile:signCrashPath atomically:YES]) {
+        NSLog(@&quot;写入数据成功&quot;);
+    }
+}</code></pre><p>根据不同的奔溃类型，手动写了两处奔溃的代码：</p>
+<pre><code>// 数组插入空值
+- (void)function9 {
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObject:nil];
+}
+
+// 访问野指针
+struct Test *test = {1,2};
+free(test);
+test-&gt;a;
+// struct 定义
+struct Test {
+    int a;
+    int b;
+};</code></pre><p>代码介绍完了，采用release的方式build到真机，运行crash，再从xcode device中下载当前真机中的内容，查看当前文件中的数据：数据如下：</p>
+<ul>
+<li><p>exception存储的文件信息</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+&lt;dict&gt;
+    &lt;key&gt;callStackReturnAddresses&lt;/key&gt;
+    &lt;array&gt;
+        &lt;integer&gt;6493351308&lt;/integer&gt;
+        &lt;integer&gt;6478382572&lt;/integer&gt;
+        &lt;integer&gt;6492927824&lt;/integer&gt;
+        &lt;integer&gt;6492090460&lt;/integer&gt;
+        &lt;integer&gt;4333932636&lt;/integer&gt;
+        &lt;integer&gt;6658430540&lt;/integer&gt;
+        &lt;integer&gt;6659614832&lt;/integer&gt;
+        &lt;integer&gt;6658455296&lt;/integer&gt;
+        &lt;integer&gt;6659723688&lt;/integer&gt;
+        &lt;integer&gt;6658968032&lt;/integer&gt;
+        &lt;integer&gt;6658922640&lt;/integer&gt;
+        &lt;integer&gt;6658916816&lt;/integer&gt;
+        &lt;integer&gt;6667181340&lt;/integer&gt;
+        &lt;integer&gt;6667190984&lt;/integer&gt;
+        &lt;integer&gt;6667162472&lt;/integer&gt;
+        &lt;integer&gt;6492992516&lt;/integer&gt;
+        &lt;integer&gt;6492990508&lt;/integer&gt;
+        &lt;integer&gt;6492981148&lt;/integer&gt;
+        &lt;integer&gt;6492065192&lt;/integer&gt;
+        &lt;integer&gt;6525509664&lt;/integer&gt;
+        &lt;integer&gt;6659966808&lt;/integer&gt;
+        &lt;integer&gt;4333932852&lt;/integer&gt;
+        &lt;integer&gt;6486368192&lt;/integer&gt;
+    &lt;/array&gt;
+    &lt;key&gt;callStackSymbols&lt;/key&gt;
+    &lt;string&gt;0   CoreFoundation                      0x000000018308ada4 &amp;lt;redacted&amp;gt; + 252
+1   libobjc.A.dylib                     0x00000001822445ec objc_exception_throw + 56
+2   CoreFoundation                      0x0000000183023750 _CFArgv + 0
+3   CoreFoundation                      0x0000000182f5705c &amp;lt;redacted&amp;gt; + 1412
+4   TestCrash                           0x000000010252905c -[ViewController function9] + 60
+5   UIKit                               0x000000018cdf964c &amp;lt;redacted&amp;gt; + 96
+6   UIKit                               0x000000018cf1a870 &amp;lt;redacted&amp;gt; + 80
+7   UIKit                               0x000000018cdff700 &amp;lt;redacted&amp;gt; + 440
+8   UIKit                               0x000000018cf351a8 &amp;lt;redacted&amp;gt; + 572
+9   UIKit                               0x000000018ce7c9e0 &amp;lt;redacted&amp;gt; + 2428
+10  UIKit                               0x000000018ce71890 &amp;lt;redacted&amp;gt; + 3160
+11  UIKit                               0x000000018ce701d0 &amp;lt;redacted&amp;gt; + 340
+12  UIKit                               0x000000018d651d1c &amp;lt;redacted&amp;gt; + 2340
+13  UIKit                               0x000000018d6542c8 &amp;lt;redacted&amp;gt; + 4744
+14  UIKit                               0x000000018d64d368 &amp;lt;redacted&amp;gt; + 152
+15  CoreFoundation                      0x0000000183033404 &amp;lt;redacted&amp;gt; + 24
+16  CoreFoundation                      0x0000000183032c2c &amp;lt;redacted&amp;gt; + 276
+17  CoreFoundation                      0x000000018303079c &amp;lt;redacted&amp;gt; + 1204
+18  CoreFoundation                      0x0000000182f50da8 CFRunLoopRunSpecific + 552
+19  GraphicsServices                    0x0000000184f36020 GSEventRunModal + 100
+20  UIKit                               0x000000018cf70758 UIApplicationMain + 236
+21  TestCrash                           0x0000000102529134 main + 88
+22  libdyld.dylib                       0x00000001829e1fc0 &amp;lt;redacted&amp;gt; + 4&lt;/string&gt;
+    &lt;key&gt;name&lt;/key&gt;
+    &lt;string&gt;NSInvalidArgumentException&lt;/string&gt;
+    &lt;key&gt;reson&lt;/key&gt;
+    &lt;string&gt;*** -[__NSArrayM insertObject:atIndex:]: object cannot be nil&lt;/string&gt;
+    &lt;key&gt;userInfo&lt;/key&gt;
+    &lt;string&gt;unknown&lt;/string&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;</code></pre></li>
+<li><p>signal 存储的文件信息</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+&lt;dict&gt;
+    &lt;key&gt;callStackReturnAddresses&lt;/key&gt;
+    &lt;string&gt;unknown&lt;/string&gt;
+    &lt;key&gt;callStackSymbols&lt;/key&gt;
+    &lt;string&gt;Stack:
+0   TestCrash                           0x00000001042f9264 signalHandler + 116
+1   libsystem_platform.dylib            0x0000000182cacb48 _sigtramp + 36
+2   libsystem_pthread.dylib             0x0000000182cb66a8 &amp;lt;redacted&amp;gt; + 360
+3   libsystem_c.dylib                   0x0000000182a7fd0c abort + 140
+4   libsystem_malloc.dylib              0x0000000182b49838 &amp;lt;redacted&amp;gt; + 0
+5   UIKit                               0x000000018cdf964c &amp;lt;redacted&amp;gt; + 96
+6   UIKit                               0x000000018cf1a870 &amp;lt;redacted&amp;gt; + 80
+7   UIKit                               0x000000018cdff700 &amp;lt;redacted&amp;gt; + 440
+8   UIKit                               0x000000018cf351a8 &amp;lt;redacted&amp;gt; + 572
+9   UIKit                               0x000000018ce7c9e0 &amp;lt;redacted&amp;gt; + 2428
+10  UIKit                               0x000000018ce71890 &amp;lt;redacted&amp;gt; + 3160
+11  UIKit                               0x000000018ce701d0 &amp;lt;redacted&amp;gt; + 340
+12  UIKit                               0x000000018d651d1c &amp;lt;redacted&amp;gt; + 2340
+13  UIKit                               0x000000018d6542c8 &amp;lt;redacted&amp;gt; + 4744
+14  UIKit                               0x000000018d64d368 &amp;lt;redacted&amp;gt; + 152
+15  CoreFoundation                      0x0000000183033404 &amp;lt;redacted&amp;gt; + 24
+16  CoreFoundation                      0x0000000183032c2c &amp;lt;redacted&amp;gt; + 276
+17  CoreFoundation                      0x000000018303079c &amp;lt;redacted&amp;gt; + 1204
+18  CoreFoundation                      0x0000000182f50da8 CFRunLoopRunSpecific + 552
+19  GraphicsServices                    0x0000000184f36020 GSEventRunModal + 100
+20  UIKit                               0x000000018cf70758 UIApplicationMain + 236
+21  TestCrash                           0x00000001042f9134 main + 88
+22  libdyld.dylib                       0x00000001829e1fc0 &amp;lt;redacted&amp;gt; + 4
+&lt;/string&gt;
+    &lt;key&gt;name&lt;/key&gt;
+    &lt;string&gt;UncaughtExceptionHandlerSignalExceptionName&lt;/string&gt;
+    &lt;key&gt;reson&lt;/key&gt;
+    &lt;string&gt;Signal SIGABRT (abort()) was raised.&lt;/string&gt;
+    &lt;key&gt;userInfo&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;UncaughtExceptionHandlerSignalKey&lt;/key&gt;
+        &lt;integer&gt;6&lt;/integer&gt;
+    &lt;/dict&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;</code></pre></li>
+</ul>
+<p>这里先介绍一个符号化的原理，apple提供了一个<code>atos</code>命令行工具，来完成符号化的过程。在crash的堆栈中，我们可以看到这样的信息<br><img src="%3C!--%EF%BF%BC1--%3E/images/crash-10.png" alt></p>
+<p>针对一行一行的堆栈信息做如下操作： </p>
+<pre><code>atos -arch &lt;Binary Architecture&gt; -o &lt;Path to dSYM file&gt;/Contents/Resources/DWARF/&lt;binary image name&gt; -l &lt;load address&gt; &lt;address to symbolicate&gt;</code></pre><p>这里存在几个参数：</p>
+<ul>
+<li>当前二进制的架构类型</li>
+<li>dSYM文件</li>
+<li>二进制镜像加载地址</li>
+<li>堆栈报错的地址</li>
+<li>当前进程的UUID信息，用于匹配dSYM文件</li>
+</ul>
+<p>如果上面的信息都有了，运行指令，例如apple给出的例子：</p>
+<pre><code>$ atos -arch arm64 -o TheElements.app.dSYM/Contents/Resources/DWARF/TheElements -l 0x1000e4000 0x00000001000effdc
+-[AtomicElementViewController myTransitionDidStop:finished:context:]</code></pre><p>问题来了，自定义收集到的信息中，缺少如下信息：</p>
+<ul>
+<li>当前二进制的架构类型</li>
+<li>二进制镜像加载的地址</li>
+<li>当前进程的UUID信息</li>
+</ul>
+<p>这些信息在哪里能够获取到呢？这里需要用到Mach-o相关的知识，二进制最终在手机上的呈现是以page的方式。在Mach-o层看到的信息为</p>
+<ul>
+<li>header</li>
+<li>load commad</li>
+<li>data</li>
+</ul>
+<p><img src="%3C!--%EF%BF%BC2--%3E/images/crash-11.png" alt></p>
+<p>header部分就是协议部分，定义了当前二进制使用的框架类型等，在Header中可以拿到的信息有</p>
+<ul>
+<li>二进制的框架类型</li>
+<li>二进制中各个镜像的加载地址</li>
+<li>uuid</li>
+</ul>
+<p>使用的方法为</p>
+<pre><code>// 这里存储一张表
+NSMutableArray *globalProgressInfo;
+void getProgressBinaryImagesInfo()
+{
+    printf(&quot;Binary Images:\n&quot;);
+    //Get count of all currently loaded DYLD
+    uint32_t count = _dyld_image_count();
+
+    if (count &gt; 0) {
+        globalProgressInfo = [NSMutableArray new];
+
+        for(uint32_t i = 0; i &lt; count; i++)
+        {
+            NSMutableDictionary *dict = [NSMutableDictionary new];
+            //Name of image (includes full path)
+            const char *dyld = _dyld_get_image_name(i);
+            if (dyld &amp;&amp; strlen(dyld) &gt; 0) {
+                //Get name of file
+                int slength = strlen(dyld);
+                int j;
+                for(j = slength - 1; j&gt;= 0; --j)
+                    if(dyld[j] == &apos;/&apos;) break;
+
+                //strndup only available in iOS 4.3
+                char *name = strndup(dyld + ++j, slength - j);
+                dict[@&quot;name&quot;] = [NSString stringWithFormat:@&quot;%s&quot;, name];
+                free(name);
+            }
+
+            const struct mach_header *header = _dyld_get_image_header(i);
+            if (header) {
+                // image address
+                dict[@&quot;imageAddress&quot;] = [NSString stringWithFormat:@&quot;0x%lX&quot;,(uintptr_t)header];
+                // arch
+                const NXArchInfo *info = NXGetArchInfoFromCpuType(header-&gt;cputype, header-&gt;cpusubtype);
+                if (info &amp;&amp; info-&gt;name) {
+                    dict[@&quot;arch&quot;] = [NSString stringWithFormat:@&quot;%s&quot;, info-&gt;name];
+                }
+
+                // uuid
+                BOOL is64bit = header-&gt;magic == MH_MAGIC_64 || header-&gt;magic == MH_CIGAM_64;
+                uintptr_t cursor = (uintptr_t)header + (is64bit ? sizeof(struct mach_header_64) : sizeof(struct mach_header));
+                const struct segment_command *segmentCommand = NULL;
+                for (uint32_t i = 0; i &lt; header-&gt;ncmds; i++, cursor += segmentCommand-&gt;cmdsize)
+                {
+                    segmentCommand = (struct segment_command *)cursor;
+                    if (segmentCommand-&gt;cmd == LC_UUID)
+                    {
+                        const struct uuid_command *uuidCommand = (const struct uuid_command *)segmentCommand;
+                        if (uuidCommand) {
+                            dict[@&quot;uuid&quot;] = [[NSUUID alloc] initWithUUIDBytes:uuidCommand-&gt;uuid].UUIDString;
+                        }
+                    }
+                }
+            }
+
+            [globalProgressInfo addObject:dict];
+        }
+    }
+}</code></pre><p>输出的结果太多了：小一百个之多，所以在crash的时候是需要过滤的</p>
+<pre><code>(
+    {
+    arch = arm64;
+    imageAddress = 0x102544000;
+    name = TestCrash;
+    uuid = &quot;812B393C-BAE2-3E1B-A14E-8593657A8935&quot;;
+},
+    {
+    arch = arm64;
+    imageAddress = 0x102560000;
+    name = &quot;libBacktraceRecording.dylib&quot;;
+    uuid = &quot;CC6A753E-76FF-324E-8314-B0BAD859C354&quot;;
+},
+    {
+    arch = arm64;
+    imageAddress = 0x102584000;
+    name = &quot;libMainThreadChecker.dylib&quot;;
+    uuid = &quot;3E93EDAA-8307-3BEA-8226-AEF09B0D193E&quot;;
+},
+    ......
+）</code></pre><p>经过排重之后上传的crash文件的内容如下：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+&lt;dict&gt;
+    &lt;key&gt;callStackReturnAddresses&lt;/key&gt;
+    &lt;array&gt;
+        &lt;integer&gt;6493351308&lt;/integer&gt;
+        &lt;integer&gt;6478382572&lt;/integer&gt;
+        &lt;integer&gt;6492927824&lt;/integer&gt;
+        &lt;integer&gt;6492090460&lt;/integer&gt;
+        &lt;integer&gt;4300867372&lt;/integer&gt;
+        &lt;integer&gt;6658430540&lt;/integer&gt;
+        &lt;integer&gt;6659614832&lt;/integer&gt;
+        &lt;integer&gt;6658455296&lt;/integer&gt;
+        &lt;integer&gt;6659723688&lt;/integer&gt;
+        &lt;integer&gt;6658968032&lt;/integer&gt;
+        &lt;integer&gt;6658922640&lt;/integer&gt;
+        &lt;integer&gt;6658916816&lt;/integer&gt;
+        &lt;integer&gt;6667181340&lt;/integer&gt;
+        &lt;integer&gt;6667190984&lt;/integer&gt;
+        &lt;integer&gt;6667162472&lt;/integer&gt;
+        &lt;integer&gt;6492992516&lt;/integer&gt;
+        &lt;integer&gt;6492990508&lt;/integer&gt;
+        &lt;integer&gt;6492981148&lt;/integer&gt;
+        &lt;integer&gt;6492065192&lt;/integer&gt;
+        &lt;integer&gt;6525509664&lt;/integer&gt;
+        &lt;integer&gt;6659966808&lt;/integer&gt;
+        &lt;integer&gt;4300867588&lt;/integer&gt;
+        &lt;integer&gt;6486368192&lt;/integer&gt;
+    &lt;/array&gt;
+    &lt;key&gt;callStackSymbols&lt;/key&gt;
+    &lt;string&gt;0   CoreFoundation                      0x000000018308ada4 &amp;lt;redacted&amp;gt; + 252
+1   libobjc.A.dylib                     0x00000001822445ec objc_exception_throw + 56
+2   CoreFoundation                      0x0000000183023750 _CFArgv + 0
+3   CoreFoundation                      0x0000000182f5705c &amp;lt;redacted&amp;gt; + 1412
+4   TestCrash                           0x00000001005a072c TestCrash + 34604
+5   UIKit                               0x000000018cdf964c &amp;lt;redacted&amp;gt; + 96
+6   UIKit                               0x000000018cf1a870 &amp;lt;redacted&amp;gt; + 80
+7   UIKit                               0x000000018cdff700 &amp;lt;redacted&amp;gt; + 440
+8   UIKit                               0x000000018cf351a8 &amp;lt;redacted&amp;gt; + 572
+9   UIKit                               0x000000018ce7c9e0 &amp;lt;redacted&amp;gt; + 2428
+10  UIKit                               0x000000018ce71890 &amp;lt;redacted&amp;gt; + 3160
+11  UIKit                               0x000000018ce701d0 &amp;lt;redacted&amp;gt; + 340
+12  UIKit                               0x000000018d651d1c &amp;lt;redacted&amp;gt; + 2340
+13  UIKit                               0x000000018d6542c8 &amp;lt;redacted&amp;gt; + 4744
+14  UIKit                               0x000000018d64d368 &amp;lt;redacted&amp;gt; + 152
+15  CoreFoundation                      0x0000000183033404 &amp;lt;redacted&amp;gt; + 24
+16  CoreFoundation                      0x0000000183032c2c &amp;lt;redacted&amp;gt; + 276
+17  CoreFoundation                      0x000000018303079c &amp;lt;redacted&amp;gt; + 1204
+18  CoreFoundation                      0x0000000182f50da8 CFRunLoopRunSpecific + 552
+19  GraphicsServices                    0x0000000184f36020 GSEventRunModal + 100
+20  UIKit                               0x000000018cf70758 UIApplicationMain + 236
+21  TestCrash                           0x00000001005a0804 TestCrash + 34820
+22  libdyld.dylib                       0x00000001829e1fc0 &amp;lt;redacted&amp;gt; + 4&lt;/string&gt;
+    &lt;key&gt;imageInfo&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;CoreFoundation&lt;/key&gt;
+        &lt;dict&gt;
+            &lt;key&gt;arch&lt;/key&gt;
+            &lt;string&gt;arm64&lt;/string&gt;
+            &lt;key&gt;imageAddress&lt;/key&gt;
+            &lt;string&gt;0x182F45000&lt;/string&gt;
+            &lt;key&gt;name&lt;/key&gt;
+            &lt;string&gt;CoreFoundation&lt;/string&gt;
+            &lt;key&gt;uuid&lt;/key&gt;
+            &lt;string&gt;533C841E-D6E9-313D-8ADB-02388744E2EF&lt;/string&gt;
+        &lt;/dict&gt;
+        &lt;key&gt;GraphicsServices&lt;/key&gt;
+        &lt;dict&gt;
+            &lt;key&gt;arch&lt;/key&gt;
+            &lt;string&gt;arm64&lt;/string&gt;
+            &lt;key&gt;imageAddress&lt;/key&gt;
+            &lt;string&gt;0x184F2B000&lt;/string&gt;
+            &lt;key&gt;name&lt;/key&gt;
+            &lt;string&gt;GraphicsServices&lt;/string&gt;
+            &lt;key&gt;uuid&lt;/key&gt;
+            &lt;string&gt;5011EC25-11D7-3A56-AF50-1E8207D54962&lt;/string&gt;
+        &lt;/dict&gt;
+        &lt;key&gt;TestCrash&lt;/key&gt;
+        &lt;dict&gt;
+            &lt;key&gt;arch&lt;/key&gt;
+            &lt;string&gt;arm64&lt;/string&gt;
+            &lt;key&gt;imageAddress&lt;/key&gt;
+            &lt;string&gt;0x100598000&lt;/string&gt;
+            &lt;key&gt;name&lt;/key&gt;
+            &lt;string&gt;TestCrash&lt;/string&gt;
+            &lt;key&gt;uuid&lt;/key&gt;
+            &lt;string&gt;8C66D9F9-9023-3E5C-B4E6-9BF8772ED730&lt;/string&gt;
+        &lt;/dict&gt;
+        &lt;key&gt;UIKit&lt;/key&gt;
+        &lt;dict&gt;
+            &lt;key&gt;arch&lt;/key&gt;
+            &lt;string&gt;arm64&lt;/string&gt;
+            &lt;key&gt;imageAddress&lt;/key&gt;
+            &lt;string&gt;0x18CC53000&lt;/string&gt;
+            &lt;key&gt;name&lt;/key&gt;
+            &lt;string&gt;UIKit&lt;/string&gt;
+            &lt;key&gt;uuid&lt;/key&gt;
+            &lt;string&gt;BE6EF020-3CAA-3939-86DA-6DD6737541D5&lt;/string&gt;
+        &lt;/dict&gt;
+        &lt;key&gt;libdyld.dylib&lt;/key&gt;
+        &lt;dict&gt;
+            &lt;key&gt;arch&lt;/key&gt;
+            &lt;string&gt;arm64&lt;/string&gt;
+            &lt;key&gt;imageAddress&lt;/key&gt;
+            &lt;string&gt;0x1829E1000&lt;/string&gt;
+            &lt;key&gt;name&lt;/key&gt;
+            &lt;string&gt;libdyld.dylib&lt;/string&gt;
+            &lt;key&gt;uuid&lt;/key&gt;
+            &lt;string&gt;6225B1CD-3984-3071-A64A-DD8F31B09C36&lt;/string&gt;
+        &lt;/dict&gt;
+        &lt;key&gt;libobjc.A.dylib&lt;/key&gt;
+        &lt;dict&gt;
+            &lt;key&gt;arch&lt;/key&gt;
+            &lt;string&gt;arm64&lt;/string&gt;
+            &lt;key&gt;imageAddress&lt;/key&gt;
+            &lt;string&gt;0x18223C000&lt;/string&gt;
+            &lt;key&gt;name&lt;/key&gt;
+            &lt;string&gt;libobjc.A.dylib&lt;/string&gt;
+            &lt;key&gt;uuid&lt;/key&gt;
+            &lt;string&gt;EB1135B2-BDE9-3B69-B96E-42CA98200183&lt;/string&gt;
+        &lt;/dict&gt;
+    &lt;/dict&gt;
+    &lt;key&gt;name&lt;/key&gt;
+    &lt;string&gt;NSInvalidArgumentException&lt;/string&gt;
+    &lt;key&gt;reson&lt;/key&gt;
+    &lt;string&gt;*** -[__NSArrayM insertObject:atIndex:]: object cannot be nil&lt;/string&gt;
+    &lt;key&gt;userInfo&lt;/key&gt;
+    &lt;string&gt;unknown&lt;/string&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;</code></pre><p>对于解析堆栈来说，这里的数据就已经足够了。</p>
+<h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>到目前为止，还没有介绍dSYM是什么，长什么样子。dSYM文件通过<code>nm</code>指令可以查看符号文件中的内容。例如：</p>
+<pre><code>nm TestCrash.app.dSYM/Contents/Resources/DWARF/TestCrash &gt; a.txt</code></pre><p>产出的文件如下：</p>
+<pre><code>0000000100007034 t +[LJCaughtException applicationDocumentsDirectory]
+00000001000082e8 t +[LJCaughtException getExceptionFileNameWithPrefix:]
+00000001000070c0 t +[LJCaughtException getHandler]
+00000001000070c4 t +[LJCaughtException processException:]
+000000010000708c t +[LJCaughtException setDefaultHandler]
+0000000100009414 t -[AppDelegate .cxx_destruct]
+0000000100009258 t -[AppDelegate application:didFinishLaunchingWithOptions:]
+00000001000093e8 t -[AppDelegate applicationDidBecomeActive:]
+00000001000093e0 t -[AppDelegate applicationDidEnterBackground:]
+00000001000093e4 t -[AppDelegate applicationWillEnterForeground:]
+00000001000093dc t -[AppDelegate applicationWillResignActive:]
+00000001000093ec t -[AppDelegate applicationWillTerminate:]
+000000010000882c t -[AppDelegate crashHandler]
+0000000100009400 t -[AppDelegate setWindow:]
+00000001000093f0 t -[AppDelegate window]
+0000000100006fc4 t -[LJCrashBackTraceModel .cxx_destruct]
+0000000100006d4c t -[LJCrashBackTraceModel encodeWithCoder:]
+0000000100006e4c t -[LJCrashBackTraceModel initWithCoder:]
+0000000100006f9c t -[LJCrashBackTraceModel setStrImageLoadAddress:]
+0000000100006fb8 t -[LJCrashBackTraceModel setStrImageName:]
+0000000100006f80 t -[LJCrashBackTraceModel setStrStackAddress:]
+0000000100006f8c t -[LJCrashBackTraceModel strImageLoadAddress]
+0000000100006fa8 t -[LJCrashBackTraceModel strImageName]
+0000000100006f70 t -[LJCrashBackTraceModel strStackAddress]
+0000000100006cd0 t -[LJCrashInfoModel .cxx_destruct]
+0000000100006cac t -[LJCrashInfoModel aryCrashBackTrace]
+0000000100006928 t -[LJCrashInfoModel encodeWithCoder:]
+0000000100006aa0 t -[LJCrashInfoModel initWithCoder:]
+0000000100006cbc t -[LJCrashInfoModel setAryCrashBackTrace:]
+0000000100006c84 t -[LJCrashInfoModel setStrCrashArch:]
+0000000100006c68 t -[LJCrashInfoModel setStrCrashName:]
+0000000100006c4c t -[LJCrashInfoModel setStrCrashReason:]
+0000000100006ca0 t -[LJCrashInfoModel setStrCrashSystemVersion:]
+0000000100006c74 t -[LJCrashInfoModel strCrashArch]
+0000000100006c58 t -[LJCrashInfoModel strCrashName]
+0000000100006c3c t -[LJCrashInfoModel strCrashReason]
+0000000100006c90 t -[LJCrashInfoModel strCrashSystemVersion]
+0000000100008744 t -[ViewController didReceiveMemoryWarning]
+0000000100008404 t -[ViewController exceptionAction:]
+0000000100008410 t -[ViewController function1]
+000000010000846c t -[ViewController function2]
+00000001000084c8 t -[ViewController function3]
+0000000100008524 t -[ViewController function4]
+0000000100008580 t -[ViewController function5]
+00000001000085dc t -[ViewController function6]
+0000000100008638 t -[ViewController function7]
+0000000100008694 t -[ViewController function8]
+00000001000086f0 t -[ViewController function9]
+000000010000873c t -[ViewController signalCrashAction:]
+00000001000083d0 t -[ViewController viewDidLoad]
+0000000100008778 t -[ViewController1 viewDidLoad]
+000000010000e2b0 s _OBJC_CLASS_$_AppDelegate
+000000010000e198 s _OBJC_CLASS_$_LJCaughtException
+000000010000e148 s _OBJC_CLASS_$_LJCrashBackTraceModel
+000000010000e0f8 s _OBJC_CLASS_$_LJCrashInfoModel
+000000010000e1e8 s _OBJC_CLASS_$_ViewController
+000000010000e238 s _OBJC_CLASS_$_ViewController1
+000000010000e0f0 s _OBJC_IVAR_$_AppDelegate._window
+000000010000e0e8 s _OBJC_IVAR_$_LJCrashBackTraceModel._strImageLoadAddress
+000000010000e0ec s _OBJC_IVAR_$_LJCrashBackTraceModel._strImageName
+000000010000e0e4 s _OBJC_IVAR_$_LJCrashBackTraceModel._strStackAddress
+000000010000e0e0 s _OBJC_IVAR_$_LJCrashInfoModel._aryCrashBackTrace
+000000010000e0d8 s _OBJC_IVAR_$_LJCrashInfoModel._strCrashArch
+000000010000e0d4 s _OBJC_IVAR_$_LJCrashInfoModel._strCrashName
+000000010000e0d0 s _OBJC_IVAR_$_LJCrashInfoModel._strCrashReason
+000000010000e0dc s _OBJC_IVAR_$_LJCrashInfoModel._strCrashSystemVersion
+000000010000e288 s _OBJC_METACLASS_$_AppDelegate
+000000010000e1c0 s _OBJC_METACLASS_$_LJCaughtException
+000000010000e170 s _OBJC_METACLASS_$_LJCrashBackTraceModel
+000000010000e120 s _OBJC_METACLASS_$_LJCrashInfoModel
+000000010000e210 s _OBJC_METACLASS_$_ViewController
+000000010000e260 s _OBJC_METACLASS_$_ViewController1
+0000000100007018 t _UncaughtExceptionHandler
+0000000100000000 T __mh_execute_header
+0000000100009428 t _getAppName
+0000000100009ac4 t _getCodeArch
+0000000100009908 t _getImageInfo
+00000001000094fc t _getImageLoadAddress
+00000001000095dc t _getProgressBinaryImagesInfo
+000000010000e410 s _globalProgressInfo
+0000000100008b6c t _handleExceptions
+00000001000087ac t _main
+000000010000e3f8 s _preHander
+000000010000e400 s _realPath
+000000010000e408 s _signCrashPath
+00000001000088c0 t _signalHandler
+000000010000916c t _signalMessageBy</code></pre><p>符号文件一个记录文件，记录当前工程中的文件编译之后在不同架构上的偏移量。进程在加载的时候都会从一个随机地址开始加载，mach-o中的section也是相对于这个初始的加载地址开始累加的，所以在奔溃的时候，可以通过奔溃堆栈的地址 - 进程加载的地址匹配到出错的函数名称</p>
+<pre><code>函数在dSYM中的便宜地址的映射 = 堆栈奔溃地址 - 进程记载地址 + slide(一般————Text代码段的slide是0x00000001000000000）
+
+也可以通过如下方法查看dSYM文件中的slide
+
+otool -arch &lt;arch&gt; -l &lt;path_to_dsym&gt; | grep __TEXT -m 2 -A 1 | grep vmaddr</code></pre><p>拿当前我们奔溃的堆栈来说</p>
+<pre><code>atos -arch arm64 -o TestCrash.app.dSYM/Contents/Resources/DWARF/TestCrash -l 0x100598000 0x00000001005a072c
+
+// 得到的结果为：
+-[ViewController function9] (in TestCrash) (ViewController.m:89)
+
+堆栈地址 - 镜像加载的地址 + 0x0000000100000000 =  0x000000010000872c</code></pre><p>当前奔溃的函数是function9,对应的堆栈地址是，和上面算出来的地址有出入</p>
+<pre><code>00000001000086f0</code></pre><p>原因是function9对饮的地址只是function9函数开始的地址，并非是函数真正报错的地址</p>
+<pre><code>- (void)function9 {
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObject:nil];
+}</code></pre><p>所以通过nm的方式没能找到对应的报错的函数,换一个命令：</p>
+<pre><code>dwarfdump -e --debug-line TestCrash.app.dSYM/Contents/Resources/DWARF/TestCrash &gt; line.txt</code></pre><p>出来的结果如下： </p>
+<pre><code>----------------------------------------------------------------------
+ File: TestCrash.app.dSYM/Contents/Resources/DWARF/TestCrash (arm64)
+----------------------------------------------------------------------
+.debug_line contents:
+----------------------------------------------------------------------
+debug_line[0x00000000]
+----------------------------------------------------------------------
+
+Address            Line   File
+------------------ ------ ------------------------------
+0x0000000000000000      1 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include/__stddef_max_align_t.h
+
+----------------------------------------------------------------------
+debug_line[0x000000a5]
+----------------------------------------------------------------------
+
+Address            Line   File
+------------------ ------ ------------------------------
+0x0000000000000000      1 /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/include/fenv.h
+
+......
+
+Address            Line   File
+------------------ ------ ------------------------------
+0x00000001000083d0     22 /****/TestCrash/ViewController.m
+0x00000001000083dc     23
+0x00000001000083f8     25
+0x0000000100008404     26
+0x0000000100008404     27
+0x0000000100008410     30
+0x0000000100008434     32
+0x0000000100008440     31
+0x0000000100008444     31
+0x000000010000844c     34
+0x000000010000846c     37
+0x0000000100008490     39
+0x000000010000849c     38
+0x00000001000084a0     38
+0x00000001000084a8     41
+0x00000001000084c8     44
+0x00000001000084ec     46
+0x00000001000084f8     45
+0x00000001000084fc     45
+0x0000000100008504     48
+0x0000000100008524     51
+0x0000000100008548     53
+0x0000000100008554     52
+0x0000000100008558     52
+0x0000000100008560     55
+0x0000000100008580     58
+0x00000001000085a4     60
+0x00000001000085b0     59
+0x00000001000085b4     59
+0x00000001000085bc     62
+0x00000001000085dc     65
+0x0000000100008600     67
+0x000000010000860c     66
+0x0000000100008610     66
+0x0000000100008618     69
+0x0000000100008638     72
+0x000000010000865c     74
+0x0000000100008668     73
+0x000000010000866c     73
+0x0000000100008674     76
+0x0000000100008694     79
+0x00000001000086b8     81
+0x00000001000086c4     80
+0x00000001000086c8     80
+0x00000001000086d0     83
+0x00000001000086f0     86
+0x00000001000086fc     87
+0x000000010000871c     88
+0x000000010000872c     89
+0x000000010000873c     91
+0x000000010000873c     94
+0x0000000100008744     98
+0x0000000100008750     99
+0x000000010000876c    101
+0x0000000100008778    112
+0x0000000100008784    113
+0x00000001000087a0    115
+0x00000001000087ac    115
+
+......</code></pre><p>这里对应的地址就能找到了，对应的行数也找出来了。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://developer.apple.com/library/archive/technotes/tn2151/_index.html#//apple_ref/doc/uid/DTS40008184-CH1-SYMBOLICATION" target="_blank" rel="noopener">Understanding and Analyzing Application Crash Reports</a></p>
+<p><a href="https://davidlii.cn/2018/07/11/dsym.html" target="_blank" rel="noopener">结合dSYM文件分析crash日志</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Crash/" rel="tag"># Crash</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/13/2018-08-13-iOS Crash 二/" rel="next" title="iOS Crash 二">
+                <i class="fa fa-chevron-left"></i> iOS Crash 二
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/16/2018-08-16-iOS Crash 四/" rel="prev" title="iOS Crash 四">
+                iOS Crash 四 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">持续、专注</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义一个crash-收集工具"><span class="nav-number">1.</span> <span class="nav-text">自定义一个crash 收集工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题外话"><span class="nav-number">2.</span> <span class="nav-text">题外话</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

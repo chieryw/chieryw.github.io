@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Crash,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="初衷当前客户端中使用的crash收集工具为第三方提供，用到的第三方工具有  fabric bugly  第三方工具在使用的过程中，存在的问题：  内聚的功能过多。有的功能我们并不会用到，成为了负担 定制化场景少。对于不同的app，希望错不同的维度来查询对应的结果 SDK size 较大  针对上面的这些问题，打算出一套自己的crash工具，工具本省应该具备的功能：  功能单一性 健壮性 定制化产出">
+<meta name="keywords" content="Crash">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS Crash 一">
+<meta property="og:url" content="http://yoursite.com/2018/08/12/2018-08-11-iOS Crash 一/index.html">
+<meta property="og:site_name" content="chiery&#39;blog">
+<meta property="og:description" content="初衷当前客户端中使用的crash收集工具为第三方提供，用到的第三方工具有  fabric bugly  第三方工具在使用的过程中，存在的问题：  内聚的功能过多。有的功能我们并不会用到，成为了负担 定制化场景少。对于不同的app，希望错不同的维度来查询对应的结果 SDK size 较大  针对上面的这些问题，打算出一套自己的crash工具，工具本省应该具备的功能：  功能单一性 健壮性 定制化产出">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC0--%3E/images/crash-1.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC1--%3E/images/crash-3.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC2--%3E/images/crash-2.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC3--%3E/images/crash-5.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC4--%3E/images/crash-6.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC5--%3E/images/crash-7.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC6--%3E/images/crash-8.png">
+<meta property="og:updated_time" content="2018-08-25T17:33:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS Crash 一">
+<meta name="twitter:description" content="初衷当前客户端中使用的crash收集工具为第三方提供，用到的第三方工具有  fabric bugly  第三方工具在使用的过程中，存在的问题：  内聚的功能过多。有的功能我们并不会用到，成为了负担 定制化场景少。对于不同的app，希望错不同的维度来查询对应的结果 SDK size 较大  针对上面的这些问题，打算出一套自己的crash工具，工具本省应该具备的功能：  功能单一性 健壮性 定制化产出">
+<meta name="twitter:image" content="http://yoursite.com/2018/08/12/2018-08-11-iOS%20Crash%20一/%3C!--%EF%BF%BC0--%3E/images/crash-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/12/2018-08-11-iOS Crash 一/">
+
+
+
+
+
+  <title>iOS Crash 一 | chiery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chiery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/12/2018-08-11-iOS Crash 一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chiery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS Crash 一</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-12T18:36:23+08:00">
+                2018-08-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS-Crash/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS Crash</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h3><p>当前客户端中使用的crash收集工具为第三方提供，用到的第三方工具有</p>
+<ul>
+<li>fabric</li>
+<li>bugly</li>
+</ul>
+<p>第三方工具在使用的过程中，存在的问题：</p>
+<ul>
+<li>内聚的功能过多。有的功能我们并不会用到，成为了负担</li>
+<li>定制化场景少。对于不同的app，希望错不同的维度来查询对应的结果</li>
+<li>SDK size 较大</li>
+</ul>
+<p>针对上面的这些问题，打算出一套自己的crash工具，工具本省应该具备的功能：</p>
+<ul>
+<li>功能单一性</li>
+<li>健壮性</li>
+<li>定制化产出</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="app发生crash之后如何定位"><a href="#app发生crash之后如何定位" class="headerlink" title="app发生crash之后如何定位"></a>app发生crash之后如何定位</h3><p>当手机中的应用发生奔溃了之后，都会在系统日志中生成一条crash日志，这里为了测试，会新建一个应用，模拟crash。比如一个数组越界的crash</p>
+<pre><code>NSMutableArray *array = [NSMutableArray array];
+[array addObject:nil];</code></pre><p>工程创建好了之后，可以先在xcode中编译一下，出发这里的demo，会发现奔溃现象，奔溃现场如下：</p>
+<p><img src="%3C!--%EF%BF%BC0--%3E/images/crash-1.png" alt></p>
+<p>从奔溃的堆栈中我们可以发现如下信息：</p>
+<ul>
+<li>reson</li>
+<li>出错堆栈</li>
+<li>函数调用的过程</li>
+</ul>
+<p>当前<code>Debug</code>中看到的crash可读性很好，方便定位crash出错的位置。这是因为XCode默认帮我们做了很多事情，从crash的产生到符号化，都在无感知的状态下帮我们做好了。更有甚者，如果打开了全局的断点调试功能，在奔溃的同时还会定位到出错的代码行。这样的便利这是在xcode IDE环境中，现实的使用场景中，获取到的crash，基本上是不可读的。为了模拟真实的用户场景，通过如下方式模拟：</p>
+<ol>
+<li>archive的方式导出当前的release包资源</li>
+<li>载通过itools之类的工具安装</li>
+<li>点击可以crash的地方，产生几条crash记录</li>
+</ol>
+<p>正常情况下，我们启动xcode,通过 <code>Window</code> -&gt; <code>Devices and Simulators</code> -&gt; <code>选中当前crash手机（这里需要usb连接）</code> -&gt; <code>View Devices Logs</code>。等待xcode scaning完成，应该就会看到crash文件，保险起见，最好check一下时间。但是也有看不到情况，例如我的xcode就没有执行scaning的操作，导致没有同步到crash数据。</p>
+<p><img src="%3C!--%EF%BF%BC1--%3E/images/crash-3.png" alt></p>
+<p>如果遇到了同样的情况，请走下面的操作：</p>
+<ol>
+<li>USB连接电脑</li>
+<li>打开iTunes同步手机到当前的电脑上</li>
+<li>cd 到 <code>~/Library/Logs/CrashReporter/MobileDevice/** iphone</code></li>
+<li>ls</li>
+</ol>
+<p>就可以看到对应的crash文件了,如下<br><img src="%3C!--%EF%BF%BC2--%3E/images/crash-2.png" alt></p>
+<p>看一下同样的报错在真实环境中是什么的：</p>
+<pre><code>Incident Identifier: 056AE3FF-0053-4B5F-8C42-5CFD2F4CE9F4
+CrashReporter Key:   3c6d6b39fd3e330ce44828e97ab49661480cbb94
+Hardware Model:      iPhone10,3
+Process:             TestCrash [652]
+Path:                /private/var/containers/Bundle/Application/538B29B9-CED1-4969-913B-CB9344F70E94/TestCrash.app/TestCrash
+Identifier:          com.lianjia.TestCrash
+Version:             1 (1.0)
+Code Type:           ARM-64 (Native)
+Role:                Foreground
+Parent Process:      launchd [1]
+Coalition:           com.lianjia.TestCrash [682]
+
+
+Date/Time:           2018-08-10 17:43:31.2405 +0800
+Launch Time:         2018-08-10 17:43:27.4744 +0800
+OS Version:          iPhone OS 11.4.1 (15G77)
+Baseband Version:    1.93.00
+Report Version:      104
+
+Exception Type:  EXC_CRASH (SIGABRT)
+Exception Codes: 0x0000000000000000, 0x0000000000000000
+Exception Note:  EXC_CORPSE_NOTIFY
+Triggered by Thread:  0
+
+Application Specific Information:
+abort() called
+
+Filtered syslog:
+None found
+
+Last Exception Backtrace:
+(0x18308ad8c 0x1822445ec 0x183023750 0x182f5705c 0x1046d105c 0x18cdf964c 0x18cf1a870 0x18cdff700 0x18cf351a8 0x18ce7c9e0 0x18ce71890 0x18ce701d0 0x18d651d1c 0x18d6542c8 0x18d64d368 0x183033404 0x183032c2c 0x18303079c 0x182f50da8 0x184f36020 0x18cf70758 0x1046d1134 0x1829e1fc0)
+
+Thread 0 name:  Dispatch queue: com.apple.main-thread
+Thread 0 Crashed:
+0   libsystem_kernel.dylib            0x0000000182b112e0 0x182aef000 + 140000
+1   libsystem_pthread.dylib           0x0000000182cb66a8 0x182caf000 + 30376
+2   libsystem_c.dylib                 0x0000000182a7fd0c 0x182a1d000 + 404748
+3   libc++abi.dylib                   0x000000018221b2c8 0x18221a000 + 4808
+4   libc++abi.dylib                   0x000000018221b470 0x18221a000 + 5232
+5   libobjc.A.dylib                   0x00000001822448d4 0x18223c000 + 35028
+6   libc++abi.dylib                   0x000000018223537c 0x18221a000 + 111484
+7   libc++abi.dylib                   0x0000000182234f78 0x18221a000 + 110456
+8   libobjc.A.dylib                   0x00000001822447ac 0x18223c000 + 34732
+9   CoreFoundation                    0x0000000182f50e18 0x182f45000 + 48664
+10  GraphicsServices                  0x0000000184f36020 0x184f2b000 + 45088
+11  UIKit                             0x000000018cf70758 0x18cc53000 + 3266392
+12  TestCrash                         0x00000001046d1134 0x1046c8000 + 37172
+13  libdyld.dylib                     0x00000001829e1fc0 0x1829e1000 + 4032
+
+Thread 1:
+0   libsystem_pthread.dylib           0x0000000182cafb04 0x182caf000 + 2820
+
+Thread 2:
+0   libsystem_pthread.dylib           0x0000000182cafb04 0x182caf000 + 2820
+
+Thread 3:
+0   libsystem_pthread.dylib           0x0000000182cafb04 0x182caf000 + 2820
+
+Thread 4:
+0   libsystem_kernel.dylib            0x0000000182b11d78 0x182aef000 + 142712
+1   libsystem_pthread.dylib           0x0000000182cb00a0 0x182caf000 + 4256
+2   libsystem_pthread.dylib           0x0000000182cafb08 0x182caf000 + 2824
+
+Thread 5 name:  com.apple.uikit.eventfetch-thread
+Thread 5:
+0   libsystem_kernel.dylib            0x0000000182aefde8 0x182aef000 + 3560
+1   libsystem_kernel.dylib            0x0000000182aefc60 0x182aef000 + 3168
+2   CoreFoundation                    0x0000000183032e40 0x182f45000 + 974400
+3   CoreFoundation                    0x0000000183030908 0x182f45000 + 964872
+4   CoreFoundation                    0x0000000182f50da8 0x182f45000 + 48552
+5   Foundation                        0x00000001839c5674 0x1839bd000 + 34420
+6   Foundation                        0x00000001839c551c 0x1839bd000 + 34076
+7   UIKit                             0x000000018cc55768 0x18cc53000 + 10088
+8   Foundation                        0x0000000183ad5efc 0x1839bd000 + 1150716
+9   libsystem_pthread.dylib           0x0000000182cb1220 0x182caf000 + 8736
+10  libsystem_pthread.dylib           0x0000000182cb1110 0x182caf000 + 8464
+11  libsystem_pthread.dylib           0x0000000182cafb10 0x182caf000 + 2832
+
+Thread 6:
+0   libsystem_pthread.dylib           0x0000000182cafb04 0x182caf000 + 2820
+
+Thread 0 crashed with ARM Thread State (64-bit):
+    x0: 0x0000000000000000   x1: 0x0000000000000000   x2: 0x0000000000000000   x3: 0x00000001cc0eedb7
+    x4: 0x000000018223aabd   x5: 0x000000016b7373f0   x6: 0x000000000000006e   x7: 0x000000000000030b
+    x8: 0x0000000008000000   x9: 0x0000000004000000  x10: 0x0000000182cb2110  x11: 0x0000000000000003
+   x12: 0xffffffffffffffff  x13: 0x0000000000000001  x14: 0x0000000000000000  x15: 0x0000000000000010
+   x16: 0x0000000000000148  x17: 0x0000000000000300  x18: 0x0000000000000000  x19: 0x0000000000000006
+   x20: 0x00000001b55dbb40  x21: 0x000000016b7373f0  x22: 0x0000000000000303  x23: 0x00000001b55dbc20
+   x24: 0x0000000000000001  x25: 0x00000001c00199f0  x26: 0x0000000000000000  x27: 0x0000000000000001
+   x28: 0x000000016b737b38   fp: 0x000000016b737350   lr: 0x0000000182cb66a8
+    sp: 0x000000016b737320   pc: 0x0000000182b112e0 cpsr: 0x00000000
+
+Binary Images:
+0x1046c8000 - 0x1046d3fff TestCrash arm64  &lt;1033c07aba8b3895bd20eb85e761bb49&gt; /var/containers/Bundle/Application/538B29B9-CED1-4969-913B-CB9344F70E94/TestCrash.app/TestCrash
+...
+0x1ab910000 - 0x1ab940fff libclosured.dylib arm64  &lt;e61ffac51cae3e1fb9eb6a6e2801777b&gt; /usr/lib/closure/libclosured.dylib
+
+EOF</code></pre><p>这里是未符号化的crash文件。符号化crash文件还需要对应的符号文件，这个符号文件可以在之前的archive中找到，路径为：<code>Xcode</code> -&gt; <code>Window</code> -&gt; <code>Organizer</code> -&gt; <code>Archive</code> -&gt; <code>选中App</code> -&gt; <code>选中其中的最顶部的archive</code> -&gt; <code>show in finder</code> -&gt; <code>显示包内容</code> -&gt; <code>dsYMs文件下</code> -&gt; <code>**.app.dSYM</code>。</p>
+<h4 id="手动符号化文件"><a href="#手动符号化文件" class="headerlink" title="手动符号化文件"></a>手动符号化文件</h4><p>为了之后的操作方便，可以将crash文件和dYSM文件放在同一个文件夹下。首先需要确定当前的crash文件和dSYM文件是否是一一对应的，校验的规则为比对uuid是否相同(这里的UUID是build级别的，每次build产生的UUID都有可能不相同)，使用如下命令获取crash uuid</p>
+<pre><code>grep &quot;appName arm&quot; *.crash
+结果：
+TestCrash-2018-08-10-174331.crash:0x1046c8000 - 0x1046d3fff TestCrash arm64  
+&lt;1033c07aba8b3895bd20eb85e761bb49&gt; /var/containers/Bundle/Application/538B29B9-CED1-4969-913B-CB9344F70E94/TestCrash.app/TestCrash</code></pre><p>使用如下命令查看dYSM文件的uuid</p>
+<pre><code>dwarfdump --uuid TestCrash.app.dSYM/Contents/Resources/DWARF/TestCrash
+结果：UUID: 1033C07A-BA8B-3895-BD20-EB85E761BB49 (arm64) TestCrash.app.dSYM/Contents/Resources/DWARF/TestCrash</code></pre><p>确定了上面的事情之后，使用符号化工具 <code>symbolicatecrash</code>,使用之前需要先导出这个工具,使用如下命令：</p>
+<pre><code>export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer</code></pre><p>运行了之后看一下本地文件下有没有<code>symbolicatecrash</code>,如果不存在，可以使用如下命令查看<code>symbolicatecrash</code>所在位置：</p>
+<pre><code>find /Applications/Xcode.app/ -name symbolicatecrash
+结果可能是多个
+/Applications/Xcode.app//Contents/Developer/Platforms/WatchSimulator.platform/Developer/Library/PrivateFrameworks/DVTFoundation.framework/symbolicatecrash
+/Applications/Xcode.app//Contents/Developer/Platforms/AppleTVSimulator.platform/Developer/Library/PrivateFrameworks/DVTFoundation.framework/symbolicatecrash
+/Applications/Xcode.app//Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/DVTFoundation.framework/symbolicatecrash
+/Applications/Xcode.app//Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/symbolicatecrash
+选择SharedFramework中的文件 copy 到本地
+cp /Applications/Xcode.app//Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/symbolicatecrash ./</code></pre><p>当前文件已经存在直接运行</p>
+<pre><code>./symbolicatecrash TestCrash-2018-08-10-174331.crash TestCrash.app.dSYM &gt; a.log</code></pre><p>符号化之后的文件如下</p>
+<pre><code>...
+
+Last Exception Backtrace:
+0   CoreFoundation                    0x18308ad8c __exceptionPreprocess + 228
+1   libobjc.A.dylib                   0x1822445ec objc_exception_throw + 55
+2   CoreFoundation                    0x183023750 _CFThrowFormattedException + 111
+3   CoreFoundation                    0x182f5705c -[__NSArrayM insertObject:atIndex:] + 1411
+4   TestCrash                         0x1046d105c -[ViewController function9] + 36956 (ViewController.m:88)
+5   UIKit                             0x18cdf964c -[UIApplication sendAction:to:from:forEvent:] + 95
+6   UIKit                             0x18cf1a870 -[UIControl sendAction:to:forEvent:] + 79
+7   UIKit                             0x18cdff700 -[UIControl _sendActionsForEvents:withEvent:] + 439
+8   UIKit                             0x18cf351a8 -[UIControl touchesEnded:withEvent:] + 571
+9   UIKit                             0x18ce7c9e0 -[UIWindow _sendTouchesForEvent:] + 2427
+10  UIKit                             0x18ce71890 -[UIWindow sendEvent:] + 3159
+11  UIKit                             0x18ce701d0 -[UIApplication sendEvent:] + 339
+12  UIKit                             0x18d651d1c __dispatchPreprocessedEventFromEventQueue + 2339
+13  UIKit                             0x18d6542c8 __handleEventQueueInternal + 4743
+14  UIKit                             0x18d64d368 __handleHIDEventFetcherDrain + 151
+15  CoreFoundation                    0x183033404 __CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE0_PERFORM_FUNCTION__ + 23
+16  CoreFoundation                    0x183032c2c __CFRunLoopDoSources0 + 275
+17  CoreFoundation                    0x18303079c __CFRunLoopRun + 1203
+18  CoreFoundation                    0x182f50da8 CFRunLoopRunSpecific + 551
+19  GraphicsServices                  0x184f36020 GSEventRunModal + 99
+20  UIKit                             0x18cf70758 UIApplicationMain + 235
+21  TestCrash                         0x1046d1134 main + 37172 (main.m:14)
+22  libdyld.dylib                     0x1829e1fc0 start + 3
+
+...</code></pre><h4 id="借助工具完成符号化"><a href="#借助工具完成符号化" class="headerlink" title="借助工具完成符号化"></a>借助工具完成符号化</h4><p>从上面手动解析的工程中，我们可以看到，需要的数据和工具有</p>
+<ul>
+<li>dSYM文件</li>
+<li>symbolicatecrash工具</li>
+</ul>
+<p>并且这两个工具都在xcode中，前提条件是这个ipa包是通过你的xcode archive出去的，当前的机器上保留了dSYM文件。之后只需要将crash文件拖到xcode crash中就会自动解析了。效果如下：</p>
+<p><img src="%3C!--%EF%BF%BC3--%3E/images/crash-5.png" alt></p>
+<h4 id="Xcode-统计的Crash"><a href="#Xcode-统计的Crash" class="headerlink" title="Xcode 统计的Crash"></a>Xcode 统计的Crash</h4><p>app 上传到APP store之后，使用过程中产生的crash，同时当前的设备打开了日志分析的功能，crash日志就会被Apple统计到。通过步骤 <code>Xcode</code> -&gt; <code>Window</code> -&gt; <code>Organizer</code> -&gt; <code>选中Crash</code> -&gt; <code>选中对应的app</code> 可以看到对应的crash，符号化的过程，可以在本地，也可以在apple服务端，取决于，上传app 二进制包的时候，有没有将符号文件一并上传。效果如下</p>
+<p><img src="%3C!--%EF%BF%BC4--%3E/images/crash-6.png" alt><br><img src="%3C!--%EF%BF%BC5--%3E/images/crash-7.png" alt></p>
+<h2 id="需要注意的点"><a href="#需要注意的点" class="headerlink" title="需要注意的点"></a>需要注意的点</h2><p>在archive的时候，不要选bitCode，否则安装的二进制造成的crash无法符号化。原因使用bitCode上传给apple,bitCode只是一个中间码，需要根据不同的架构来决定最终生成的代码是什么？所以,如果使用bitCode上传的话，需要向apple下载dSYM文件。如下是使用bitcode发布时的流程图</p>
+<p><img src="%3C!--%EF%BF%BC6--%3E/images/crash-8.png" alt></p>
+<h2 id="参考地址"><a href="#参考地址" class="headerlink" title="参考地址"></a>参考地址</h2><p><a href="https://developer.apple.com/library/archive/technotes/tn2151/_index.html#//apple_ref/doc/uid/DTS40008184-CH1-SYMBOLICATION" target="_blank" rel="noopener">Understanding and Analyzing Application Crash Reports</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Crash/" rel="tag"># Crash</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/06/2017-03-06-基于地理位置的AR增强现实/" rel="next" title="基于地理位置的AR增强现实">
+                <i class="fa fa-chevron-left"></i> 基于地理位置的AR增强现实
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/13/2018-08-13-iOS Crash 二/" rel="prev" title="iOS Crash 二">
+                iOS Crash 二 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">持续、专注</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#初衷"><span class="nav-number">1.</span> <span class="nav-text">初衷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#app发生crash之后如何定位"><span class="nav-number">2.</span> <span class="nav-text">app发生crash之后如何定位</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#手动符号化文件"><span class="nav-number">2.1.</span> <span class="nav-text">手动符号化文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#借助工具完成符号化"><span class="nav-number">2.2.</span> <span class="nav-text">借助工具完成符号化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Xcode-统计的Crash"><span class="nav-number">2.3.</span> <span class="nav-text">Xcode 统计的Crash</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#需要注意的点"><span class="nav-number"></span> <span class="nav-text">需要注意的点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考地址"><span class="nav-number"></span> <span class="nav-text">参考地址</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

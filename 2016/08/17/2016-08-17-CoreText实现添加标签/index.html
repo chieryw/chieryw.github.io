@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Objective-C,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="CoreText实现添加标签CoreText是基于C语言的API设计，主要通过UIView的drawRect:来实现自定义的文案排版，但是在OS X系统上放回的确实NSRect的一个对象，这个时候你可以使用的NSRectToCGRect这个函数来将结果做一下转化，以适应更多的平台。这里有个需要注意的点：图形环境是根据UIGraphicsGetCurrentContext此函数的结果，但是在这个结果">
+<meta name="keywords" content="Objective-C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CoreText实现添加标签">
+<meta property="og:url" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/index.html">
+<meta property="og:site_name" content="chiery&#39;blog">
+<meta property="og:description" content="CoreText实现添加标签CoreText是基于C语言的API设计，主要通过UIView的drawRect:来实现自定义的文案排版，但是在OS X系统上放回的确实NSRect的一个对象，这个时候你可以使用的NSRectToCGRect这个函数来将结果做一下转化，以适应更多的平台。这里有个需要注意的点：图形环境是根据UIGraphicsGetCurrentContext此函数的结果，但是在这个结果">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC0--%3E/images/CoreText-1.png">
+<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC1--%3E/images/CoreText-2.png">
+<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC2--%3E/images/CoreText-3.png">
+<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC3--%3E/images/CoreText-7.png">
+<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC4--%3E/images/CoreText-8.png">
+<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC5--%3E/images/CoreText-9.png">
+<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC6--%3E/images/CoreText-10.png">
+<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC7--%3E/images/CoreText-11.png">
+<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC8--%3E/images/CoreText-12.png">
+<meta property="og:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC9--%3E/images/CoreText-6.png">
+<meta property="og:updated_time" content="2018-08-25T17:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CoreText实现添加标签">
+<meta name="twitter:description" content="CoreText实现添加标签CoreText是基于C语言的API设计，主要通过UIView的drawRect:来实现自定义的文案排版，但是在OS X系统上放回的确实NSRect的一个对象，这个时候你可以使用的NSRectToCGRect这个函数来将结果做一下转化，以适应更多的平台。这里有个需要注意的点：图形环境是根据UIGraphicsGetCurrentContext此函数的结果，但是在这个结果">
+<meta name="twitter:image" content="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/%3C!--%EF%BF%BC0--%3E/images/CoreText-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/">
+
+
+
+
+
+  <title>CoreText实现添加标签 | chiery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chiery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/17/2016-08-17-CoreText实现添加标签/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chiery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CoreText实现添加标签</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-17T15:32:23+08:00">
+                2016-08-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CoreText/" itemprop="url" rel="index">
+                    <span itemprop="name">CoreText</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="CoreText实现添加标签"><a href="#CoreText实现添加标签" class="headerlink" title="CoreText实现添加标签"></a>CoreText实现添加标签</h2><p>CoreText是基于C语言的API设计，主要通过UIView的<code>drawRect:</code>来实现自定义的文案排版，但是在OS X系统上放回的确实NSRect的一个对象，这个时候你可以使用的<code>NSRectToCGRect</code>这个函数来将结果做一下转化，以适应更多的平台。这里有个需要注意的点：图形环境是根据<code>UIGraphicsGetCurrentContext</code>此函数的结果，但是在这个结果的参考系是左下角，ios的参考系确实在左上角，所以，如果你是在ios上做CoreText对文案的排版，你需要转换一下参考系。由于CoreText是基于C的语言所以在速度上有所提升，在语言上也比较简单。</p>
+<p>CoreText渲染引擎使用的场景经常是attributeString/graphicsPath之类，这些对象在被渲染的时候都是包含自己的Properties(or “attributes”),这样引擎就可以知道这些文字或是图形将要被渲染成什么样式。</p>
+<a id="more"></a>
+
+<p>下面来看一组图片,CoreText是在运行时构建的多层次的文本对象，如图，在这个层次的最顶端是一个<code>frameSetter</code>对象，当有一个文本或是一个图形输入的时候，frameSetter就会生成一个或是多个文本（CTFrameRef）,每个CTFrame对象代表一个段落</p>
+<p><img src="%3C!--%EF%BF%BC0--%3E/images/CoreText-1.png" alt></p>
+<p>为了生成可是的文本，frameSetter会调用一个叫CTTypesetterRef的对象，然后将FrameSetter将相应的段落信息，行信息，等等属性，转化成AttributeString放进排版的文本中去</p>
+<h4 id="Font-Obejcts"><a href="#Font-Obejcts" class="headerlink" title="Font Obejcts"></a>Font Obejcts</h4><p>字体对象用来制定一个字符的字体size等表现，你可以用多线程的思想来创建多个fontObejct，以便于使用。同时当我们制定对应文本的时候，在系统中会有这样一个字体表，或从中匹配一个默认值做显示。同时也是可以自定义这个字体表的存取的。在创建FontObejct的时候，你可以使用已有的fontDescriptors，也可以自定义一个出来，FontDescriptor对象是一个相当于字典的对象。可以很方便的充中拿到你想要的信息。同时你可以将你自定义的字体对象放到一个Collections中，这个Collection可以为你提供遍历和存储的功能，你可以很方便从中去到你已经存储的字体集，从而统一实现app的文字展示</p>
+<p>在这之后的Apple 原文还是不翻译了，最终起效果的就是上面的图片所示的内容。主要的就是一个CTFrameSetter这样的一个排版设置，下面就让我们一起来看一下这个函数中都包含了那些信息。下面的只是简介都会使用简短代码的方式，完整的代码整理后放到了<a href="https://github.com/chieryd/CTTest" target="_blank" rel="noopener">这里</a></p>
+<p>分析一下CoreText/CTFramesetter.h文件</p>
+<pre><code>// Typedef 定义了一个CTFrameSetterRef的对象以便于使用
+typedef const struct CF_BRIDGED_TYPE(id) __CTFramesetter * CTFramesetterRef;
+
+// 得到类型ID
+CFTypeID CTFramesetterGetTypeID( void ) CT_AVAILABLE(10_5, 3_2);
+
+// 下面是创建FrameSetter
+
+/*!
+    @摘要    通过attributeString创建属性不变的FrameSetter对象
+
+    @描述 结果FrameSetter对象可以用来创建和填充文本框通过调用CTFrameSetterCreateFrame。
+
+    @参数        string
+                需要绘制的文字
+
+    @结果    创建成功返回一个CTFramesetterRef引用，否则返回NULL
+*/
+
+CTFramesetterRef CTFramesetterCreateWithAttributedString(
+    CFAttributedStringRef string ) CT_AVAILABLE(10_5, 3_2);
+
+
+/* --------------------------------------------------------------------------- */
+/* Frame Creation */
+/* --------------------------------------------------------------------------- */
+
+/*!
+    @摘要    通过如上所述的FrameSetter创建一个不可变的Frame对象.
+
+    @描述  这个调用将创建一个边框，这个边框的定义来自于参数Path.排版也将这个这边框中执行，
+           直到排版完成，或这个边框已经被排版完全为止
+
+    @param        framesetter
+                就像上面创建的FrameSetter对象
+
+    @param        stringRange
+                这个StringRange是一个结合attributeString使用的一个对象，当你指定了{location,length}之后，
+                排版就会将这段文字绘制在当前的Context中。当你制定了length=0，则在location之后的文字都会被会在到context中
+
+    @param        path
+                给出这个排版的区域
+
+    @param        frameAttributes
+                和attributeString中设置属性一样，可以单独指定
+
+    @result     返回一个CTFrame对象
+*/
+
+CTFrameRef CTFramesetterCreateFrame(
+    CTFramesetterRef framesetter,
+    CFRange stringRange,
+    CGPathRef path,
+    CFDictionaryRef __nullable frameAttributes ) CT_AVAILABLE(10_5, 3_2);
+
+
+/*!
+    @摘要    从边框中获取typesetter
+
+    @discussion Each framesetter uses a typesetter internally to perform
+                line breaking and other contextual analysis based on the
+                characters in a string; this function returns the typesetter
+                being used by a particular framesetter if the caller would
+                like to perform other operations on that typesetter.
+
+    @param        framesetter
+                The framesetter from which a typesetter is being requested.
+
+    @result        This function will return a reference to a CTTypesetter
+                object, which should not be released by the caller.
+*/
+
+CTTypesetterRef CTFramesetterGetTypesetter(
+    CTFramesetterRef framesetter ) CT_AVAILABLE(10_5, 3_2);
+
+
+// 边框尺寸
+
+/*!
+    @摘要    确定字符串范围所需的边框大小大小。    
+    @描述    这个函数可用来确定一个字符串在文本中显示，需要多大的空间。可选的参考类型有两种一个是约束，一个是给定的尺寸
+
+    @param        framesetter
+                衡量边框的大小
+
+    @param        stringRange
+                这个StringRange是一个结合attributeString使用的一个对象，当你指定了{location,length}之后，
+                排版就会将这段文字绘制在当前的Context中。当你制定了length=0，则在location之后的文字都会被会在到context
+
+    @param        frameAttributes
+                指定的文字展示样式
+
+    @param        constraints
+                给定一个尺寸用于展示，也可以指定width，和height都是max
+
+    @param        fitRange
+                实际适用于约束大小的字符串的范围。
+
+    @result        The actual dimensions for the given string range and constraints.
+*/
+
+CGSize CTFramesetterSuggestFrameSizeWithConstraints
+(
+    CTFramesetterRef framesetter,
+    CFRange stringRange,
+    CFDictionaryRef __nullable frameAttributes,
+    CGSize constraints,
+    CFRange * __nullable fitRange ) CT_AVAILABLE(10_5, 3_2);</code></pre><p>上面的就是CTFrameSetter.h函数的全部API，其实也不是很多。接下来了解一下CTFrame.h头文件</p>
+<pre><code>// 获取CTFrame类型
+CFTypeID CTFrameGetTypeID( void ) CT_AVAILABLE(10_5, 3_2);
+
+// 这个枚举类型主要给出的就是文字排版的方向
+typedef CF_ENUM(uint32_t, CTFrameProgression) {
+    kCTFrameProgressionTopToBottom  = 0, // 从上到下的水平布局方式
+    kCTFrameProgressionRightToLeft  = 1, // 从由到左的垂直布局方式
+    kCTFrameProgressionLeftToRight  = 2  // 从左到右的垂直布局方式
+};
+
+// 排版的方向，值必须是一个CFNumberRef类型的值，默认是kCTFrameProgressionTopToBottom
+extern const CFStringRef kCTFrameProgressionAttributeName CT_AVAILABLE(10_5, 3_2);
+
+// 下面是两种填充规则
+typedef CF_ENUM(uint32_t, CTFramePathFillRule) {
+    kCTFramePathFillEvenOdd         = 0,
+    kCTFramePathFillWindingNumber   = 1
+};
+
+// 对应上面的填充规则的key    
+extern const CFStringRef kCTFramePathFillRuleAttributeName CT_AVAILABLE(10_7, 4_2);
+
+// 边框宽度的key，value是一个CFNumberRef的对象
+extern const CFStringRef kCTFramePathWidthAttributeName CT_AVAILABLE(10_7, 4_2);
+
+// 这个key是一个很实用的key,例如在排版的时候你想忽略掉某个CGPathRef，将这个CGPathRef作为Value添加在这个属性中就可以了忽略了。    
+extern const CFStringRef kCTFrameClippingPathsAttributeName CT_AVAILABLE(10_7, 4_3);
+
+// 当只有一个CGPathRef需要忽略的时候可以实用这个key
+extern const CFStringRef kCTFramePathClippingPathAttributeName CT_AVAILABLE(10_7, 4_3);
+
+// 从Frame中拿到已经填充的字体的range,请求失败的话，返回一个空的range
+CFRange CTFrameGetStringRange(
+CTFrameRef frame ) CT_AVAILABLE(10_5, 3_2);
+
+// 只显示已经排版的range,这个情况会出现在，当rect很小，但是文字很多的时候，这个时候就可以实用这个函数，知道那些字是被排版上了的
+CFRange CTFrameGetVisibleStringRange(
+CTFrameRef frame ) CT_AVAILABLE(10_5, 3_2);
+
+// 从CTFrameRef中返回一个CGPathRef
+CGPathRef CTFrameGetPath(
+CTFrameRef frame ) CT_AVAILABLE(10_5, 3_2);
+
+// 返回这个CTFrameRef中的所有属性设置
+CFDictionaryRef __nullable CTFrameGetFrameAttributes(
+CTFrameRef frame ) CT_AVAILABLE(10_5, 3_2);
+
+// 返回一个排版的行的数组
+CFArrayRef CTFrameGetLines(
+CTFrameRef frame ) CT_AVAILABLE(10_5, 3_2);
+
+// 返回行的原点坐标数组，range是文字的range。frame是
+void CTFrameGetLineOrigins(
+CTFrameRef frame,
+CFRange range,
+CGPoint origins[] ) CT_AVAILABLE(10_5, 3_2);
+
+// frame绘制
+void CTFrameDraw(
+CTFrameRef frame,
+CGContextRef context ) CT_AVAILABLE(10_5, 3_2);</code></pre><p>介绍了上面的两个.h文件的API之后，还需要介绍CTLine.h的API和CTRun.h文件的API。基本上就够了。这里只介绍上面的两个，如果想了解后两个可以自行查看。类似的方法自己可以分析的</p>
+<h2 id="项目需求"><a href="#项目需求" class="headerlink" title="项目需求"></a>项目需求</h2><p>图文混排，用CoreText不是一件难事。这样的例子google一下，相信你就会有思路了。或者，如果你的项目支持更高的ios版本的话，可以使用ios7新出的TextKit来完成图文混排，TextKit可是苹果耗费3年时间优化的。可以很好的支持你想要的效果，但是这也不是说苹果将要使用TextKit取代CoreText，TextKit只是CoreText的封装，你可以根据自己的需求，选择合适的框架，来完成自己的工作。</p>
+<p>这一次使用CoreText想要完成的效果是，看下图</p>
+<p><img src="%3C!--%EF%BF%BC1--%3E/images/CoreText-2.png" alt></p>
+<p>在一个给定的区域内绘制文本，文本中可能含有很多标签，这些标签可以自定义如下属性</p>
+<ul>
+<li>borderWidth</li>
+<li>borderColor</li>
+<li>borderCornerRadius</li>
+<li>textFont</li>
+<li>textColor</li>
+</ul>
+<p>附上一段实现上面效果的函数段</p>
+<pre><code>// 步骤 1  生成当前的环境
+
+CGContextRef context = UIGraphicsGetCurrentContext();
+
+// 步骤 2  转换坐标系
+CGContextSetTextMatrix(context, CGAffineTransformIdentity);
+CGContextTranslateCTM(context, 0, self.bounds.size.height);
+CGContextScaleCTM(context, 1.0, -1.0);
+
+// 步骤 3  生成绘制文字的path
+CGMutablePathRef path = CGPathCreateMutable();
+CGPathAddRect(path, NULL, self.bounds);
+
+// 步骤 4  组织attributeString,开始渲染
+NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:@&quot;Hello World! &quot;
+                                 &quot; 创建绘制的区域，CoreText 本身支持各种文字排版的区域，&quot;
+                                 &quot; 我们这里简单地将 UIView 的整个界面作为排版的区域。&quot;
+                                 &quot; 为了加深理解，建议读者将该步骤的代码替换成如下代码，&quot;
+                                 &quot; 测试设置不同的绘制区域带来的界面变化。&quot;];
+
+[attString setAttributes:@{
+                           NSFontAttributeName:[UIFont systemFontOfSize:20],
+                           NSForegroundColorAttributeName:[UIColor redColor],
+                           @&quot;addRect&quot;:@(YES)
+                           } range:[attString.string rangeOfString:@&quot;创建绘制的区域&quot;]];
+                           CTParagraphStyleSetting lineBreakMode;
+CTLineBreakMode lineBreak = kCTLineBreakByWordWrapping;//kCTLineBreakByCharWrapping;//换行模式
+lineBreakMode.spec = kCTParagraphStyleSpecifierLineBreakMode;
+lineBreakMode.value = &amp;lineBreak;
+lineBreakMode.valueSize = sizeof(CTLineBreakMode);
+
+//组合设置
+CTParagraphStyleSetting settings[] = {
+    lineBreakMode,
+};
+
+//通过设置项产生段落样式对象
+CTParagraphStyleRef style = CTParagraphStyleCreate(settings, 1);
+
+[attString addAttributes:@{
+                           NSFontAttributeName:[UIFont systemFontOfSize:30],
+                           NSForegroundColorAttributeName:[UIColor redColor],
+                           @&quot;addRect&quot;:@(YES)
+                           } range:[attString.string rangeOfString:@&quot;本身支持&quot;]];
+
+[attString addAttributes:@{
+                           NSFontAttributeName:[UIFont systemFontOfSize:17],
+                           NSForegroundColorAttributeName:[UIColor yellowColor],
+                           @&quot;addRect&quot;:@(YES),
+                           (id)kCTParagraphStyleAttributeName:(id)style,
+                           } range:[attString.string rangeOfString:@&quot;我们这里简单地将&quot;]];
+
+CTFramesetterRef framesetter =
+CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attString);
+CTFrameRef frame =
+CTFramesetterCreateFrame(framesetter,
+                         CFRangeMake(0, 0), path, NULL);
+
+CFArrayRef lines = CTFrameGetLines(frame);
+CGPoint lineOrigins[CFArrayGetCount(lines)];
+CTFrameGetLineOrigins(frame, CFRangeMake(0, 0), lineOrigins);
+
+for (int i = 0; i &lt; CFArrayGetCount(lines); i++) {
+    CTLineRef line = CFArrayGetValueAtIndex(lines, i);
+    CGFloat lineAscent;
+    CGFloat lineDescent;
+    CGFloat lineLeading;
+    CTLineGetTypographicBounds(line, &amp;lineAscent, &amp;lineDescent, &amp;lineLeading);
+
+    CFArrayRef runs = CTLineGetGlyphRuns(line);
+
+    for (int j = 0; j &lt; CFArrayGetCount(runs); j++) {
+        CGFloat runAscent;
+        CGFloat runDescent;
+        CGPoint lineOrigin = lineOrigins[i];
+        CTRunRef run = CFArrayGetValueAtIndex(runs, j);
+        NSDictionary* attributes = (NSDictionary*)CTRunGetAttributes(run);
+        BOOL needAddRect = [[attributes objectForKey:@&quot;addRect&quot;] boolValue];
+        //图片渲染逻辑
+        if (needAddRect) {                    
+            CGRect runRect;
+            runRect.size.width = CTRunGetTypographicBounds(run, CFRangeMake(0,0), &amp;runAscent, &amp;runDescent, NULL);
+            runRect=CGRectMake(lineOrigin.x + CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL), lineOrigin.y - runDescent, runRect.size.width, runAscent + runDescent);
+            /*
+             *  这是在文字渲染好了的情况下定义的一种方式，这种方式只是在CTRun加上了一个边框，置于想变动里面文字的排版。
+             *  就变得不可能了，这种方式的边框还是有一定的局限性*/
+            // 获取需要边框的文字的range
+            [[UIColor redColor] set];
+            if (runRect.size.width &gt; 4.0f) {
+                UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:runRect cornerRadius:1.0f];
+                path.lineWidth = 0.5f;
+                [path stroke];
+            }                    
+        }
+    }
+}
+// 步骤 5  绘制
+CTFrameDraw(frame, context);        
+
+// 步骤 6  释放已经存在的对象
+CFRelease(frame);
+CFRelease(path);
+CFRelease(framesetter);</code></pre><p>上面的代码只要随意的复制粘贴到一个UIView的drawRect方法中就可以了。之后将这个UIView的View加载显示的VC中，即可得到如上图所示的效果。</p>
+<p>在这里，还是先用一张图来讲述CoreText的排版是如何排版的。</p>
+<p><img src="%3C!--%EF%BF%BC2--%3E/images/CoreText-3.png" alt></p>
+<p>如上图所示：CoreText会把一行里连在一起相同属性的文字合在一起作为一个CTRun，每一行是一个CTLine，多行合在一起组成CTFrame。如上图，第一行的文字有两种样式，第一部分是加粗，第二部分是斜体，因为样式不同所以分成了两个CTRun，CTLine包含了这两个CTRun，CTFrame包含了所有CTLine。</p>
+<p>上面效果图的实现与这张理论图很是相似，效果图的实现是在文本排版完成后添加边框来实现的。主要原理是</p>
+<ul>
+<li>attributedString排版</li>
+<li>获取排版中所有的行</li>
+<li>获取每行中所有的CTRun</li>
+<li>匹配addRect属性</li>
+<li>获取CTRun的边框</li>
+<li>自定义边框的颜色，圆角，宽度</li>
+</ul>
+<p>每个属性相同的文字排版时会使用同一个CTRun来进行排版，利用了这个原理，我们给需要加边框的文字加上了一个addRect属性，这样在检测到这个属性的时候，我们就知道，这个文字是要加上边框的。之后再从这个已经绘制了文本的CTRun对象中取出这个文本在排版时的位置，在这个位置上加上一个边框。就实现上面的效果。</p>
+<p>但是这样的后期特效是存在问题的，比如：</p>
+<ul>
+<li>边框距离文字太近</li>
+<li>边框加粗之后会遮盖文字</li>
+<li>边框圆角过大会遮盖文字</li>
+<li>文字换行处理不好做</li>
+</ul>
+<p>这么多问题，显然不是我想要的效果，所以变换了一下思路。google了一下coreText，看到的基本上都是图文混排的思想，很是懊恼，并没有找到自己想要的。忽然一个想法从脑中穿过，既然图片可以在文本环境中自定义边框展示，那么，文字应该也是可以的。深入的看了一下文字展示的原理</p>
+<ul>
+<li>在文字排版的时候为图片预留图片可以展示的空间</li>
+<li>排版完成后逐行扫描CTLine，再逐行扫描CTRun</li>
+<li>匹配CTRun的属性，成功匹配获取当前CTRun的绘制原点，</li>
+<li>获取Image的size,得到图片的path,获取图片资源</li>
+<li>绘制图片</li>
+</ul>
+<p>如果想给文字预留空间，难点在与AttributeString在展示的时候需要的Size如何获取，因为这个文字最终还是会通过CTRun绘制当当前环境中去的，所以果断前往<code>CTRun.h</code>文件，在这个.h文件中找到了这两个函数</p>
+<pre><code>double CTLineGetTypographicBounds(
+    CTLineRef line,
+    CGFloat * __nullable ascent,
+    CGFloat * __nullable descent,
+    CGFloat * __nullable leading ) CT_AVAILABLE(10_5, 3_2);
+
+CGRect CTLineGetBoundsWithOptions(
+    CTLineRef line,
+    CTLineBoundsOptions options ) CT_AVAILABLE(10_8, 6_0);</code></pre><p>第一个函数可以知道attributeString在CTLine中所占的高度 高度=ascent+descent,第二个函数可以知道，CTRun的bounds，尽管第二个函数也是可以知道高度，但是这个高度没有前一个函数计算得出的高度精确。知道了上述的信息之后，文本排版的高度和宽度就都已经得到了解决。下面是效果图</p>
+<p><img src="%3C!--%EF%BF%BC3--%3E/images/CoreText-7.png" alt></p>
+<p>与上次不同的是，这次是先将需要绘制的文字的空间预留出来。这样的优点在于可以自定义这个空间的大小，你可以将这个空间的大小放大一些，同时在绘制的时候，在预留的空间里剪裁一个适合的空间来绘制文本。这样边框就不会和文字挨得很紧密了。<a href="https://github.com/chieryd/CTTest" target="_blank" rel="noopener">demo</a></p>
+<pre><code>//为文字设置CTRunDelegate,delegate决定留给文字的空间大小
+    CTDisplayViewModel *model = [CTDisplayViewModel new];
+    model.font = [UIFont systemFontOfSize:30];
+    model.textColor = [UIColor redColor];
+    model.boderWidth = 1.0f;
+    model.boderColor = [UIColor blueColor];
+    model.borderCornerRadius = 2.0f;
+    model.text = @&quot;创建绘制的区域&quot;;
+    [model builder];
+
+    CTRunDelegateCallbacks textCallbacks;
+    textCallbacks.version = kCTRunDelegateVersion1;
+    textCallbacks.dealloc = RunDelegateDeallocCallback;
+    textCallbacks.getAscent = RunDelegateGetAscentCallback;
+    textCallbacks.getDescent = RunDelegateGetDescentCallback;
+    textCallbacks.getWidth = RunDelegateGetWidthCallback;
+    CTRunDelegateRef runDelegate = CTRunDelegateCreate(&amp;textCallbacks, (__bridge void * _Nullable)(model));
+    // 增加处理文本渲染时的代理
+    [attString addAttribute:(NSString *)kCTRunDelegateAttributeName value:(__bridge id _Nonnull)(runDelegate) range:NSMakeRange(14, 1)];
+    [attString addAttribute:@&quot;addRectTag&quot; value:model range:NSMakeRange(14, 1)];</code></pre><p>通过代理的方式预留出文字的size，在这个size中你可以适当的放大你需要的尺寸。这样文字在显示的时候就会显得不是那么紧凑，同时空间的大小也会变的可控。</p>
+<pre><code>- (void)builder {
+    // alloc attributedString
+    [self buildAttributtedString];
+    // get bounds info
+    [self getCTLineRefBoundsInfo];
+}
+
+- (void)buildAttributtedString {
+    self.attributedString = [[NSMutableAttributedString alloc] initWithString:self.text
+                                                                   attributes:@{
+                                                                                NSFontAttributeName:self.font,
+                                                                                NSForegroundColorAttributeName:self.textColor
+                                                                                }];
+}
+
+- (void)getCTLineRefBoundsInfo {
+    CTLineRef line = CTLineCreateWithAttributedString((CFAttributedStringRef)self.attributedString);
+
+    // get bounds info
+    CTLineGetTypographicBounds(line, &amp;_lineAscent, &amp;_lineDescent, &amp;_lineLeading);
+    _lineBounds = CTLineGetBoundsWithOptions(line,kCTLineBoundsExcludeTypographicLeading);
+}</code></pre><p>那么在这个delegate函数中你就可以自定义了，你可以自定义你需要增加的值</p>
+<pre><code>// delegate
+void RunDelegateDeallocCallback( void* refCon ){
+
+}
+
+CGFloat RunDelegateGetAscentCallback( void *refCon ){
+    CTDisplayViewModel *model = (__bridge CTDisplayViewModel *)refCon;
+    return model.lineAscent;
+}
+
+CGFloat RunDelegateGetDescentCallback(void *refCon){
+    CTDisplayViewModel *model = (__bridge CTDisplayViewModel *)refCon;
+    // 你可以这样
+    // return model.lineDescent + 2; 来适配自定义的界面
+    return model.lineDescent;
+}
+
+CGFloat RunDelegateGetWidthCallback(void *refCon){
+    CTDisplayViewModel *model = (__bridge CTDisplayViewModel *)refCon;
+    return CGRectGetWidth(model.lineBounds);
+}</code></pre><p>相对于第一次的实现方案来说，这一次的方案解决了如下问题</p>
+<ul>
+<li>边框距离文字太近</li>
+<li>边框加粗之后会遮盖文字</li>
+<li>边框圆角过大会遮盖文字</li>
+</ul>
+<p>但是依然存在的问题还有<code>换行</code>，在这一次的绘制方案上实现换行是不可能的，首先预留的空间是更具CTLine的context做的空间的预留，这个context并没有假设在当前绘制的画布上，所以预留的空间也只是当前绘制文字需要的size而已。但是在预留孔的排版的时候，这个空间需要结合绘制原点才能真正的得到绘制的区域，如果原点+预留空间的width没有超出当前画布的边界的话，那么整体绘制的效果就会满足绘制的需求。但是，这样的情况是存在一定的概率的。</p>
+<p>为了解决换行的问题,并保持之前绘制的有点，改变绘制的方案。</p>
+<ul>
+<li><p>遍历attributedString,获取其中的信息和range。</p>
+<pre><code>// 不同属性的attributedString构成了这个遍历数组
+__weak typeof(self) weakSelf = self;
+    [self.attributedString enumerateAttributesInRange:NSMakeRange(0, self.attributedString.length)
+                                              options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
+                                           usingBlock:^(NSDictionary&lt;NSString *,id&gt; * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
+                                               __strong typeof(weakSelf) strongSelf = weakSelf;
+                                               if (strongSelf) [strongSelf createLineRefWithRange:range config:[CTFrameParser configWithAttributes:attrs]];
+                                           }];</code></pre></li>
+<li><p>根据range拿到相同该属性下的attributedString,对这个属性下的文字做排版</p>
+<ul>
+<li>计算当前文字的拼接节点是在行开始还是在行中间<ul>
+<li>行开始的处理<ul>
+<li>当前需要绘制的文字的长度类型<ul>
+<li>长度小于当前行的情况，将当前信息收集起来，x游标向后移动</li>
+<li>长度大于当前行的情况，计算出本行的size,绘制本行得到FrameRef，根据frameRef拿到当前行绘制了多少文字，截断当前的文字，剩余的文字递归该函数。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>行中间的处理<ul>
+<li>计算当前行是否已经被充满<ul>
+<li>没有被充满,将当前信息收集起来，x游标向后移动</li>
+<li>已经被充满<ul>
+<li>新来的文字是否需要加上边框<ul>
+<li>不需要加上边框，计算出本行的size,绘制本行得到FrameRef，根据frameRef拿到当前行绘制了多少文字，截断当前的文字，剩余的文字递归该函数</li>
+<li>需要加边框，将之前行文字数组中的文字绘制，x游标指向0，本次文字做递归处理</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>上面所述的就是本次绘制的核心逻辑，所有的行Path都是经过计算得到的size,所以可以做预留空间。继承绘制方案二的优点，同时也解决了换行的难题</p>
+<p>说了这么多，来看一下效果，阶段性的展示<br><img src="%3C!--%EF%BF%BC4--%3E/images/CoreText-8.png" alt></p>
+<p>上图存在的问题</p>
+<ul>
+<li>坐标系</li>
+<li>文字基线不对齐</li>
+</ul>
+<p><img src="%3C!--%EF%BF%BC5--%3E/images/CoreText-9.png" alt></p>
+<p>上图存在的问题</p>
+<ul>
+<li>文字基线不对齐</li>
+</ul>
+<p><img src="%3C!--%EF%BF%BC6--%3E/images/CoreText-10.png" alt><img src="%3C!--%EF%BF%BC7--%3E/images/CoreText-11.png" alt><img src="%3C!--%EF%BF%BC8--%3E/images/CoreText-12.png" alt></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>说了那么多究竟该如何使用呢。直接上代码</p>
+<pre><code>CTDisplayView *displayView = [CTDisplayView new];
+    displayView.frame =CGRectMake(100, 20, CGRectGetWidth(self.view.bounds) - 40, CGRectGetHeight(self.view.bounds) - 200);
+
+    NSString *content = @&quot;阅读分为四个阶段：基础阅读，检视阅读，分析阅读，主题阅读，经典的图书有经典的理由，《如何阅读一本书》的阅读分类方法第一次让我看到自己停留在什么阅读层次，该如何提高。这本书详细给出了每种阅读方法的进行步骤，以及不同种类的书籍要如何阅读，可以说是研究阅读方法的基础教材。看了这本书之后再看其他《越读者》、《王者速读法》等图书强化速读、主题阅读等，阅读方法有了显著的提高。&quot;;
+    CTFrameParserConfig *config = [CTFrameParserConfig new];
+
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:content attributes:[CTFrameParser attributesWithConfig:config]];
+    [attributedString addAttributes:@{
+                                      NSForegroundColorAttributeName:[UIColor blackColor],
+                                      NSFontAttributeName:[UIFont systemFontOfSize:12]
+                                      } range:NSMakeRange(0, attributedString.length)];
+    [attributedString addAttributes:@{
+                                      NSForegroundColorAttributeName:[UIColor redColor],
+                                      NSFontAttributeName:[UIFont systemFontOfSize:12],
+                                      CTAttributedStringNeedBorder:@(YES)
+                                      } range:NSMakeRange(20, 12)];
+
+    [attributedString addAttributes:@{
+                                      NSForegroundColorAttributeName:[UIColor redColor],
+                                      NSFontAttributeName:[UIFont systemFontOfSize:30],
+                                      CTAttributedStringNeedBorder:@(YES)
+                                      } range:NSMakeRange(50, 12)];
+
+    [attributedString addAttributes:@{
+                                      NSForegroundColorAttributeName:[UIColor redColor],
+                                      NSFontAttributeName:[UIFont systemFontOfSize:30],
+                                      CTAttributedStringNeedBorder:@(YES),
+                                      CTAttributedStringBorderWidth:@(1),
+                                      CTAttributedStringBorderColor:[UIColor greenColor],
+                                      CTAttributedStringBorderCornerRadius:@(5),
+                                      CTAttributedStringBorderHorizonSpacing:@(4),
+                                      CTAttributedStringBorderVerticalSpacing:@(6),
+                                      } range:NSMakeRange(70, 12)];
+
+    [attributedString addAttributes:@{
+                                      NSForegroundColorAttributeName:[UIColor redColor],
+                                      NSFontAttributeName:[UIFont systemFontOfSize:12],
+                                      CTAttributedStringNeedBorder:@(YES),
+                                      CTAttributedStringBorderWidth:@(1),
+                                      CTAttributedStringBorderColor:[UIColor yellowColor],
+                                      CTAttributedStringBorderCornerRadius:@(2),
+                                      CTAttributedStringBorderHorizonSpacing:@(1),
+                                      CTAttributedStringBorderVerticalSpacing:@(1),
+                                      } range:NSMakeRange(90, 12)];
+    displayView.attributedText = attributedString;
+    displayView.center = self.view.center;
+    displayView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:displayView];</code></pre><p>该功能的实现有针对性，如果你想在此基础上添加自己的排版方式，可以fork该工程，添加自己需求。这里主要讲述的还是CoreText排版的思想</p>
+<h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><p>无意之中用xcode8.0-beta4打开了工程，发现文字不能正常展示了。更改了代理中的值如下所示</p>
+<pre><code>CGFloat RunDelegateGetAscentCallback( void *refCon ){
+    CTDisplayViewModel *model = (__bridge CTDisplayViewModel *)refCon;
+    return model.lineAscent + 2;
+}
+
+CGFloat RunDelegateGetDescentCallback(void *refCon){
+    CTDisplayViewModel *model = (__bridge CTDisplayViewModel *)refCon;
+    return model.lineDescent + 2;
+}
+
+CGFloat RunDelegateGetWidthCallback(void *refCon){
+    CTDisplayViewModel *model = (__bridge CTDisplayViewModel *)refCon;
+    return CGRectGetWidth(model.lineBounds) + 2;
+}</code></pre><p>才可以正常显示，但是想了一下，不能这样去增加值。如果单一的靠增加行布局的空间来实现文本的展示，那整个排版就不可控了。想想这应该是Xcode存在的bug,果断将fontSize增加了50%,果然又不能正常展示了。哎！！！，不知道要给苹果提交几个report。</p>
+<p>这个问题在Xcode7.3.1上可以正常运行</p>
+<p>在排版的时候，其实可以通过文字之间的非换行连字符，结合文本的换行模式来实现换行的目的。</p>
+<ul>
+<li><p>设置文本的段落排版的换行模式为NSLineBreakByWordWrapping</p>
+<pre><code>// 设置段落样式
+CTParagraphStyleSetting lineBreakMode;
+CTLineBreakMode lineBreak = kCTLineBreakByWordWrapping;//kCTLineBreakByCharWrapping;//换行模式
+lineBreakMode.spec = kCTParagraphStyleSpecifierLineBreakMode;
+lineBreakMode.value = &amp;lineBreak;
+lineBreakMode.valueSize = sizeof(CTLineBreakMode);
+
+//组合设置
+CTParagraphStyleSetting settings[] = {
+lineBreakMode,
+};
+
+//通过设置项产生段落样式对象
+CTParagraphStyleRef style = CTParagraphStyleCreate(settings, 1);
+
+[attString addAttributes:@{
+                       NSFontAttributeName:[UIFont systemFontOfSize:17],
+                       NSForegroundColorAttributeName:[UIColor yellowColor],
+                       @&quot;addRect&quot;:@(YES),
+                       (id)kCTParagraphStyleAttributeName:(id)style,
+                       } range:[attString.string rangeOfString:@&quot;我们这里简单地将&quot;]];</code></pre></li>
+</ul>
+<p>然后修改文字为<code>我\u180E们\u180E这\u180E里\u180E简\u180E单\u180E地\u180E将</code>这样文字在行尾展示补全的时候，就会自动切换到下一行了。但是这里会有一个问题，如下图</p>
+<p><img src="%3C!--%EF%BF%BC9--%3E/images/CoreText-6.png" alt></p>
+<p>文字中有乱七八糟的东西，可以通过把 \u180E 所在字符设置成 [UIColor clearColor] 来避免。</p>
+<p>问题到这里你以为会是你想要的效果了，NO。完全不是</p>
+<ul>
+<li>CTRun的排版中设置了文字<code>我\u180E们\u180E这\u180E里\u180E简\u180E单\u180E地\u180E将</code>，和<code>\u180E</code></li>
+<li>CTRun会将这段文字分成一个一个的CTRun</li>
+<li>这个时候你在使用的CTRun的时候，你就发现，你加上的边框不是一段文字上，而是一个一个文字上都加上了边框！！！！</li>
+</ul>
+<p>呵呵失望了吗！！！！我也郁闷了好久</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a href="https://developer.apple.com/library/ios/documentation/StringsTextFonts/Conceptual/CoreText_Programming/Introduction/Introduction.html#//apple_ref/doc/uid/TP40005533-CH1-SW1" target="_blank" rel="noopener">About Core Text</a></p>
+<p><a href="https://developer.apple.com/library/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/Introduction/Introduction.html#//apple_ref/doc/uid/TP40009542" target="_blank" rel="noopener">About Text Handling in iOS</a></p>
+<p><a href="https://developer.apple.com/library/ios/documentation/CoreFoundation/Conceptual/CFDesignConcepts/CFDesignConcepts.html#//apple_ref/doc/uid/10000122i" target="_blank" rel="noopener">Introduction to Core Foundation Design Concepts</a></p>
+<p><a href="http://geeklu.com/2013/03/core-text/" target="_blank" rel="noopener">CoreText使用教程(一)</a></p>
+<p><a href="http://geeklu.com/2013/03/core-text/" target="_blank" rel="noopener">Core Text 入门</a></p>
+<p><a href="http://www.zoomfeng.com/blog/coretextshi-yong-jiao-cheng-er.html" target="_blank" rel="noopener">CoreText使用教程(二)</a></p>
+<p><a href="http://www.itstrike.cn/Question/80a0e837-a31f-4626-8e31-d3a0c3ad40f7.html" target="_blank" rel="noopener">与剪辑属性返回零高度</a></p>
+<p><a href="http://www.xuebuyuan.com/1225161.html" target="_blank" rel="noopener">段落样子CTParagraphStyle</a></p>
+<p><a href="http://xiongzenghuidegithub.github.io/blog/2016/04/14/coretext-part2/" target="_blank" rel="noopener">CoreText Part2</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Objective-C/" rel="tag"># Objective-C</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/08/2016-07-08-Remote Notification/" rel="next" title="Remote Notification">
+                <i class="fa fa-chevron-left"></i> Remote Notification
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/18/2016-08-18-安全方案/" rel="prev" title="安全方案">
+                安全方案 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">持续、专注</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CoreText实现添加标签"><span class="nav-number">1.</span> <span class="nav-text">CoreText实现添加标签</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Font-Obejcts"><span class="nav-number">1.0.1.</span> <span class="nav-text">Font Obejcts</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#项目需求"><span class="nav-number">2.</span> <span class="nav-text">项目需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">3.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tips"><span class="nav-number">4.</span> <span class="nav-text">Tips</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章"><span class="nav-number">5.</span> <span class="nav-text">参考文章</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Objective-C,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="iOS图片上传/下载 NodeJS后台基本所有应用中都存在图片的上传和下载，之前了解到的也就是ios端的代码，并不知道后端是如何解析收到的数据，以及下发文件的。结合NodeJS的学习，完成图片上传下载技术上的闭环。">
+<meta name="keywords" content="Objective-C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ios图片上传&#x2F;下载 NodeJS后台">
+<meta property="og:url" content="http://yoursite.com/2015/10/21/2015-10-21-图片上传下载/index.html">
+<meta property="og:site_name" content="chiery&#39;blog">
+<meta property="og:description" content="iOS图片上传/下载 NodeJS后台基本所有应用中都存在图片的上传和下载，之前了解到的也就是ios端的代码，并不知道后端是如何解析收到的数据，以及下发文件的。结合NodeJS的学习，完成图片上传下载技术上的闭环。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-25T17:43:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ios图片上传&#x2F;下载 NodeJS后台">
+<meta name="twitter:description" content="iOS图片上传/下载 NodeJS后台基本所有应用中都存在图片的上传和下载，之前了解到的也就是ios端的代码，并不知道后端是如何解析收到的数据，以及下发文件的。结合NodeJS的学习，完成图片上传下载技术上的闭环。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/10/21/2015-10-21-图片上传下载/">
+
+
+
+
+
+  <title>ios图片上传/下载 NodeJS后台 | chiery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chiery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/10/21/2015-10-21-图片上传下载/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chiery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ios图片上传/下载 NodeJS后台</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-10-21T12:04:23+08:00">
+                2015-10-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ios/" itemprop="url" rel="index">
+                    <span itemprop="name">ios</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="iOS图片上传-下载-NodeJS后台"><a href="#iOS图片上传-下载-NodeJS后台" class="headerlink" title="iOS图片上传/下载 NodeJS后台"></a>iOS图片上传/下载 NodeJS后台</h1><p>基本所有应用中都存在图片的上传和下载，之前了解到的也就是ios端的代码，并不知道后端是如何解析收到的数据，以及下发文件的。结合NodeJS的学习，完成图片上传下载技术上的闭环。</p>
+<a id="more"></a>
+
+<h2 id="ios端的实现"><a href="#ios端的实现" class="headerlink" title="ios端的实现"></a>ios端的实现</h2><p>前端的实现是向请求中添加form表单，将上传的文件作为请求的body数据，发出post请求。这里给出实现的demo</p>
+<pre><code>+ (NSString *)postRequestWithURL: (NSString *)url
+                      postParems: (NSMutableDictionary *)postParems
+                     picFilePath: (NSString *)picFilePath
+                     picFileName: (NSString *)picFileName
+                          result:(void (^)(NSError *error, NSDictionary *resultInfo))imageHandle
+{
+    //住址Url
+    NSURL *requestUrl = [NSURL URLWithString:[NSString stringWithFormat:@&quot;%@%@&quot;,MMDebugUrl,url]];
+
+    NSString *TWITTERFON_FORM_BOUNDARY = @&quot;0xKhTmLbOuNdArY&quot;;
+    //根据url初始化request
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:requestUrl
+                                                           cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                       timeoutInterval:10];
+    //分界线 --AaB03x
+    NSString *MPboundary=[[NSString alloc]initWithFormat:@&quot;--%@&quot;,TWITTERFON_FORM_BOUNDARY];
+    //结束符 AaB03x--
+    NSString *endMPboundary=[[NSString alloc]initWithFormat:@&quot;%@--&quot;,MPboundary];
+    //得到图片的data
+    NSData* data;
+    if(picFilePath){
+
+        UIImage *image=[UIImage imageWithContentsOfFile:picFilePath];
+        //判断图片是不是png格式的文件
+        if (UIImagePNGRepresentation(image)) {
+            //返回为png图像。
+            data = UIImagePNGRepresentation(image);
+        }else {
+            //返回为JPEG图像。
+            data = UIImageJPEGRepresentation(image, 1.0);
+        }
+    }
+    //http body的字符串
+    NSMutableString *body=[[NSMutableString alloc]init];
+    //参数的集合的所有key的集合
+    NSArray *keys= [postParems allKeys];
+
+    //遍历keys
+    for(int i=0;i&lt;[keys count];i++)
+    {
+        //得到当前key
+        NSString *key=[keys objectAtIndex:i];
+
+        //添加分界线，换行
+        [body appendFormat:@&quot;%@\r\n&quot;,MPboundary];
+        //添加字段名称，换2行
+        [body appendFormat:@&quot;Content-Disposition: form-data; name=\&quot;%@\&quot;\r\n\r\n&quot;,key];
+        //添加字段的值
+        [body appendFormat:@&quot;%@\r\n&quot;,[postParems objectForKey:key]];
+
+        NSLog(@&quot;添加字段的值==%@&quot;,[postParems objectForKey:key]);
+    }
+
+    if(picFilePath){
+        ////添加分界线，换行
+        [body appendFormat:@&quot;%@\r\n&quot;,MPboundary];
+
+        //声明pic字段，文件名为boris.png
+        [body appendFormat:@&quot;Content-Disposition: form-data; name=\&quot;%@\&quot;; filename=\&quot;%@\&quot;\r\n&quot;,FORM_FLE_INPUT,[self fileName:picFileName filePath:picFilePath]];
+        //声明上传文件的格式
+        [body appendFormat:@&quot;Content-Type: image/jpge,image/gif, image/jpeg, image/pjpeg, image/pjpeg\r\n\r\n&quot;];
+    }
+
+    //声明结束符：--AaB03x--
+    NSString *end=[[NSString alloc]initWithFormat:@&quot;\r\n%@&quot;,endMPboundary];
+    //声明myRequestData，用来放入http body
+    NSMutableData *myRequestData=[NSMutableData data];
+
+    //将body字符串转化为UTF8格式的二进制
+    [myRequestData appendData:[body dataUsingEncoding:NSUTF8StringEncoding]];
+    if(picFilePath){
+        //将image的data加入
+        [myRequestData appendData:data];
+    }
+    //加入结束符--AaB03x--
+    [myRequestData appendData:[end dataUsingEncoding:NSUTF8StringEncoding]];
+
+    //设置HTTPHeader中Content-Type的值
+    NSString *content=[[NSString alloc]initWithFormat:@&quot;multipart/form-data; boundary=%@&quot;,TWITTERFON_FORM_BOUNDARY];
+    //设置HTTPHeader
+    [request setValue:content forHTTPHeaderField:@&quot;Content-Type&quot;];
+    //设置Content-Length
+    [request setValue:[NSString stringWithFormat:@&quot;%lu&quot;, (unsigned long)[myRequestData length]] forHTTPHeaderField:@&quot;Content-Length&quot;];
+    //设置http body
+    [request setHTTPBody:myRequestData];
+    //http method
+    [request setHTTPMethod:@&quot;POST&quot;];
+
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue new] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+        if (!connectionError || data.length) {
+            NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            imageHandle(nil,resultDict);
+        }
+        else {
+            imageHandle(connectionError,nil);
+        }
+    }];
+
+    return nil;
+}</code></pre><p>demo中的post上传只适合单个文件上传，如果需要做多文件的上传。可以有两种方案来实现：</p>
+<ul>
+<li>循环使用这个接口</li>
+<li>form表单中添加多个文件数据</li>
+</ul>
+<p>从苹果的网络设计层面来说，第二个方案更加符合苹果。尽量减少请求数量，增加请求的饱和度。请求中的参数意义分别是<code>url</code>请求的接口，<code>picFilePath</code>需要上传的文件的路径，<code>picFileName</code>上传到后端存储文件的名称，<code>postParems</code>post请求所带的参数，<code>result</code>请求回调</p>
+<h2 id="NodeJS实现"><a href="#NodeJS实现" class="headerlink" title="NodeJS实现"></a>NodeJS实现</h2><p>添加upload和download路由</p>
+<pre><code>var upload = require(&apos;./routes/upload&apos;);
+var download = require(&apos;./routes/download&apos;);
+...
+app.use(&apos;/upload&apos;, upload);
+app.use(&apos;/download&apos;, download);</code></pre><p>增加upload post请求的解析</p>
+<pre><code>var express = require(&apos;express&apos;);
+var router = express.Router();
+var formidable = require(&apos;formidable&apos;);
+var fs = require(&apos;fs&apos;);
+
+router.post(&apos;/image&apos;,function(req,res) {
+    var form = new formidable.IncomingForm();
+    // req 即用户请求对象
+    form.parse(req, function (err, fields, files) {
+        if (files) {
+            console.log(files);
+            // 获得文件的临时路径
+             var tmp_path = files.file.path;
+            // 指定文件上传后的目录 - 示例为&quot;images&quot;目录。 
+            var target_path = &apos;./public/images/&apos; + files.file.name;
+
+            if (tmp_path &amp;&amp; target_path) {
+                console.log()
+                // 移动文件
+                fs.rename(tmp_path, target_path, function(err) {
+                  if (err) {
+                      res.send({&quot;netStatus&quot;:{&quot;code&quot;:-1,&quot;des&quot;:&quot;出错了&quot; + err}});
+                  } else {
+                    // 删除临时文件夹文件, 
+                      fs.unlink(tmp_path, function() {
+                         if (err) {
+                              res.send({&quot;netStatus&quot;:{&quot;code&quot;:-1,&quot;des&quot;:&quot;出错了&quot; + err}});
+                         } else {
+                             res.send({&quot;netStatus&quot;:{&quot;code&quot;:0,&quot;des&quot;:&quot;文件&quot; + target_path + &quot;上传成功！&quot;}});
+                         }
+                      });
+                  }
+                });
+            } else {
+                 res.send({&quot;netStatus&quot;:{&quot;code&quot;:-2,&quot;des&quot;:&quot;文件丢失&quot;}});
+            }
+        }
+    });
+})
+
+module.exports = router;</code></pre><p>这里有一个小插曲，nodeJS指定的bodyParser工具可以正确的解析请求中json参数，当前端指定了请求中的参数为：</p>
+<pre><code>[request addValue:@&quot;application/json&quot; forHTTPHeaderField:@&quot;Content-Type&quot;];</code></pre><p>但是在上传文件的时候，参数类型是以表单的形式上传此时的参数类型是：</p>
+<pre><code>[request addValue:@&quot;multipart/form-data&quot; forHTTPHeaderField:@&quot;Content-Type&quot;];</code></pre><p>当上传的数据的内容类型发生改变的时候，上传文件的参数无法解析，报了服务端500的错误，在经过了chrome查询后 npm install formidable第三方插件解决了这个问题。</p>
+<p>下面是download路由的处理：</p>
+<pre><code>var express = require(&apos;express&apos;);
+var router = express.Router();
+
+router.get(&apos;/image/:imageName&apos;,function(req,res) {
+    var target_path = &apos;./public/images/&apos; + req.params.imageName;
+    console.log(&quot;文件路径&quot;);
+    console.log(target_path);
+    res.download(target_path);
+})
+
+module.exports = router;</code></pre><p>nodeJS启动服务之后，并不能直接根据文件的目录直接取出文件的内容，nodeJS中所有的请求服务都是走的GET/POST接口，所以就出现了download这个路由处理，在一般的CDN中，如果我们将文件上传到了服务器，根据指定的文件路径，就可以访问到这个文件，并完成下载，但是在NodeJS中，确实要写一层GET网络请求做中间的处理的。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Objective-C/" rel="tag"># Objective-C</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/27/2015-10-27-JSPatch 子线程卡死问题/" rel="prev" title="JSPatch 子线程调用卡死问题">
+                JSPatch 子线程调用卡死问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">持续、专注</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#iOS图片上传-下载-NodeJS后台"><span class="nav-number">1.</span> <span class="nav-text">iOS图片上传/下载 NodeJS后台</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ios端的实现"><span class="nav-number">1.1.</span> <span class="nav-text">ios端的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NodeJS实现"><span class="nav-number">1.2.</span> <span class="nav-text">NodeJS实现</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

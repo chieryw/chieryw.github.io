@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Objective-C,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="iOS各种锁的对比 为什么要引入锁？这是每个在学习ios锁的同学都会有的疑问。简单来说，ios语言是多线程的，当多个线程操作一个对象，且这个对象的操作要求是有序的时候，就需要的这个对象加锁。 eg:     ios中存在一个数据库     a/b/c/d业务都会像这个业务中存取数据     a/b/c/d业务操作是异步的就会存在这样一个情况，a在根据条件删除数据库中的数据，b在向数据库中添加数据。">
+<meta name="keywords" content="Objective-C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ios中各种锁的对比">
+<meta property="og:url" content="http://yoursite.com/2016/04/22/2016-04-22-ios中各种锁的对比/index.html">
+<meta property="og:site_name" content="chiery&#39;blog">
+<meta property="og:description" content="iOS各种锁的对比 为什么要引入锁？这是每个在学习ios锁的同学都会有的疑问。简单来说，ios语言是多线程的，当多个线程操作一个对象，且这个对象的操作要求是有序的时候，就需要的这个对象加锁。 eg:     ios中存在一个数据库     a/b/c/d业务都会像这个业务中存取数据     a/b/c/d业务操作是异步的就会存在这样一个情况，a在根据条件删除数据库中的数据，b在向数据库中添加数据。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-25T17:39:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ios中各种锁的对比">
+<meta name="twitter:description" content="iOS各种锁的对比 为什么要引入锁？这是每个在学习ios锁的同学都会有的疑问。简单来说，ios语言是多线程的，当多个线程操作一个对象，且这个对象的操作要求是有序的时候，就需要的这个对象加锁。 eg:     ios中存在一个数据库     a/b/c/d业务都会像这个业务中存取数据     a/b/c/d业务操作是异步的就会存在这样一个情况，a在根据条件删除数据库中的数据，b在向数据库中添加数据。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/04/22/2016-04-22-ios中各种锁的对比/">
+
+
+
+
+
+  <title>ios中各种锁的对比 | chiery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chiery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/04/22/2016-04-22-ios中各种锁的对比/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chiery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ios中各种锁的对比</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-22T16:04:23+08:00">
+                2016-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/性能对比/" itemprop="url" rel="index">
+                    <span itemprop="name">性能对比</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="iOS各种锁的对比"><a href="#iOS各种锁的对比" class="headerlink" title="iOS各种锁的对比"></a>iOS各种锁的对比</h2><p> 为什么要引入锁？这是每个在学习ios锁的同学都会有的疑问。简单来说，ios语言是多线程的，当多个线程操作一个对象，且这个对象的操作要求是有序的时候，就需要的这个对象加锁。</p>
+<pre><code>eg:
+    ios中存在一个数据库
+    a/b/c/d业务都会像这个业务中存取数据
+    a/b/c/d业务操作是异步的</code></pre><p>就会存在这样一个情况，a在根据条件删除数据库中的数据，b在向数据库中添加数据。a/b是异步执行的，就可能a在执行的时候，b添加了元素，a继续执行，b添加的元素被删除。这样就与a执行完成在执行b冲突。</p>
+<p> 这个时候就引入了锁的概念</p>
+ <a id="more"></a>
+
+<pre><code>eg:
+    生成一个锁保护数据库这个对象
+    只有拥有当锁打开的时候，该对象才能备操作</code></pre><h2 id="各种锁的性能的对比"><a href="#各种锁的性能的对比" class="headerlink" title="各种锁的性能的对比"></a>各种锁的性能的对比</h2><p> 这里给出了几个性能性能对比的blog,详细的介绍了各种lock的使用场景以及时间消耗</p>
+<p> <a href="http://ksnowlv.github.io/blog/2014/09/07/ios-tong-bu-suo-xing-neng-dui-bi/" target="_blank" rel="noopener">iOS同步对象性能对比</a></p>
+<p> <a href="http://blog.ibireme.com/2016/01/16/spinlock_is_unsafe_in_ios/" target="_blank" rel="noopener">不再安全的 OSSpinLock</a></p>
+<p><a href="http://www.tanhao.me/pieces/616.html/" target="_blank" rel="noopener">Objective-C中不同方式实现锁</a></p>
+<h2 id="各种锁的使用场景"><a href="#各种锁的使用场景" class="headerlink" title="各种锁的使用场景"></a>各种锁的使用场景</h2><ul>
+<li>NSLock</li>
+</ul>
+<p>相信大家接触最多的就是NSLock这个锁了，这个就不多用多说了。只要被NSLock锁中保护的对象，修改它只能在unlock的状态下</p>
+<ul>
+<li><p>NSCondition</p>
+<p>从名字中可以知道，这是一个条件锁。主要的特点其实是在<code>wait</code>和<code>signal</code>这两个函数。当条件不满足时,wait,这个锁在了一个等待的状态，当我们再想让这个锁执行时，signal一个信号，中断的函数就会继续执行了</p>
+<ul>
+<li><p>(void)wait; 挂起线程</p>
+</li>
+<li><p>(BOOL)waitUntilDate:(NSDate *)limit; 线程挂起到指定时间</p>
+</li>
+<li><p>(void)signal; 任意通知一个线程</p>
+</li>
+<li><p>(void)broadcast; 通知所用等待的线程</p>
+<p>eg:</p>
+<ul>
+<li>网络图片加载,下载图片时子线程wait</li>
+<li>当网络图片下载完成之后signal,中断wait调用主线程重新渲染UI</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>NSConditionLock</p>
+<p>从名字上看也是一个条件所，但是和之前的NSCondition有什么区别呢，我们看一下API,初始化条件锁，注意这个condition</p>
+<ul>
+<li>(instancetype)initWithCondition:(NSInteger)condition NS_DESIGNATED_INITIALIZER;</li>
+</ul>
+</li>
+</ul>
+<p>初始化中的condition,readonly</p>
+<ul>
+<li>property (readonly) NSInteger condition;</li>
+</ul>
+<p>当条件满足时加锁</p>
+<ul>
+<li>(void)lockWhenCondition:(NSInteger)condition;</li>
+</ul>
+<p>尝试加锁，返回值为BOOL,这里先做判断为好</p>
+<ul>
+<li>(BOOL)tryLock;</li>
+</ul>
+<p>当满足条件时尝试加锁</p>
+<ul>
+<li>(BOOL)tryLockWhenCondition:(NSInteger)condition;</li>
+</ul>
+<p>当满足条件时尝试解锁</p>
+<ul>
+<li>(void)unlockWithCondition:(NSInteger)condition;</li>
+</ul>
+<p>在指定时间之前加锁</p>
+<ul>
+<li>(BOOL)lockBeforeDate:(NSDate *)limit;</li>
+</ul>
+<p>在指定时间之前条件满足时加锁</p>
+<ul>
+<li>(BOOL)lockWhenCondition:(NSInteger)condition beforeDate:(NSDate *)limit;</li>
+</ul>
+<p>其实他的API已经解释了这个锁的使用环境</p>
+<ul>
+<li><p>NSRecursiveLock</p>
+<p>从名字中大约知道这个锁实在递归中使用的。那么这个锁的用处在哪里？</p>
+<p>  @property (nonatomic, strong) NSLock *lock;<br>  @property (nonatomic, strong) NSRecursiveLock *recursiveLock;</p>
+<ul>
+<li><p>(void)viewDidLoad {<br>  [super viewDidLoad];<br>  [self recursiveFunction:100];<br>}</p>
+</li>
+<li><p>(void)recursiveFunction:(NSInteger)condition {<br>  [self.lock lock];<br>  if (condition == 0) {</p>
+<pre><code>return;</code></pre><p>  } else {</p>
+<pre><code>[self recursiveFunction:condition-1];</code></pre><p>  }<br>  [self.lock unlock];<br>}<br>上面的函数执行的时候会崩溃，NSLock无法在同一线程下，没有unlock就再次持有这个锁，为了满足递归时对该对象的保护出现了NSRecursiveLock</p>
+<p>将self.lock替换成self.recursiveLock就可以执行了</p>
+</li>
+</ul>
+<p>为什么换成了递归所就没有问题了呢？</p>
+</li>
+</ul>
+<p>那是因为，NSRecursiveLock类定义的锁可以在同一线程多次获得，而不会造成死锁。一个递归锁会跟踪它被多少次成功获得了。每次成功的获得该锁都必须平衡调用锁住和解锁的操作。只有所有的锁住和解锁操作都平衡的时候，锁才真正被释放给其他线程获得。</p>
+<ul>
+<li><p>pthread_mutex_t</p>
+<p>这也是个互斥锁，只是更底层，C实现的锁，效率上也会更高</p>
+<p>可以看一下<a href="http://www.parallellabs.com/2010/01/31/pthreads-programming-spin-lock-vs-mutex-performance-analysis/" target="_blank" rel="noopener">这个博客</a></p>
+<p><a href="http://www.lai18.com/content/1135448.html" target="_blank" rel="noopener">这个博客</a>中有相关的举例</p>
+</li>
+</ul>
+<ul>
+<li><p>OSSpinLock</p>
+<p>现在已不再推荐使用 <a href="http://blog.ibireme.com/2016/01/16/spinlock_is_unsafe_in_ios/" target="_blank" rel="noopener">请看链接</a></p>
+</li>
+</ul>
+<ul>
+<li><p>dispatch_barrier_async</p>
+<p>这里有一篇很好的<a href="http://songzengbin.github.io/blog/2013/08/13/dispatch-barrier-asynde-yan-jiu/" target="_blank" rel="noopener">文章</a>介绍</p>
+</li>
+</ul>
+<ul>
+<li><p>@synchronized</p>
+<p>这也是一个互斥锁，相当于NSLock的封装版。相信大家用的也不少，虽然简化了很多，但是不推荐大家使用，自己在创建锁资源是比较耗时</p>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在对比了所有的锁之后，相信大家在面对资源读取的时候会有自己的初步判断了。至少我在搜集了这些资料之后里了解了更多，不是吗</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Objective-C/" rel="tag"># Objective-C</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/23/2016-02-23-iterm替代terminal/" rel="next" title="iterm替代terminal">
+                <i class="fa fa-chevron-left"></i> iterm替代terminal
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/03/2016-05-03-AudioCore/" rel="prev" title="CoreAudio">
+                CoreAudio <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">持续、专注</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS各种锁的对比"><span class="nav-number">1.</span> <span class="nav-text">iOS各种锁的对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各种锁的性能的对比"><span class="nav-number">2.</span> <span class="nav-text">各种锁的性能的对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各种锁的使用场景"><span class="nav-number">3.</span> <span class="nav-text">各种锁的使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

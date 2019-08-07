@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Objective-C,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="音频在使用音频之前还是需要做相应的技术调研，可以更好的根据需求选择相应的技术方案和框架。技术调研的参考数据来自于Apple document。文档讲述了多种api的功能以及适合的场景，apple提供了丰富的组件来帮助开发者完成相应的需求。其中就包含： * Media Player framework播放系统音乐 * AV Foundation framework录制或是播放声音，此框架中提供了简单">
+<meta name="keywords" content="Objective-C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="音频">
+<meta property="og:url" content="http://yoursite.com/2015/11/03/2015-11-03-音频/index.html">
+<meta property="og:site_name" content="chiery&#39;blog">
+<meta property="og:description" content="音频在使用音频之前还是需要做相应的技术调研，可以更好的根据需求选择相应的技术方案和框架。技术调研的参考数据来自于Apple document。文档讲述了多种api的功能以及适合的场景，apple提供了丰富的组件来帮助开发者完成相应的需求。其中就包含： * Media Player framework播放系统音乐 * AV Foundation framework录制或是播放声音，此框架中提供了简单">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2015/11/03/2015-11-03-音频/%3C!--%EF%BF%BC0--%3E/images/AVAudioPlayer-1.jpeg">
+<meta property="og:image" content="http://yoursite.com/2015/11/03/2015-11-03-音频/%3C!--%EF%BF%BC1--%3E/images/MPMusicPlayerController-1.jpeg">
+<meta property="og:image" content="http://yoursite.com/2015/11/03/2015-11-03-音频/%3C!--%EF%BF%BC2--%3E/images/MPMusicPlayerController-2.jpeg">
+<meta property="og:image" content="http://yoursite.com/2015/11/03/2015-11-03-音频/%3C!--%EF%BF%BC3--%3E/images/MPMusicPlayerController-3.jpeg">
+<meta property="og:image" content="http://yoursite.com/2015/11/03/2015-11-03-音频/%3C!--%EF%BF%BC4--%3E/images/MPMusicPlayerController-4.jpeg">
+<meta property="og:image" content="http://yoursite.com/2015/11/03/2015-11-03-音频/%3C!--%EF%BF%BC5--%3E/images/AVAudioRecorder-1.jpeg">
+<meta property="og:updated_time" content="2018-08-25T17:42:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="音频">
+<meta name="twitter:description" content="音频在使用音频之前还是需要做相应的技术调研，可以更好的根据需求选择相应的技术方案和框架。技术调研的参考数据来自于Apple document。文档讲述了多种api的功能以及适合的场景，apple提供了丰富的组件来帮助开发者完成相应的需求。其中就包含： * Media Player framework播放系统音乐 * AV Foundation framework录制或是播放声音，此框架中提供了简单">
+<meta name="twitter:image" content="http://yoursite.com/2015/11/03/2015-11-03-音频/%3C!--%EF%BF%BC0--%3E/images/AVAudioPlayer-1.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/11/03/2015-11-03-音频/">
+
+
+
+
+
+  <title>音频 | chiery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chiery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/11/03/2015-11-03-音频/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chiery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">音频</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-03T12:04:23+08:00">
+                2015-11-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ios/" itemprop="url" rel="index">
+                    <span itemprop="name">ios</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="音频"><a href="#音频" class="headerlink" title="音频"></a>音频</h1><p>在使用音频之前还是需要做相应的技术调研，可以更好的根据需求选择相应的技术方案和框架。技术调研的参考数据来自于<a href="https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/MultimediaPG/Introduction/Introduction.html" target="_blank" rel="noopener">Apple document</a>。文档讲述了多种api的功能以及适合的场景，apple提供了丰富的组件来帮助开发者完成相应的需求。其中就包含：</p>
+<pre><code>* Media Player framework播放系统音乐
+* AV Foundation framework录制或是播放声音，此框架中提供了简单的UI封装
+* Audio Toolbox framework来同步录制声音，做声音的解析，格式转化等
+* Audio Unit framework可以用作中间件，解析，编辑声音
+* OpenAL framework提供声音定位，适用于游戏或是其他实时性对话较高的应用</code></pre><a id="more"></a>
+
+<p>通过引入相应的头文件，就可以使用相应框架中提供的技术。在这之后讲述了硬件和软件支持的编码解码格式，以及在播放中断的时候，不同的框架，通过触发相应的方法做UI上的适配,下面就来一一讲解简单的视屏播放框架</p>
+<h2 id="System-Sound-Servie"><a href="#System-Sound-Servie" class="headerlink" title="System Sound Servie"></a>System Sound Servie</h2><p>System Sound Servie是系统的底层框架，是AudioToolbox.framework框架下的功能，但是在播放文件上存在一定的缺陷：下面的是针对播放文件的要求</p>
+<ul>
+<li>音频播放时间不能超过30s</li>
+<li>数据必须是PCM或者IMA4格式</li>
+<li>音频文件必须打包成.caf、.aif、.wav中的一种（注意这是官方文档的说法，实际测试发现一些.mp3也可以播放）</li>
+</ul>
+<p>如果使用了AudioServicesPlaySystemSound函数，还存在一下问题</p>
+<ul>
+<li>没有音量控制，使用的是系统的音量</li>
+<li>声音播放时快速的</li>
+<li>循环以及立体声失效</li>
+<li>同步播放失效，你只能在同一时间播放一个文件</li>
+</ul>
+<p>所以这个API主要的作用是播放一些提示信息，例如消息到达的声音，任务完成的声音，注入此类剪短的声音。需要注意的是：</p>
+<pre><code>播放声音的ID不能系统指定的ID（kSystemSoundID_UserPreferredAlert）重复，否则播放不出任何声音</code></pre><p>根据播放的特性做了相应的封装 .h文件</p>
+<pre><code>#import &lt;Foundation/Foundation.h&gt;
+#import &lt;AudioToolbox/AudioToolbox.h&gt;
+
+typedef NS_ENUM(NSInteger, MMPlaySystemSoundType) {
+    // 默认只是提示声音  静音模式没有声音
+    MMPlaySystemSoundTypeDefault,
+    // 播放声音并震动    静音模式只是震动
+    MMPlaySystemSoundTypeAlert
+};
+
+@interface MMSystemSoundServie : NSObject
+
+/**
+ 实例
+
+ @return 返回对象本身
+ */
++ (instancetype)getInstance;
+
+/**
+ 播放音乐的请求以及回调
+
+ @param fileName 即将播放资源的文件路径
+ @param palySystemSoundType 播放声音的类型
+ @param handle 播放完成的回调
+ */
+- (void)playSoundWithName:(NSString *)fileName
+      palySystemSoundType:(MMPlaySystemSoundType)type
+           completeHandle:(void (^)(SystemSoundID soundID,void *clientData))handle;
+
+@end</code></pre><p>.m文件的实现</p>
+<pre><code>#import &quot;MMSystemSoundServie.h&quot;
+
+@interface MMSystemSoundServie ()
+@property(nonatomic, copy) void(^completeHandle)(SystemSoundID soundID,void * clientData);
+@end
+
+@implementation MMSystemSoundServie
+
++ (instancetype)getInstance {
+    static MMSystemSoundServie *__instance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&amp;onceToken, ^{
+        __instance = [MMSystemSoundServie new];
+    });
+    return __instance;
+}
+
+/**
+ 播放完声音的回调
+
+ @param soundID 系统声音ID
+ @param clientData 回调时传递的参数
+ */
+void soundCompleteCallback(SystemSoundID soundID,void * clientData){
+    NSLog(@&quot;播放完成...&quot;);
+    if ([[MMSystemSoundServie getInstance] completeHandle]) {
+        [MMSystemSoundServie getInstance].completeHandle(soundID,clientData);
+        // 执行完成回调之后，将回调数据置为nil，方便下次使用
+        [MMSystemSoundServie getInstance].completeHandle = nil;
+    }
+}
+
+- (void)playSoundWithName:(NSString *)fileName
+      palySystemSoundType:(MMPlaySystemSoundType)type
+           completeHandle:(void (^)(SystemSoundID, void *))handle {
+
+    // 将回调寄存
+    if (!self.completeHandle) self.completeHandle = handle;
+
+    // 因为系统的播放声音的API，只能播放本地资源，只能从bundle中取出资源
+    NSString *audioFile = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
+    NSURL *fileUrl = [NSURL fileURLWithPath:audioFile];
+
+    //1.获得系统声音ID
+    SystemSoundID soundID=0;
+    /**
+     * inFileUrl:音频文件url
+     * outSystemSoundID:声音id（此函数会将音效文件加入到系统音频服务中并返回一个长整形ID）
+     */
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl), &amp;soundID);
+    //如果需要在播放完之后执行某些操作，可以调用如下方法注册一个播放完成回调函数
+    AudioServicesAddSystemSoundCompletion(soundID, NULL, NULL, soundCompleteCallback, NULL);
+    //2.播放音频
+    if (type == MMPlaySystemSoundTypeDefault) AudioServicesPlaySystemSound(soundID);//播放音效
+    else AudioServicesPlayAlertSound(soundID);//播放音效并震动
+}
+
+@end</code></pre><p>下面是调用入口</p>
+<pre><code>[[MMSystemSoundServie getInstance] playSoundWithName:@&quot;alert.wav&quot;
+                                 palySystemSoundType:MMPlaySystemSoundTypeDefault
+                                      completeHandle:^(SystemSoundID soundID, void *clientData) {
+                                          NSLog(@&quot;播放结束了 soundID:%u，clientData:%@&quot;,(unsigned int)soundID,clientData);
+                                      }];</code></pre><p>实现了播放完成block回调函数。</p>
+<h2 id="AVAudioPlayer"><a href="#AVAudioPlayer" class="headerlink" title="AVAudioPlayer"></a>AVAudioPlayer</h2><p>源自AVFoundation.framework的AVAudioPlayer的相比于System Sound Servie， AVAudioPlayer可以完成更多的定制，但是只能播放本地音乐，不能播放网络音乐。使用AVAudioPlayer可以完成如下定制：</p>
+<ul>
+<li>不限制时长</li>
+<li>播放本地文件或者缓存数据</li>
+<li>循环播放</li>
+<li>支持同步播放</li>
+<li>每种声音的音量都是可控的</li>
+<li>支持快进快退</li>
+<li>可获得音频信息</li>
+</ul>
+<p>使用AVAudioPlayer完成播放，只要完成下面三个步骤：</p>
+<ul>
+<li>初始化AVAudioPlayer对象，此时通常指定本地文件路径。</li>
+<li>设置播放器属性，例如重复次数、音量大小等，准备播放</li>
+<li>设置代理，控制播放完成/出错的处理</li>
+</ul>
+<p><img src="%3C!--%EF%BF%BC0--%3E/images/AVAudioPlayer-1.jpeg" alt></p>
+<p>对AVAudioPlayer做了如下的封装：.h文件</p>
+<pre><code>#import &lt;Foundation/Foundation.h&gt;
+
+@protocol MMAVAudioPlayerDelegate &lt;NSObject&gt;
+
+- (void)playFinish;
+- (void)playError;
+
+@end
+
+@interface MMAVAudioPlayer : NSObject
+
+/**
+ 声音
+ */
+@property (nonatomic, assign) CGFloat volume;
+
+/**
+ 播放进度
+ */
+@property (nonatomic, assign) CGFloat progress;
+
+
+/**
+ 播放完成回调
+ */
+@property (nonatomic, weak) id&lt;MMAVAudioPlayerDelegate&gt;delegate;
+
+
+/**
+ 当期那播放进度用于外界监听
+ */
+@property (nonatomic, readonly) CGFloat currentProgress;
+
+
+/**
+ 用文件的名称来初始化对象
+
+ @param name 文件名称
+ @return 实例对象
+ */
+- (instancetype)initWithAudioFileName:(NSString *)name;
+
+
+/**
+ 播放声音
+ */
+- (void)play;
+
+
+/**
+ 停止播放
+ */
+- (void)pause;
+
+@end</code></pre><p>.m文件</p>
+<pre><code>#import &quot;MMAVAudioPlayer.h&quot;
+#import &lt;AVFoundation/AVFoundation.h&gt;
+
+@interface MMAVAudioPlayer ()&lt;AVAudioPlayerDelegate&gt;
+@property (nonatomic, strong) AVAudioPlayer *player;
+@property (nonatomic, strong) NSString *fileName;
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, readwrite) CGFloat currentProgress;
+@end
+
+@implementation MMAVAudioPlayer
+
+- (void)dealloc {
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
+/**
+ 初始化对象
+
+ @param name 播放文件的名称
+ @return 播放对象
+ */
+- (instancetype)initWithAudioFileName:(NSString *)name {
+    if (self = [super init]) {
+        _fileName = name;
+        [self initSelf];
+    }
+    return self;
+}
+
+
+/**
+ 设置默认值
+ */
+- (void)initSelf {
+    _progress = 0;
+    _volume = 0.3;
+}
+
+
+/**
+ 初始化player对象
+
+ @return player对象
+ */
+- (AVAudioPlayer *)player {
+    if (!_player) {
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:self.fileName ofType:nil];
+        NSURL *fileURL = [NSURL URLWithString:filePath];
+        NSError *error = nil;
+        _player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:&amp;error];
+        if (error) {
+            NSLog(@&quot;出错了&quot;);
+            return nil;
+        }
+
+        _player.numberOfLoops = 0;
+        _player.delegate = self;
+        _player.currentTime = self.progress;
+        _player.volume = self.volume;
+        [_player prepareToPlay];
+    }
+    return _player;
+}
+
+
+/**
+ 定时器，监听播放进度
+
+ @return 定时器
+ */
+- (NSTimer *)timer {
+    if (!_timer) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:0.1 block:^(NSTimer * _Nonnull timer) {
+            [self playing];
+        } repeats:YES];
+    }
+    return _timer;
+}
+
+
+/**
+ 播放中
+ */
+- (void)playing {
+    self.currentProgress = (self.player.currentTime / self.player.duration);
+}
+
+
+/**
+ 播放完成
+ */
+- (void)playFinish {
+    self.progress = 0;
+    [self pause];
+    [self.timer setFireDate:[NSDate distantFuture]];
+    if (self.delegate &amp;&amp; [self.delegate respondsToSelector:@selector(playFinish)])
+        [self.delegate playFinish];
+}
+
+
+/**
+ 设置播放进度
+
+ @param Progress 播放进度
+ */
+- (void)setProgress:(CGFloat)progress {
+    if (_progress != progress) {
+        _progress = progress;
+        self.player.currentTime = progress * self.player.duration;
+    }
+}
+
+
+/**
+ 设置播放器声音
+
+ @param volume 声音
+ */
+- (void)setVolume:(CGFloat)volume {
+    if (_volume != volume) {
+        _volume = volume;
+        self.player.volume = volume;
+    }
+}
+
+
+/**
+ 播放
+ */
+- (void)play {
+    if (self.player &amp;&amp; [self.player prepareToPlay]) {
+        [self.player play];
+        [self.timer setFireDate:[NSDate date]];
+    }
+}
+
+
+/**
+ 暂定播放
+ */
+- (void)pause {
+    if (self.player &amp;&amp; self.player.isPlaying) {
+        [self.player pause];
+        [self.timer setFireDate:[NSDate distantFuture]];
+    }
+}
+
+#pragma mark - delegate
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    [self playFinish];
+}
+
+- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
+    NSLog(@&quot;发生错误&quot;);
+}
+
+@end</code></pre><p>调用实例以及代理</p>
+<pre><code>- (MMAVAudioPlayer *)player {
+    if (!_player) {
+        _player = [[MMAVAudioPlayer alloc] initWithAudioFileName:@&quot;jazz.mp3&quot;];
+        _player.delegate = self;
+    }
+    return _player;
+}
+
+- (void)playFinish {
+    self.processSlider.value = 0;
+    self.playButton.selected = NO;
+}
+
+- (void)playError {
+    self.processSlider.value = 0;
+    self.playButton.selected = NO;
+    [UIAlertView tipMessage:@&quot;播放出错了！&quot;];
+}</code></pre><p>监测player进度变化，这里使用的reactiveCocoa,如果没有引用这个第三方文件，可以使用自带的KVO处理：</p>
+<pre><code>- (void)observePlayerProcess {
+    [RACObserve(self.player, currentProgress) subscribeNext:^(id x) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.processSlider.value = [x floatValue];
+        });
+    }];
+}</code></pre><h2 id="MPMusicPlayerController"><a href="#MPMusicPlayerController" class="headerlink" title="MPMusicPlayerController"></a>MPMusicPlayerController</h2><p>MPMusicPlayerController是MediaPlayer.frameowork库中的播放器，用于播放系统库中的音乐，只是不能像AVAudioPlayer那样直接通过一个filePath来播放这个文件内容，需要通过一个队列来向Controller中添加数据来源，由于输入数据源的关系，MPMusicPlayerController可以直接控制上一曲，下一曲。为了播放系统库中音乐，获取系统库中的音乐入口给出的API也是比较充分：</p>
+<pre><code>+ (MPMediaQuery *)albumsQuery;
++ (MPMediaQuery *)artistsQuery;
++ (MPMediaQuery *)songsQuery;
++ (MPMediaQuery *)playlistsQuery;
++ (MPMediaQuery *)podcastsQuery;
++ (MPMediaQuery *)audiobooksQuery;
++ (MPMediaQuery *)compilationsQuery;
++ (MPMediaQuery *)composersQuery;
++ (MPMediaQuery *)genresQuery;</code></pre><p>如果这些队列还是不能满足用户需求，可以配合使用 <code>MPMediaPickerController</code> 来本地的音乐库中来选择自己需要播放的<code>MPMediaItem</code></p>
+<pre><code>-(MPMediaPickerController *)mediaPicker{
+    if (!_mediaPicker) {
+        //初始化媒体选择器，这里设置媒体类型为音乐，其实这里也可以选择视频、广播等
+//                _mediaPicker=[[MPMediaPickerController alloc]initWithMediaTypes:MPMediaTypeMusic];
+        _mediaPicker=[[MPMediaPickerController alloc]initWithMediaTypes:MPMediaTypeAny];
+        _mediaPicker.allowsPickingMultipleItems=YES;//允许多选
+//                _mediaPicker.showsCloudItems=YES;//显示icloud选项
+        _mediaPicker.prompt=@&quot;请选择要播放的音乐&quot;;
+        _mediaPicker.delegate=self;//设置选择器代理
+    }
+    return _mediaPicker;
+}
+
+#pragma mark - MPMediaPickerController代理方法
+//选择完成
+-(void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection{
+    MPMediaItem *mediaItem=[mediaItemCollection.items firstObject];//第一个播放音乐
+    //注意很多音乐信息如标题、专辑、表演者、封面、时长等信息都可以通过MPMediaItem的valueForKey:方法得到,但是从iOS7开始都有对应的属性可以直接访问
+    //    NSString *title= [mediaItem valueForKey:MPMediaItemPropertyAlbumTitle];
+    //    NSString *artist= [mediaItem valueForKey:MPMediaItemPropertyAlbumArtist];
+    //    MPMediaItemArtwork *artwork= [mediaItem valueForKey:MPMediaItemPropertyArtwork];
+    //UIImage *image=[artwork imageWithSize:CGSizeMake(100, 100)];//专辑图片
+    NSLog(@&quot;标题：%@,表演者：%@,专辑：%@&quot;,mediaItem.title ,mediaItem.artist,mediaItem.albumTitle);
+    [self.musicPlayer setQueueWithItemCollection:mediaItemCollection];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+//取消选择
+-(void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}</code></pre><p>效果如下图：</p>
+<p><img src="%3C!--%EF%BF%BC1--%3E/images/MPMusicPlayerController-1.jpeg" alt> <img src="%3C!--%EF%BF%BC2--%3E/images/MPMusicPlayerController-2.jpeg" alt> <img src="%3C!--%EF%BF%BC3--%3E/images/MPMusicPlayerController-3.jpeg" alt> <img src="%3C!--%EF%BF%BC4--%3E/images/MPMusicPlayerController-4.jpeg" alt></p>
+<p><code>MPMediaPickerController</code>完成了开发者很多工作量，只要选中了对应的音乐，这个音乐就会在pickerController中消失，实现相应的代理方法，将选中的<code>MPMediaItem</code>添加到<code>MPMusicPlayerController</code>中，这里<code>MPMusicPlayerController</code>只是一个音乐库播放队列的管理器，没有实现相应的界面。</p>
+<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><p>自定义界面播放系统库音乐，自定义界面可以通过<code>MPMediaItem</code>获取，包含了播放对象的全部资源：</p>
+<ul>
+<li>歌词（英文歌曲可能会包含歌词，中文歌词很少包含歌词。可能和美国音乐不习惯显示歌词的习惯有关系）</li>
+<li>歌名</li>
+<li>歌唱者</li>
+<li>…</li>
+</ul>
+<p>目前使用的是ios10系统，音乐界面不敢恭维，不是自己喜欢的风格，歌词还是对于中文歌词介入不是很友好，还是要像之前一样需要从itunes同步，才能显示，但是<code>MPMediaItem</code>是包含歌词这一对象的，不知道国内的服务是出于什么原因没有根据国情将国人喜欢的歌词浏览放上去（至少我自己喜欢一首歌希望看到歌词）</p>
+<h3 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h3><p>劣势：</p>
+<ul>
+<li><code>MPMediaItem</code>所有的property都是readonly的属性，这个属性，就杜绝了加载外界歌词来源的可能（iTunes同步资源可以）</li>
+<li>苹果音乐对外收费</li>
+<li>不能播放网络音乐</li>
+</ul>
+<p>优势:</p>
+<ul>
+<li>API高度封装，自定义播放界面即可实现播放</li>
+<li>播放资源数据格式统一，不用担心资源来源和处理问题</li>
+</ul>
+<p>在ios10之后需要添加使用系统mediaFramework的权限，需要在info.plist中添加<code>Privacy - Media Library Usage Description</code>,并且添加对应的文字介绍。否则无法使用PresentViewController来调取<code>MPMediaPickerController</code></p>
+<h2 id="录音AVAudioRecorder"><a href="#录音AVAudioRecorder" class="headerlink" title="录音AVAudioRecorder"></a>录音AVAudioRecorder</h2><p>AVAudioRecorder也是AVFoundation中的一员，支持多种音频格式，与AVAudioPlayer相似，可以将其看作是一个音频的控制类使用，但是与AVAudioPlayer不同的是：AVAudioRecorder需要设置录音的属性，来决定录制声音的质量。这些信息包含：文件的格式、采样率、通道数、每个采样点的位数等信息。</p>
+<p>下面的是对AVAudioRecorder的封装：.h文件</p>
+<p>#import &lt;Foundation/Foundation.h&gt;</p>
+<pre><code>@interface MMAVAudioRecord : NSObject
+
+
+/**
+ 将声音信息透传出去,每0.1秒透传一次
+ */
+@property (nonatomic, readonly) CGFloat currentVolume;
+
+
+/**
+ 开始录制声音
+ */
+- (void)start;
+
+/**
+ 暂停录制声音，重新开始会在原有的基础上追加录音的信息
+ */
+- (void)pause;
+
+/**
+ 与pause结合使用，在pause暂停的基础上追加录音数据
+ */
+- (void)resume;
+
+/**
+ 停止录制声音，这个动作会触发代理方法，录制已经结束
+ */
+- (void)stop;
+
+@end</code></pre><p>.m文件封装</p>
+<pre><code>#import &quot;MMAVAudioRecord.h&quot;
+#import &lt;AVFoundation/AVFoundation.h&gt;
+
+#define kRecordAudioFile @&quot;myRecord.caf&quot;
+
+static const CGFloat recordTimerInterval = 0.08;
+
+@interface MMAVAudioRecord ()&lt;AVAudioRecorderDelegate&gt;
+@property (nonatomic, strong) AVAudioRecorder *recorder;
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, readwrite) CGFloat currentVolume;
+@end
+
+@implementation MMAVAudioRecord
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self setAudioSession];
+    }
+    return self;
+}
+
+-(void)setAudioSession{
+    AVAudioSession *audioSession=[AVAudioSession sharedInstance];
+    //设置为播放和录音状态，以便可以在录制完之后播放录音
+    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    [audioSession setActive:YES error:nil];
+}
+
+- (NSURL *)getSavePath {
+    NSString *urlStr=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    urlStr=[urlStr stringByAppendingPathComponent:kRecordAudioFile];
+    NSLog(@&quot;file path:%@&quot;,urlStr);
+    NSURL *url=[NSURL fileURLWithPath:urlStr];
+    return url;
+}
+
+
+- (NSDictionary *)getAudioSetting {
+    NSMutableDictionary *dicM=[NSMutableDictionary dictionary];
+    //设置录音格式
+    [dicM setObject:@(kAudioFormatLinearPCM) forKey:AVFormatIDKey];
+    //设置录音采样率，8000是电话采样率，对于一般录音已经够了，录音一般使用44100采样率
+    [dicM setObject:@(8000) forKey:AVSampleRateKey];
+    //设置通道,这里采用单声道
+    [dicM setObject:@(1) forKey:AVNumberOfChannelsKey];
+    //每个采样点位数,分为8、16、24、32 默认给出的是16
+    [dicM setObject:@(8) forKey:AVLinearPCMBitDepthKey];
+    //是否使用浮点数采样
+    [dicM setObject:@(YES) forKey:AVLinearPCMIsFloatKey];
+    //....其他设置等
+    return dicM;
+}
+
+- (AVAudioRecorder *)recorder {
+    if (!_recorder) {
+        //创建录音文件保存路径
+        NSURL *url=[self getSavePath];
+        //创建录音格式设置
+        NSDictionary *setting=[self getAudioSetting];
+        //创建录音机
+        NSError *error=nil;
+        _recorder=[[AVAudioRecorder alloc]initWithURL:url settings:setting error:&amp;error];
+        _recorder.delegate=self;
+        _recorder.meteringEnabled=YES;//如果要监控声波则必须设置为YES
+        [_recorder prepareToRecord];
+        if (error) {
+            NSLog(@&quot;创建录音机对象时发生错误，错误信息：%@&quot;,error.localizedDescription);
+            return nil;
+        }
+    }
+    return _recorder;
+}
+
+- (NSTimer *)timer {
+    if (!_timer) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:recordTimerInterval block:^(NSTimer * _Nonnull timer) {
+            [self getVolumeInfo];
+        } repeats:YES];
+    }
+    return _timer;
+}
+
+- (void)getVolumeInfo {
+    [self.recorder updateMeters];//更新测量值
+    float power= [self.recorder averagePowerForChannel:0];//取得第一个通道的音频，注意音频强度范围时-160到0
+    self.currentVolume = (1.0/160.0)*(power+160.0);
+    NSLog(@&quot;正在输出音量:%f&quot;,self.currentVolume);
+}
+
+- (void)start {
+    if (!self.recorder.isRecording) {
+        [self.recorder record];
+        self.timer.fireDate = [NSDate date];
+    }
+}
+
+- (void)pause {
+    if (self.recorder.isRecording) {
+        [self.recorder pause];
+        self.timer.fireDate = [NSDate distantFuture];
+    }
+}
+
+- (void)resume {
+    [self start];
+}
+
+- (void)stop {
+    [self.recorder stop];
+    self.timer.fireDate = [NSDate distantFuture];
+}
+
+#pragma mark - 录音机代理方法
+- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
+    NSLog(@&quot;录音完成!&quot;);
+}
+
+@end</code></pre><p>下面的是录音的效果图：</p>
+<p><img src="%3C!--%EF%BF%BC5--%3E/images/AVAudioRecorder-1.jpeg" alt></p>
+<p>功能介绍：这个界面中，按住圆圈开始录音，松开停止录音。录音的时长控制在60s内，超过时长停止录音，中间的红色波纹表示录音时音量的大小。</p>
+<p>下面的录音设置可以做一下参考</p>
+<pre><code>NSMutableDictionary *settings = [[NSMutableDictionary alloc]init ];
+//录制的音频格式
+[settings setValue:[NSNumber numberWithInteger:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
+//采样率
+[settings setValue:[NSNumber numberWithFloat:44100.0f] forKey:AVSampleRateKey];
+//信道数
+[settings setValue:[NSNumber numberWithInteger:1] forKey:AVNumberOfChannelsKey];
+//录音的质量
+[settings setValue:[NSNumber numberWithInteger:AVAudioQualityHigh] forKey:AVEncoderAudioQualityKey];
+[settings setValue:[NSNumber numberWithInt:12800] forKey:AVEncoderBitRateKey];
+[settings setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];</code></pre><h3 id="Note-1"><a href="#Note-1" class="headerlink" title="Note"></a>Note</h3><p>ios中录制的声音的格式是.wav,.aif,.caf等，但是这样格式在安卓手机上都是不能播放的，所以这中间存在一个转码的工作，现在安卓支持的通用的音频播放的格式是.amr。选择一个合适的转码实际是必要的。例如： 微信的语音，时效性没有那么的强烈，可以在服务端使用FFMPEG做转码。</p>
+<p>这里对录音编码格式做一下介绍：</p>
+<ul>
+<li>AAC: AAC其实是“高级音频编码（advanced audio coding）”的缩写，它是被设计用来取代MP3格式的。你可能会想，它压缩了原始的声音，导致容量占用少但是质量肯定会有所下降。不过这些质量的损失 取决于声音比特率的大小，当比特率合适的时候，这些损失人耳是很难听出来的。事实上，aac比mp3有更好的压缩率，特别是在比特率低于128bit/s 的时候。</li>
+<li>HE-AAC: HE-AAC是AAC的一个超集，这个“HE”代表的是“High efficiency”。 HE-AAC是专门为低比特率所优化的一种音频编码格式，比如streaming audio就特别适合使用这种编码格式。</li>
+<li>AMR: AMR全称是“Adaptive Multi-Rate”，它也是另一个专门为“说话（speech）”所优化的编码格式，也是适合低比特率环境下采用。</li>
+<li>ALAC: 它全称是“Apple Lossless”，这是一种没有任何质量损失的音频编码方式，也就是我们说的无损压缩。在实际使用过程中，它能够压缩40%-60%的原始数据。这种编码格式的解码速度非常快，这对iphone或者ipod这种小型设备来说非常适合。</li>
+<li>iLBC: 这是另一种专门为说话所设计的音频编码格式，它非常适合于IP电话等其它需要流式音频的场合。</li>
+<li>IMA4: 这是一个在16-bit音频文件下按照4：1的压缩比来进行压缩的格式。这是iphone上面一种非常重要的编码格式。<br>它的中文意思是基于线性脉冲编码调制，用于将模拟声音数据转换成数字声音数据。简而言之，就是意味着无压缩数据。由于数据是非压缩的，它可以非常快的播放，并且当空间不是问题时，这是在iphone上面首选的音频编码方式。</li>
+<li>μ-law and a-law: 就我所知道的，这种编码是交替的编码模拟数据为数字格式数据，但是在speech优化方面比linear PCM更好。</li>
+<li>MP3: 这种格式是我们都知道也喜欢的，虽然很多年过去了，但MP3到目前为止仍然是一种非常流行的编码格式，它也能被iphone很好地支持。</li>
+<li>LPCM也很早就被定义在DVD播放机 的标准内，为了和CD有所区别，DVD的的采样规格为16bit/48KHz，随着技术的发展，DVD的的采样规格更提升到24bit/96KHz，以达 到更高的播放品质，用96KHz/24bit方式记录的音频信号所能达到的频率上限是96÷2= 48KHz，而它的最大动态范围将可以达到24×6=144dB。从指标上就可以看出：它的声音比CD要好得多。pcm编码的最大的优点就是音质好，最大的缺点就是体数据量大。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Objective-C/" rel="tag"># Objective-C</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/27/2015-10-27-JSPatch 子线程卡死问题/" rel="next" title="JSPatch 子线程调用卡死问题">
+                <i class="fa fa-chevron-left"></i> JSPatch 子线程调用卡死问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/23/2015-11-23-ReactNative IOS7上的异步问题md/" rel="prev" title="React-native在IOS7上的异步问题">
+                React-native在IOS7上的异步问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">持续、专注</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#音频"><span class="nav-number">1.</span> <span class="nav-text">音频</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#System-Sound-Servie"><span class="nav-number">1.1.</span> <span class="nav-text">System Sound Servie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AVAudioPlayer"><span class="nav-number">1.2.</span> <span class="nav-text">AVAudioPlayer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPMusicPlayerController"><span class="nav-number">1.3.</span> <span class="nav-text">MPMusicPlayerController</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#适用场景"><span class="nav-number">1.3.1.</span> <span class="nav-text">适用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Note"><span class="nav-number">1.3.2.</span> <span class="nav-text">Note</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#录音AVAudioRecorder"><span class="nav-number">1.4.</span> <span class="nav-text">录音AVAudioRecorder</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Note-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">Note</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

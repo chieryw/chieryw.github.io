@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Crash,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="上一篇文章中讲述了，如何拿到crash，并且有几种方式来符号化crash文件。但是对文件本身还没有做对应的介绍。本节就来说说crash文件中各个字段对应的意义 Header每个crash都有这样的header Incident Identifier: 056AE3FF-0053-4B5F-8C42-5CFD2F4CE9F4 CrashReporter Key:   3c6d6b39fd3e330c">
+<meta name="keywords" content="Crash">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS Crash 二">
+<meta property="og:url" content="http://yoursite.com/2018/08/13/2018-08-13-iOS Crash 二/index.html">
+<meta property="og:site_name" content="chiery&#39;blog">
+<meta property="og:description" content="上一篇文章中讲述了，如何拿到crash，并且有几种方式来符号化crash文件。但是对文件本身还没有做对应的介绍。本节就来说说crash文件中各个字段对应的意义 Header每个crash都有这样的header Incident Identifier: 056AE3FF-0053-4B5F-8C42-5CFD2F4CE9F4 CrashReporter Key:   3c6d6b39fd3e330c">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-25T17:32:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS Crash 二">
+<meta name="twitter:description" content="上一篇文章中讲述了，如何拿到crash，并且有几种方式来符号化crash文件。但是对文件本身还没有做对应的介绍。本节就来说说crash文件中各个字段对应的意义 Header每个crash都有这样的header Incident Identifier: 056AE3FF-0053-4B5F-8C42-5CFD2F4CE9F4 CrashReporter Key:   3c6d6b39fd3e330c">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/13/2018-08-13-iOS Crash 二/">
+
+
+
+
+
+  <title>iOS Crash 二 | chiery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chiery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/13/2018-08-13-iOS Crash 二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chiery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS Crash 二</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-13T18:36:23+08:00">
+                2018-08-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS-Crash/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS Crash</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>上一篇文章中讲述了，如何拿到crash，并且有几种方式来符号化crash文件。但是对文件本身还没有做对应的介绍。本节就来说说crash文件中各个字段对应的意义</p>
+<h2 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h2><p>每个crash都有这样的header</p>
+<pre><code>Incident Identifier: 056AE3FF-0053-4B5F-8C42-5CFD2F4CE9F4
+CrashReporter Key:   3c6d6b39fd3e330ce44828e97ab49661480cbb94
+Hardware Model:      iPhone10,3
+Process:             TestCrash [652]
+Path:                /private/var/containers/Bundle/Application/538B29B9-CED1-4969-913B-CB9344F70E94/TestCrash.app/TestCrash
+Identifier:          com.lianjia.TestCrash
+Version:             1 (1.0)
+Code Type:           ARM-64 (Native)
+Role:                Foreground
+Parent Process:      launchd [1]
+Coalition:           com.lianjia.TestCrash [682]
+
+
+Date/Time:           2018-08-10 17:43:31.2405 +0800
+Launch Time:         2018-08-10 17:43:27.4744 +0800
+OS Version:          iPhone OS 11.4.1 (15G77)
+Baseband Version:    1.93.00
+Report Version:      104</code></pre><p>apple 给出的解释如下：</p>
+<a id="more"></a> 
+
+<ul>
+<li><code>Incident Identifier</code>: A unique identifier for the report. Two reports will never share the same Incident Identifier.</li>
+<li><code>CrashReporter Key</code>: An anonymized per-device identifier. Two reports from the same device will contain identical values.</li>
+<li><code>Beta Identifier</code>: A unique identifier for the combination of the device and vendor of the crashed application. Two reports for applications from the same vendor and from the same device will contain identical values. This field is only present in crash reports generated for applications distributed through TestFlight, and replaces the CrashReporter Key field.</li>
+<li><code>Process</code>: The executable name for the process that crashed. This matches the value for the CFBundleExecutable key in the application’s information property list.</li>
+<li><code>Version</code>: The version of the process that crashed. The value for this field is a concatenation of the crashed application’s CFBundleVersion and CFBundleVersionString.</li>
+<li><code>Code Type</code>: The target architecture of the process that crashed. This will be one of ARM-64, ARM, x86-64, or x86.</li>
+<li><code>Role</code>: The task_role assigned to the process at the time of termination.</li>
+<li><code>OS Version</code>: The OS version, including the build number, on which the crash occurred.</li>
+</ul>
+<h2 id="Exception-Information"><a href="#Exception-Information" class="headerlink" title="Exception Information"></a>Exception Information</h2><p>下一个分段中讲述的是异常信息： 这是一个未catch 的exception,值得注意的地方是这里没有termination reason。如果是手动handle uncatched exception时会看到当前异常的reason</p>
+<pre><code>Exception Type:  EXC_CRASH (SIGABRT)
+Exception Codes: 0x0000000000000000, 0x0000000000000000
+Exception Note:  EXC_CORPSE_NOTIFY
+Triggered by Thread:  0</code></pre><p>再来一个访问野指针的异常信息,这是从apple 文档上摘录的，在实际的crash文件中和上面的没有差别，也是没有reason</p>
+<pre><code>Exception Type: EXC_BAD_ACCESS (SIGSEGV)
+Exception Subtype: KERN_INVALID_ADDRESS at 0x0000000000000000
+Termination Signal: Segmentation fault: 11
+Termination Reason: Namespace SIGNAL, Code 0xb
+Terminating Process: exc handler [0]
+Triggered by Thread: 0</code></pre><ul>
+<li><code>Exception Codes</code>: Processor specific information about the exception encoded into one or more 64-bit hexadecimal numbers. Typically, this field will not be present because the Crash Reporter parses the exception codes to present them as a human-readable description in the other fields.</li>
+<li><code>Exception Subtype</code>: The human-readable name of the exception codes.</li>
+<li><code>Exception Message</code>: Additional human-readable information extracted from the exception codes.</li>
+<li><code>Exception Note</code>: Additional information that is not specific to one exception type. If this field contains SIMULATED (this is NOT a crash) then the process did not crash, but was killed at the request of the system, typically the watchdog.</li>
+<li><code>Termination Reason</code>: Exit reason information specified when a process is terminated. Key system components, both inside and outside of a process, will terminate the process upon encountering a fatal error (e.g. a bad code signature, a missing dependent library, or accessing privacy sensitive information without the proper entitlement). macOS Sierra, iOS 10, watchOS 3, and tvOS 10 have adopted new infrastructure to record these errors, and crash reports generated by these operating systems list the error messages in the Termination Reason field.</li>
+<li><code>Triggered by Thread</code>: The thread on which the exception originated.</li>
+</ul>
+<h2 id="Additional-Diagnostic-Information"><a href="#Additional-Diagnostic-Information" class="headerlink" title="Additional Diagnostic Information"></a>Additional Diagnostic Information</h2><p>我在真实的crash中看到的额外信息和apple文档中的存在出入：我当前的crash</p>
+<pre><code>Application Specific Information:
+abort() called
+
+Filtered syslog:
+None found</code></pre><p>apple 文档中信息</p>
+<pre><code>额外信息1
+Dyld Error Message:
+Dyld Message: Library not loaded: @rpath/MyCustomFramework.framework/MyCustomFramework
+  Referenced from: /private/var/containers/Bundle/Application/CD9DB546-A449-41A4-A08B-87E57EE11354/TheElements.app/TheElements
+  Reason: no suitable image found.
+
+额外信息2
+Application Specific Information:
+com.example.apple-samplecode.TheElements failed to scene-create after 19.81s (launch took 0.19s of total time limit 20.00s)
+
+Elapsed total CPU time (seconds): 7.690 (user 7.690, system 0.000), 19% CPU
+Elapsed application CPU time (seconds): 0.697, 2% CPU</code></pre><p>额外信息中可能包含的内容有，当前app的信息，内核态的信息和动态库连接的信息</p>
+<ul>
+<li><code>Application Specific Information</code>: framework error messages captured just before the process terminated</li>
+<li><code>Kernel Messages</code>: details about code-signature problems</li>
+<li><code>Dyld Error Messages</code>: error messages emitted by the dynamic linker</li>
+</ul>
+<h2 id="Backtraces"><a href="#Backtraces" class="headerlink" title="Backtraces"></a>Backtraces</h2><p>接下来就是我们熟悉的堆栈信息，堆栈都是逆序的，阅读堆栈信息有利于定位问题所在</p>
+<pre><code>Last Exception Backtrace:
+(0x18308ad8c 0x1822445ec 0x183023750 0x182f5705c 0x1046d105c 0x18cdf964c 0x18cf1a870 0x18cdff700 0x18cf351a8 0x18ce7c9e0 0x18ce71890 0x18ce701d0 0x18d651d1c 0x18d6542c8 0x18d64d368 0x183033404 0x183032c2c 0x18303079c 0x182f50da8 0x184f36020 0x18cf70758 0x1046d1134 0x1829e1fc0)
+
+Thread 0 name:  Dispatch queue: com.apple.main-thread
+Thread 0 Crashed:
+0   libsystem_kernel.dylib          0x0000000182b112e0 0x182aef000 + 140000
+1   libsystem_pthread.dylib         0x0000000182cb66a8 0x182caf000 + 30376
+2   libsystem_c.dylib               0x0000000182a7fd0c 0x182a1d000 + 404748
+3   libc++abi.dylib                 0x000000018221b2c8 0x18221a000 + 4808
+4   libc++abi.dylib                 0x000000018221b470 0x18221a000 + 5232
+5   libobjc.A.dylib                 0x00000001822448d4 0x18223c000 + 35028
+6   libc++abi.dylib                 0x000000018223537c 0x18221a000 + 111484
+7   libc++abi.dylib                 0x0000000182234f78 0x18221a000 + 110456
+8   libobjc.A.dylib                 0x00000001822447ac 0x18223c000 + 34732
+9   CoreFoundation                  0x0000000182f50e18 0x182f45000 + 48664
+10  GraphicsServices                0x0000000184f36020 0x184f2b000 + 45088
+11  UIKit                           0x000000018cf70758 0x18cc53000 + 3266392
+12  TestCrash                       0x00000001046d1134 0x1046c8000 + 37172
+13  libdyld.dylib                   0x00000001829e1fc0 0x1829e1000 + 4032</code></pre><h2 id="Thread-State"><a href="#Thread-State" class="headerlink" title="Thread State"></a>Thread State</h2><p>这是APP crash的时候，ARM64 构架CPU的32个寄存器的值， 虽然在堆栈的解析中不会用到这些值，但是在理解crash 奔溃的原因上有帮助，这里有一篇汇编的<a href="https://blog.csdn.net/Hello_Hwc/article/details/80028030" target="_blank" rel="noopener">讲解</a></p>
+<pre><code>Thread 0 crashed with ARM Thread State (64-bit):
+    x0: 0x0000000000000000   x1: 0x0000000000000000   x2: 0x0000000000000000   x3: 0x00000001cc0eedb7
+    x4: 0x000000018223aabd   x5: 0x000000016b7373f0   x6: 0x000000000000006e   x7: 0x000000000000030b
+    x8: 0x0000000008000000   x9: 0x0000000004000000  x10: 0x0000000182cb2110  x11: 0x0000000000000003
+   x12: 0xffffffffffffffff  x13: 0x0000000000000001  x14: 0x0000000000000000  x15: 0x0000000000000010
+   x16: 0x0000000000000148  x17: 0x0000000000000300  x18: 0x0000000000000000  x19: 0x0000000000000006
+   x20: 0x00000001b55dbb40  x21: 0x000000016b7373f0  x22: 0x0000000000000303  x23: 0x00000001b55dbc20
+   x24: 0x0000000000000001  x25: 0x00000001c00199f0  x26: 0x0000000000000000  x27: 0x0000000000000001
+   x28: 0x000000016b737b38   fp: 0x000000016b737350   lr: 0x0000000182cb66a8
+    sp: 0x000000016b737320   pc: 0x0000000182b112e0 cpsr: 0x00000000</code></pre><h2 id="Binary-Images"><a href="#Binary-Images" class="headerlink" title="Binary Images"></a>Binary Images</h2><p>二进制加载时的镜像地址，每次进程执行的时候都会生成全新的镜像地址。在crash的同时我们也需要镜像地址，因为使用handle的方式手动记录的crash exception中只存在堆栈的报错地址，并没有当前进程的镜像加载地址。手动handle的方式和 device crash文件中的堆栈的信息存在出入。镜像信息中包含的内容有：</p>
+<ul>
+<li>The binary image’s address space within the process.</li>
+<li>The binary name or bundle identifier of the binary (macOS only). In crash reports from macOS, a (+) is prepended if the binary is part of the OS.</li>
+<li>(macOS only) The binary’s short version string and bundle version, separated by a dash.</li>
+<li>(iOS only) The architecture of the binary image. A binary may contain multiple “slices”, one for each architecture it supports. Only one of these slices is loaded into the process.</li>
+<li>An UUID which uniquely identifies the binary image. This value changes with each build of the binary and is used to locate the corresponding dSYM file when symbolicating the crash report.</li>
+<li>The path to the binary on disk.</li>
+</ul>
+<pre><code>Binary Images:
+0x1046c8000 - 0x1046d3fff TestCrash arm64  &lt;1033c07aba8b3895bd20eb85e761bb49&gt; /var/containers/Bundle/Application/538B29B9-CED1-4969-913B-CB9344F70E94/TestCrash.app/TestCrash
+...
+0x1ab910000 - 0x1ab940fff libclosured.dylib arm64  &lt;e61ffac51cae3e1fb9eb6a6e2801777b&gt; /usr/lib/closure/libclosured.dylib</code></pre><h2 id="补充信息"><a href="#补充信息" class="headerlink" title="补充信息"></a>补充信息</h2><p>关于不同的信号代表的意思，搜索结果如下：</p>
+<h3 id="EXC-BAD-INSTRUCTION"><a href="#EXC-BAD-INSTRUCTION" class="headerlink" title="EXC_BAD_INSTRUCTION"></a>EXC_BAD_INSTRUCTION</h3><ul>
+<li><p>此类异常通常由于线程执行非法指令导致。</p>
+</li>
+<li><p>在代码中修改了storyboard与outlet的对应关系，但是storyboard没有更新时发生过此crash。</p>
+</li>
+<li><p>与第三方库中方法冲突时发生过此crash。</p>
+</li>
+<li><p>调用系统方法时传入了不恰当的指针类型。</p>
+</li>
+</ul>
+<h3 id="EXC-ARITHMETIC"><a href="#EXC-ARITHMETIC" class="headerlink" title="EXC_ARITHMETIC"></a>EXC_ARITHMETIC</h3><p>代码中做除法时分母为零了会发生此问题。</p>
+<h3 id="EXC-BAD-ACCESS"><a href="#EXC-BAD-ACCESS" class="headerlink" title="EXC_BAD_ACCESS"></a>EXC_BAD_ACCESS</h3><p>此类型的Excpetion是我们最常碰到的Crash，通常用于访问了不该访问的内存导致。一般EXC_BAD_ACCESS后面的”()”还会带有补充信息。</p>
+<h4 id="SIGHUP"><a href="#SIGHUP" class="headerlink" title="SIGHUP"></a>SIGHUP</h4><p>本信号在用户终端连接(正常或非正常)结束时发出, 通常是在终端的控制进程结束时, 通知同一session内的各个作业, 这时它们与控制终端不再关联。<br>登录Linux时，系统会分配给登录用户一个终端(Session)。在这个终端运行的所有程序，包括前台进程组和后台进程组，一般都属于这个 Session。当用户退出Linux登录时，前台进程组和后台有对终端输出的进程将会收到SIGHUP信号。这个信号的默认操作为终止进程，因此前台进 程组和后台有终端输出的进程就会中止。不过可以捕获这个信号，比如wget能捕获SIGHUP信号，并忽略它，这样就算退出了Linux登录， wget也 能继续下载。<br>此外，对于与终端脱离关系的守护进程，这个信号用于通知它重新读取配置文件。</p>
+<h4 id="SIGINT"><a href="#SIGINT" class="headerlink" title="SIGINT"></a>SIGINT</h4><p>程序终止(interrupt)信号, 在用户键入INTR字符(通常是Ctrl-C)时发出，用于通知前台进程组终止进程。</p>
+<h4 id="SIGQUIT"><a href="#SIGQUIT" class="headerlink" title="SIGQUIT"></a>SIGQUIT</h4><p>和SIGINT类似, 但由QUIT字符(通常是Ctrl-)来控制. 进程在因收到SIGQUIT退出时会产生core文件, 在这个意义上类似于一个程序错误信号。</p>
+<h4 id="SIGILL"><a href="#SIGILL" class="headerlink" title="SIGILL"></a>SIGILL</h4><p>执行了非法指令. 通常是因为可执行文件本身出现错误, 或者试图执行数据段. 堆栈溢出时也有可能产生这个信号。</p>
+<h4 id="SIGTRAP"><a href="#SIGTRAP" class="headerlink" title="SIGTRAP"></a>SIGTRAP</h4><p>由断点指令或其它trap指令产生. 由debugger使用。</p>
+<h4 id="SIGABRT"><a href="#SIGABRT" class="headerlink" title="SIGABRT"></a>SIGABRT</h4><p>调用abort函数生成的信号退出，通常Foundation库中的容器为了保护状态正常会做一些检测，例如插入nil到数组中等会遇到此类错误。</p>
+<h4 id="SIGBUS"><a href="#SIGBUS" class="headerlink" title="SIGBUS"></a>SIGBUS</h4><p>非法地址, 包括内存地址对齐(alignment)出错。比如访问一个四个字长的整数, 但其地址不是4的倍数。它与SIGSEGV的区别在于后者是由于对合法存储地址的非法访问触发的(如访问不属于自己存储空间或只读存储空间)。<br>与 SIGSEGV 不同的是，SIGSEGV 访问的是无效地址，而 SIGBUS 访问的是有效地址，但总线访问异常(如地址对齐问题)</p>
+<h4 id="SIGFPE"><a href="#SIGFPE" class="headerlink" title="SIGFPE"></a>SIGFPE</h4><p>在发生致命的算术运算错误时发出. 不仅包括浮点运算错误, 还包括溢出及除数为0等其它所有的算术的错误。</p>
+<h4 id="SIGKILL"><a href="#SIGKILL" class="headerlink" title="SIGKILL"></a>SIGKILL</h4><p>用来立即结束程序的运行. 本信号不能被阻塞、处理和忽略。如果管理员发现某个进程终止不了，可尝试发送这个信号。</p>
+<h4 id="SIGUSR1"><a href="#SIGUSR1" class="headerlink" title="SIGUSR1"></a>SIGUSR1</h4><p>留给用户使用</p>
+<h4 id="SIGSEGV"><a href="#SIGSEGV" class="headerlink" title="SIGSEGV"></a>SIGSEGV</h4><p>试图访问未分配给自己的内存, 或试图往没有写权限的内存地址写数据，这种类型在切换了ARC以后应该已经很少见到了</p>
+<h4 id="SIGUSR2"><a href="#SIGUSR2" class="headerlink" title="SIGUSR2"></a>SIGUSR2</h4><p>留给用户使用</p>
+<h4 id="SIGPIPE"><a href="#SIGPIPE" class="headerlink" title="SIGPIPE"></a>SIGPIPE</h4><p>管道破裂。这个信号通常在进程间通信产生，比如采用FIFO(管道)通信的两个进程，读管道没打开或者意外终止就往管道写，写进程会收到SIGPIPE信号。此外用Socket通信的两个进程，写进程在写Socket的时候，读进程已经终止。</p>
+<h4 id="SIGALRM"><a href="#SIGALRM" class="headerlink" title="SIGALRM"></a>SIGALRM</h4><p>时钟定时信号, 计算的是实际的时间或时钟时间. alarm函数使用该信号.</p>
+<h4 id="SIGTERM"><a href="#SIGTERM" class="headerlink" title="SIGTERM"></a>SIGTERM</h4><p>程序结束(terminate)信号, 与SIGKILL不同的是该信号可以被阻塞和处理。通常用来要求程序自己正常退出，shell命令kill缺省产生这个信号。如果进程终止不了，我们才会尝试SIGKILL。</p>
+<h4 id="SIGCHLD"><a href="#SIGCHLD" class="headerlink" title="SIGCHLD"></a>SIGCHLD</h4><p>子进程结束时, 父进程会收到这个信号。<br>如果父进程没有处理这个信号，也没有等待(wait)子进程，子进程虽然终止，但是还会在内核进程表中占有表项，这时的子进程称为僵尸进程。这种情 况我们应该避免(父进程或者忽略SIGCHILD信号，或者捕捉它，或者wait它派生的子进程，或者父进程先终止，这时子进程的终止自动由init进程 来接管)。</p>
+<h4 id="SIGCONT"><a href="#SIGCONT" class="headerlink" title="SIGCONT"></a>SIGCONT</h4><p>让一个停止(stopped)的进程继续执行. 本信号不能被阻塞. 可以用一个handler来让程序在由stopped状态变为继续执行时完成特定的工作. 例如, 重新显示提示符</p>
+<h4 id="SIGSTOP"><a href="#SIGSTOP" class="headerlink" title="SIGSTOP"></a>SIGSTOP</h4><p>停止(stopped)进程的执行. 注意它和terminate以及interrupt的区别:该进程还未结束, 只是暂停执行. 本信号不能被阻塞, 处理或忽略.</p>
+<h4 id="SIGTSTP"><a href="#SIGTSTP" class="headerlink" title="SIGTSTP"></a>SIGTSTP</h4><p>停止进程的运行, 但该信号可以被处理和忽略. 用户键入SUSP字符时(通常是Ctrl-Z)发出这个信号</p>
+<h4 id="SIGTTIN"><a href="#SIGTTIN" class="headerlink" title="SIGTTIN"></a>SIGTTIN</h4><p>当后台作业要从用户终端读数据时, 该作业中的所有进程会收到SIGTTIN信号. 缺省时这些进程会停止执行.</p>
+<h4 id="SIGTTOU"><a href="#SIGTTOU" class="headerlink" title="SIGTTOU"></a>SIGTTOU</h4><p>类似于SIGTTIN, 但在写终端(或修改终端模式)时收到.</p>
+<h4 id="SIGURG"><a href="#SIGURG" class="headerlink" title="SIGURG"></a>SIGURG</h4><p>有”紧急”数据或out-of-band数据到达socket时产生.</p>
+<h4 id="SIGXCPU"><a href="#SIGXCPU" class="headerlink" title="SIGXCPU"></a>SIGXCPU</h4><p>超过CPU时间资源限制. 这个限制可以由getrlimit/setrlimit来读取/改变。</p>
+<h4 id="SIGXFSZ"><a href="#SIGXFSZ" class="headerlink" title="SIGXFSZ"></a>SIGXFSZ</h4><p>当进程企图扩大文件以至于超过文件大小资源限制。</p>
+<h4 id="SIGVTALRM"><a href="#SIGVTALRM" class="headerlink" title="SIGVTALRM"></a>SIGVTALRM</h4><p>虚拟时钟信号. 类似于SIGALRM, 但是计算的是该进程占用的CPU时间.</p>
+<h4 id="SIGPROF"><a href="#SIGPROF" class="headerlink" title="SIGPROF"></a>SIGPROF</h4><p>类似于SIGALRM/SIGVTALRM, 但包括该进程用的CPU时间以及系统调用的时间.</p>
+<h4 id="SIGWINCH"><a href="#SIGWINCH" class="headerlink" title="SIGWINCH"></a>SIGWINCH</h4><p>窗口大小改变时发出.</p>
+<h4 id="SIGIO"><a href="#SIGIO" class="headerlink" title="SIGIO"></a>SIGIO</h4><p>文件描述符准备就绪, 可以开始进行输入/输出操作.</p>
+<h4 id="SIGPWR"><a href="#SIGPWR" class="headerlink" title="SIGPWR"></a>SIGPWR</h4><p>Power failure</p>
+<h4 id="SIGSYS"><a href="#SIGSYS" class="headerlink" title="SIGSYS"></a>SIGSYS</h4><p>非法的系统调用。</p>
+<h4 id="SEGV"><a href="#SEGV" class="headerlink" title="SEGV"></a>SEGV</h4><p>Segmentation Violation，代表无效内存地址，比如空指针，未初始化指针，栈溢出等</p>
+<h3 id="关键点注意"><a href="#关键点注意" class="headerlink" title="关键点注意"></a>关键点注意</h3><p>在以上列出的信号中，程序不可捕获、阻塞或忽略的信号有：SIGKILL,SIGSTOP</p>
+<p>不能恢复至默认动作的信号有：SIGILL,SIGTRAP</p>
+<p>默认会导致进程流产的信号有：SIGABRT,SIGBUS,SIGFPE,SIGILL,SIGIOT,SIGQUIT,SIGSEGV,SIGTRAP,SIGXCPU,SIGXFSZ</p>
+<p>默认会导致进程退出的信号有:<br>SIGALRM,SIGHUP,SIGINT,SIGKILL,SIGPIPE,SIGPOLL,SIGPROF,SIGSYS,SIGTERM,SIGUSR1,SIGUSR2,SIGVTALRM</p>
+<p>默认会导致进程停止的信号有：SIGSTOP,SIGTSTP,SIGTTIN,SIGTTOU</p>
+<p>默认进程忽略的信号有：SIGCHLD,SIGPWR,SIGURG,SIGWINCH</p>
+<p>此外，SIGIO在SVR4是退出，在4.3BSD中是忽略；SIGCONT在进程挂起时是继续，否则是忽略，不能被阻塞。</p>
+<h3 id="signal-handle"><a href="#signal-handle" class="headerlink" title="signal handle"></a>signal handle</h3><p>根据上面的结论，在crash handle 信号中主要handle的对象有：</p>
+<pre><code>signal(SIGHUP, signalHandler);
+signal(SIGINT, signalHandler);
+signal(SIGQUIT, signalHandler);
+signal(SIGABRT, signalHandler);
+signal(SIGILL, signalHandler);
+signal(SIGSEGV, signalHandler);
+signal(SIGFPE, signalHandler);
+signal(SIGBUS, signalHandler);
+signal(SIGPIPE, signalHandler);</code></pre><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://developer.apple.com/library/archive/technotes/tn2151/_index.html#//apple_ref/doc/uid/DTS40008184-CH1-SYMBOLICATION" target="_blank" rel="noopener">Understanding and Analyzing Application Crash Reports</a></p>
+<p><a href="https://blog.csdn.net/wjb123sw99/article/details/75232932" target="_blank" rel="noopener">常见的信号们</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Crash/" rel="tag"># Crash</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/12/2018-08-11-iOS Crash 一/" rel="next" title="iOS Crash 一">
+                <i class="fa fa-chevron-left"></i> iOS Crash 一
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/14/2018-08-14-iOS Crash 三/" rel="prev" title="iOS Crash 三">
+                iOS Crash 三 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">持续、专注</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Header"><span class="nav-number">1.</span> <span class="nav-text">Header</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exception-Information"><span class="nav-number">2.</span> <span class="nav-text">Exception Information</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Additional-Diagnostic-Information"><span class="nav-number">3.</span> <span class="nav-text">Additional Diagnostic Information</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Backtraces"><span class="nav-number">4.</span> <span class="nav-text">Backtraces</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thread-State"><span class="nav-number">5.</span> <span class="nav-text">Thread State</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binary-Images"><span class="nav-number">6.</span> <span class="nav-text">Binary Images</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充信息"><span class="nav-number">7.</span> <span class="nav-text">补充信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXC-BAD-INSTRUCTION"><span class="nav-number">7.1.</span> <span class="nav-text">EXC_BAD_INSTRUCTION</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXC-ARITHMETIC"><span class="nav-number">7.2.</span> <span class="nav-text">EXC_ARITHMETIC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXC-BAD-ACCESS"><span class="nav-number">7.3.</span> <span class="nav-text">EXC_BAD_ACCESS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGHUP"><span class="nav-number">7.3.1.</span> <span class="nav-text">SIGHUP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGINT"><span class="nav-number">7.3.2.</span> <span class="nav-text">SIGINT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGQUIT"><span class="nav-number">7.3.3.</span> <span class="nav-text">SIGQUIT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGILL"><span class="nav-number">7.3.4.</span> <span class="nav-text">SIGILL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGTRAP"><span class="nav-number">7.3.5.</span> <span class="nav-text">SIGTRAP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGABRT"><span class="nav-number">7.3.6.</span> <span class="nav-text">SIGABRT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGBUS"><span class="nav-number">7.3.7.</span> <span class="nav-text">SIGBUS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGFPE"><span class="nav-number">7.3.8.</span> <span class="nav-text">SIGFPE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGKILL"><span class="nav-number">7.3.9.</span> <span class="nav-text">SIGKILL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGUSR1"><span class="nav-number">7.3.10.</span> <span class="nav-text">SIGUSR1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGSEGV"><span class="nav-number">7.3.11.</span> <span class="nav-text">SIGSEGV</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGUSR2"><span class="nav-number">7.3.12.</span> <span class="nav-text">SIGUSR2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGPIPE"><span class="nav-number">7.3.13.</span> <span class="nav-text">SIGPIPE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGALRM"><span class="nav-number">7.3.14.</span> <span class="nav-text">SIGALRM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGTERM"><span class="nav-number">7.3.15.</span> <span class="nav-text">SIGTERM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGCHLD"><span class="nav-number">7.3.16.</span> <span class="nav-text">SIGCHLD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGCONT"><span class="nav-number">7.3.17.</span> <span class="nav-text">SIGCONT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGSTOP"><span class="nav-number">7.3.18.</span> <span class="nav-text">SIGSTOP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGTSTP"><span class="nav-number">7.3.19.</span> <span class="nav-text">SIGTSTP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGTTIN"><span class="nav-number">7.3.20.</span> <span class="nav-text">SIGTTIN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGTTOU"><span class="nav-number">7.3.21.</span> <span class="nav-text">SIGTTOU</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGURG"><span class="nav-number">7.3.22.</span> <span class="nav-text">SIGURG</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGXCPU"><span class="nav-number">7.3.23.</span> <span class="nav-text">SIGXCPU</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGXFSZ"><span class="nav-number">7.3.24.</span> <span class="nav-text">SIGXFSZ</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGVTALRM"><span class="nav-number">7.3.25.</span> <span class="nav-text">SIGVTALRM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGPROF"><span class="nav-number">7.3.26.</span> <span class="nav-text">SIGPROF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGWINCH"><span class="nav-number">7.3.27.</span> <span class="nav-text">SIGWINCH</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGIO"><span class="nav-number">7.3.28.</span> <span class="nav-text">SIGIO</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGPWR"><span class="nav-number">7.3.29.</span> <span class="nav-text">SIGPWR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SIGSYS"><span class="nav-number">7.3.30.</span> <span class="nav-text">SIGSYS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SEGV"><span class="nav-number">7.3.31.</span> <span class="nav-text">SEGV</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键点注意"><span class="nav-number">7.4.</span> <span class="nav-text">关键点注意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#signal-handle"><span class="nav-number">7.5.</span> <span class="nav-text">signal handle</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

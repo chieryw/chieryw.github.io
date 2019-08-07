@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="APNs,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Notification苹果的notification包含了两个类型 Local Notification Remote Notification当接收到推送的时候，我们可以做出相应的提示 一个AlertView提示 一个Application icon上的badge 一个语音我们可以将Local Notification 和 Remote Notification当成一种类型来处理，这样对于用户">
+<meta name="keywords" content="APNs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Notification">
+<meta property="og:url" content="http://yoursite.com/2016/07/02/2016-07-02-Notification/index.html">
+<meta property="og:site_name" content="chiery&#39;blog">
+<meta property="og:description" content="Notification苹果的notification包含了两个类型 Local Notification Remote Notification当接收到推送的时候，我们可以做出相应的提示 一个AlertView提示 一个Application icon上的badge 一个语音我们可以将Local Notification 和 Remote Notification当成一种类型来处理，这样对于用户">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-25T17:37:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Notification">
+<meta name="twitter:description" content="Notification苹果的notification包含了两个类型 Local Notification Remote Notification当接收到推送的时候，我们可以做出相应的提示 一个AlertView提示 一个Application icon上的badge 一个语音我们可以将Local Notification 和 Remote Notification当成一种类型来处理，这样对于用户">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/07/02/2016-07-02-Notification/">
+
+
+
+
+
+  <title>Notification | chiery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chiery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/02/2016-07-02-Notification/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chiery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Notification</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-02T10:04:23+08:00">
+                2016-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/APNs/" itemprop="url" rel="index">
+                    <span itemprop="name">APNs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Notification"><a href="#Notification" class="headerlink" title="Notification"></a>Notification</h2><p>苹果的notification包含了两个类型</p>
+<pre><code>Local Notification
+Remote Notification</code></pre><p>当接收到推送的时候，我们可以做出相应的提示</p>
+<pre><code>一个AlertView提示
+一个Application icon上的badge
+一个语音</code></pre><p>我们可以将Local Notification 和 Remote Notification当成一种类型来处理，这样对于用户来说是比较容易接受的，毕竟都是推送。但是如果你想定制不同的类型，也是可以的，苹果给出了每个类型对应的API，所以对于单独的定制也是支持的。</p>
+<a id="more"></a>
+
+<h3 id="Location-Notification"><a href="#Location-Notification" class="headerlink" title="Location Notification"></a>Location Notification</h3><p>这个通知一般都是由客户端主动发起，用一个定时器，定时的发出一个本地通知。所以这个通知中一般包含下面的内容</p>
+<ul>
+<li>Scheduled time.定制时间</li>
+<li>Notification type.通知类型（这里包含信息，按钮，事件，声音，一个数字）</li>
+<li>Custom data.自定义的数据</li>
+</ul>
+<p>这里需要注意的就是，这个自定义的Location Notification数量有限，最多只能支持64个本地通知，循环的通知只能算一个通知。想一想还是很多的。</p>
+<h3 id="Remote-Notification"><a href="#Remote-Notification" class="headerlink" title="Remote Notification"></a>Remote Notification</h3><p>远程推送和本地推送逻辑上都是一样的，只是一个是本地发出的通知，另一个是服务端发出的通知。所以在设计到网络服务的时候东西就会变得麻烦了很多。这里主要讲述的是苹果的APNs服务，</p>
+<p>需要注意的点是，当设备没有连接网络的时候。后台是不会向客户端发送推送的，而这些已有的推送会在后端保存，当前端处于网络环境的时候，会向客户端发出推送。这里可能会涉及到消息过时的处理。</p>
+<h2 id="注册、调度和处理用户通知"><a href="#注册、调度和处理用户通知" class="headerlink" title="注册、调度和处理用户通知"></a>注册、调度和处理用户通知</h2><p>Apple在ios8之后需要通过在UIApplication文件中实现 registerUserNotificationSettings:函数来告诉系统当一个新的通知来临的时候，以什么样的方式展示给用户，这里给出一个事例demo</p>
+<pre><code>UIUserNotificationType types = (UIUserNotificationType) (UIUserNotificationTypeBadge |
+         UIUserNotificationTypeSound | UIUserNotificationTypeAlert);
+
+UIUserNotificationSettings *mySettings =
+            [UIUserNotificationSettings settingsForTypes:types categories:nil];
+
+[[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];</code></pre><p>上图的demo中给出的是在通知来临的时候可以展示alert,badge,sound来提示用户。为了区分交互类型的，</p>
+<p>在设置actionNotification是会设置一个变量</p>
+<pre><code>[tempCategory setActions:@[tempAction] forContext:UIUserNotificationActionContextDefault];</code></pre><p>UIUserNotificationActionContextDefault这是一个枚举类型，通常就是default,默认情况支持4个action,另一个值的action值，只是支持2个action。这个应用场景没有做实际的检验，但是从文档中看，可以看出在不同的屏幕尺寸上展示4个action似乎回事有问题的。所以在小屏手机上还是考虑一下action的优先级，分情况去展示这个action</p>
+<p>对于ios8之后的系统，程序需要实现以下的这几个delegate去处理自定义的action的识别</p>
+<pre><code>// 处理远程自定义action推送
+application:handleActionWithIdentifier:forRemoteNotification:completionHandler:
+
+// 处理本地自定义action推送
+application:handleActionWithIdentifier:forLocalNotification:completionHandler:.</code></pre><h2 id="APNs"><a href="#APNs" class="headerlink" title="APNs"></a>APNs</h2><p>APNs可以说是远程推送的核心内容，它是一个健壮的高效的服务在分发消息到远程的设备上。每一台远程设备都建立一个被认证的加密的IP远程连接来接受服务端分发的消息，如果当一个远程信息到达的时候，用户由没有在使用手机，这个时候就会在用户的设备上显示一个提示，等待用户去处理相关的信息</p>
+<p>服务端向用户提供需要push的信息，并将这些信息封装在payload&amp;attaches，用HTTP/2的网络多路传输的方式去分发相应的push,APNs的处理是在用户端做的处理</p>
+<h2 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h2><p>payload是每个notification都包含的模块，因为它相当于notification的信息载体，可以包含信息，alert,sound,badge或是自定义的data。但是在内容的大小是有限制的</p>
+<pre><code>* ios8之后使用HTTP/2传输的payload的size是4kb
+* ios8之后使用二进制协议传输的payload的size是2kb
+* ios8之前是256byte</code></pre><p>自定义的json只能包含下面集中类型</p>
+<pre><code>* dictionary
+* array
+* string
+* number
+* bool</code></pre><h2 id="表现"><a href="#表现" class="headerlink" title="表现"></a>表现</h2><p>当程序不处于foreground运行的时候，手机界面上会显示一个notification。点按这个notification，指定的程序会被启动。当程序处于运行状态时，手机不会出现notification,而是直接调用已经实现的代理。</p>
+<p>这里需要注意的是，APNs的 Qualit of Service(Qos)执行的store-and-forward函数在处理下线设备接收推送是这样处理的</p>
+<p>当服务器发出了一个推送给到了APNs,当时当前的设备是不在线，这时，APNs缓存当前这一条信息，当设备恢复有网状态的时候，这个时候，如果这个notification还没有过期，APNs会将这一条信息推送给前端。但是，如果这个设备一直不在网络服务的状态，且这个时候服务器又发来了多个notification,这个时候就会执行这个函数，结果就是，只保留最新的notification,将之前的的notification都置为忽略的状态。但是最后的这个最新的notification也是有时效限制的，所有，设备在一段时间不上线的话，这个notification也是会过期的</p>
+<h2 id="notes"><a href="#notes" class="headerlink" title="notes"></a>notes</h2><p>设备的token是会变化的这些token的变化一般会在这样的条件下变化</p>
+<ul>
+<li>恢复备份数据</li>
+<li>更新操作系统信息</li>
+<li>重置系统内容</li>
+</ul>
+<p>所以注册token的方法总是在设备启动的时候执行一次，当拿到这个token及时传输到服务器，同步设备信息，才能准确及时的接收到通知。同时需要注意的是，这个代理方法的调用是随机的，只要这个设备的token变化了，这个代理方法就会被调用。所以代理方法的调用不仅仅是在程序启动注册或是重新注册的时候才会调用。所以最好不要缓存这个token。这也说明了这个Token不是唯一能标明设备的id。</p>
+<p>ios10之前的nitification不能知道通知是否正常送达，所以在推送的信息最好不要是“敏感信息”，这个敏感信息包含的就会很多，比如说</p>
+<pre><code>条件性的信息
+验证性的信息</code></pre><p>在播放音乐的时候，只是支持一下几种格式</p>
+<ul>
+<li>aiff</li>
+<li>wav</li>
+<li>caf</li>
+</ul>
+<p>如果格式不支持的话，可以打开相关的视屏到处对应的格式，同时在这里需要说明的是，视屏文件的大小不能超过30秒。这里还介绍了一个视屏格式转化的工具 <code>afconvert</code>。</p>
+<pre><code>afconvert /System/Library/Sounds/Submarine.aiff ~/Desktop/sub.caf -d ima4 -f caff -v</code></pre><p>具体的工具的使用还是去google一下，这里只是做一个介绍</p>
+<p>远程推送，本身支持如何通知用户，例如你可以使用一个alert,或是一个声音，或是一个badge.都是可以的。但是在现在的使用场景中，大部分使用的都是自定义的payload</p>
+<h2 id="相关博文"><a href="#相关博文" class="headerlink" title="相关博文"></a>相关博文</h2><p><a href="http://www.jianshu.com/p/508066017286" target="_blank" rel="noopener">对 APNs 的认识</a></p>
+<p><a href="http://www.jianshu.com/p/e7b817e23fbc" target="_blank" rel="noopener">APNs推送那些事</a></p>
+<p><a href="http://www.jianshu.com/p/db9c95c9e29f" target="_blank" rel="noopener">简单使用APNs</a></p>
+<p><a href="http://www.jianshu.com/p/a510b4f8b300" target="_blank" rel="noopener">iOS10推送新框架UserNotifications</a></p>
+<p><a href="http://www.jianshu.com/p/f9fa71325a7d" target="_blank" rel="noopener">WWDC2016-session707 Introduction to Notifications</a></p>
+<p><a href="http://www.jianshu.com/p/2f3202b5e758" target="_blank" rel="noopener">玩转 iOS 10 推送 —— UserNotifications Framework（上）</a></p>
+<p><a href="http://www.jianshu.com/p/db2f938542e6" target="_blank" rel="noopener">remote Notification 实践</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/APNs/" rel="tag"># APNs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/23/2016-06-23-what-new-in-swift/" rel="next" title="what new in swift">
+                <i class="fa fa-chevron-left"></i> what new in swift
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/02/2016-07-02-Notification传输流程/" rel="prev" title="Notification 传输流程">
+                Notification 传输流程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">持续、专注</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Notification"><span class="nav-number">1.</span> <span class="nav-text">Notification</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Location-Notification"><span class="nav-number">1.1.</span> <span class="nav-text">Location Notification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Remote-Notification"><span class="nav-number">1.2.</span> <span class="nav-text">Remote Notification</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注册、调度和处理用户通知"><span class="nav-number">2.</span> <span class="nav-text">注册、调度和处理用户通知</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#APNs"><span class="nav-number">3.</span> <span class="nav-text">APNs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#payload"><span class="nav-number">4.</span> <span class="nav-text">payload</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表现"><span class="nav-number">5.</span> <span class="nav-text">表现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#notes"><span class="nav-number">6.</span> <span class="nav-text">notes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关博文"><span class="nav-number">7.</span> <span class="nav-text">相关博文</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
