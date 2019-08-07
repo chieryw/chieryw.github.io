@@ -87,13 +87,13 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="Storyboard使用终于到的问题我们知道在xib中可以为这个文件中内容添加User Defined Runtime Attributes,这个选项的添加会在runtime的时候自动为这个类添加相应的属性。当时在使用中我们会遇到相应的麻烦，比如在这个选项中添加对应的borderColor。 layer.borderWidth  Number 1 layer.borderColor  Color">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2015/11/23/2015-09-23-storyboard使用中遇到的问题/%3C!--%EF%BF%BC0--%3E/images/tabbar-selected-1.png">
-<meta property="og:image" content="http://yoursite.com/2015/11/23/2015-09-23-storyboard使用中遇到的问题/%3C!--%EF%BF%BC1--%3E/images/tabbar-selected-2.png">
-<meta property="og:updated_time" content="2018-08-25T17:44:04.000Z">
+<meta property="og:image" content="http://yoursite.com/images/tabbar-selected-1.png">
+<meta property="og:image" content="http://yoursite.com/images/tabbar-selected-2.png">
+<meta property="og:updated_time" content="2019-08-07T13:28:04.816Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="storyboard使用中遇到的问题">
 <meta name="twitter:description" content="Storyboard使用终于到的问题我们知道在xib中可以为这个文件中内容添加User Defined Runtime Attributes,这个选项的添加会在runtime的时候自动为这个类添加相应的属性。当时在使用中我们会遇到相应的麻烦，比如在这个选项中添加对应的borderColor。 layer.borderWidth  Number 1 layer.borderColor  Color">
-<meta name="twitter:image" content="http://yoursite.com/2015/11/23/2015-09-23-storyboard使用中遇到的问题/%3C!--%EF%BF%BC0--%3E/images/tabbar-selected-1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/tabbar-selected-1.png">
 
 
 
@@ -347,9 +347,9 @@ layer.borderColor  Color  redColor</code></pre><a id="more"></a>
 <pre><code>layer.borderWidth  Number 1
 layer.xibColor     Color  redColor</code></pre><p>这样就OK了</p>
 <h2 id="Storyboard中的tabbar-Selected-Image的问题"><a href="#Storyboard中的tabbar-Selected-Image的问题" class="headerlink" title="Storyboard中的tabbar Selected Image的问题"></a>Storyboard中的tabbar Selected Image的问题</h2><p>当tabbar中的tabbarItem在selected状态下也是不一样的图片的时候就需要在这里设置了，单纯的在xib中设置如下图</p>
-<p><img src="%3C!--%EF%BF%BC0--%3E/images/tabbar-selected-1.png" alt></p>
+<p><img src="/images/tabbar-selected-1.png" alt></p>
 <p>单纯的设置这里还是不行的，图片在渲染的时候还是会将xib中的tabbarController中的image tint这个设置给带进去。所以还需要设置对应的颜色渲染</p>
-<p><img src="%3C!--%EF%BF%BC1--%3E/images/tabbar-selected-2.png" alt></p>
+<p><img src="/images/tabbar-selected-2.png" alt></p>
 <p>加上这个设置就可以完成想要的效果了。</p>
 
       

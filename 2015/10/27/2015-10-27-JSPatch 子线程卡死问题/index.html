@@ -87,17 +87,17 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="JSPatch 子线程调用卡死问题用JSPatch修复了一个主流程模块的事件点击函数，在这个事件中，包含了网络请求（不止一个，连续多个请求）。包上线了之后，成功的解决了线上的Bug。但是，过了一天后，有同学发现在ios7系统下的主模块入口进不去了，正好是上次修复的bug,😱！">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2015/10/27/2015-10-27-JSPatch%20子线程卡死问题/%3C!--%EF%BF%BC0--%3E/images/testProtocol.h.png">
-<meta property="og:image" content="http://yoursite.com/2015/10/27/2015-10-27-JSPatch%20子线程卡死问题/%3C!--%EF%BF%BC1--%3E/images/testProtocol.h.png">
-<meta property="og:image" content="http://yoursite.com/2015/10/27/2015-10-27-JSPatch%20子线程卡死问题/%3C!--%EF%BF%BC2--%3E/images/ios7Log.png">
-<meta property="og:image" content="http://yoursite.com/2015/10/27/2015-10-27-JSPatch%20子线程卡死问题/%3C!--%EF%BF%BC3--%3E/images/ios7Thread.png">
-<meta property="og:image" content="http://yoursite.com/2015/10/27/2015-10-27-JSPatch%20子线程卡死问题/%3C!--%EF%BF%BC4--%3E/images/ios9Log.png">
-<meta property="og:image" content="http://yoursite.com/2015/10/27/2015-10-27-JSPatch%20子线程卡死问题/%3C!--%EF%BF%BC5--%3E/images/ios9Thread.png">
-<meta property="og:updated_time" content="2018-08-25T17:43:08.000Z">
+<meta property="og:image" content="http://yoursite.com/images/testProtocol.h.png">
+<meta property="og:image" content="http://yoursite.com/images/testProtocol.h.png">
+<meta property="og:image" content="http://yoursite.com/images/ios7Log.png">
+<meta property="og:image" content="http://yoursite.com/images/ios7Thread.png">
+<meta property="og:image" content="http://yoursite.com/images/ios9Log.png">
+<meta property="og:image" content="http://yoursite.com/images/ios9Thread.png">
+<meta property="og:updated_time" content="2019-08-07T13:27:53.425Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JSPatch 子线程调用卡死问题">
 <meta name="twitter:description" content="JSPatch 子线程调用卡死问题用JSPatch修复了一个主流程模块的事件点击函数，在这个事件中，包含了网络请求（不止一个，连续多个请求）。包上线了之后，成功的解决了线上的Bug。但是，过了一天后，有同学发现在ios7系统下的主模块入口进不去了，正好是上次修复的bug,😱！">
-<meta name="twitter:image" content="http://yoursite.com/2015/10/27/2015-10-27-JSPatch%20子线程卡死问题/%3C!--%EF%BF%BC0--%3E/images/testProtocol.h.png">
+<meta name="twitter:image" content="http://yoursite.com/images/testProtocol.h.png">
 
 
 
@@ -344,8 +344,8 @@
 <p>会不会是后修复的文件引起的问题？删除这个文件，果然生效。</p>
 <h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>删除之后修复的文件，发布JSPatch到线上，这个问题解决了。</p>
 <h2 id="后期跟踪"><a href="#后期跟踪" class="headerlink" title="后期跟踪"></a>后期跟踪</h2><p>bug是解决了，但是真正的原因还是没有分析出来。经过后期的追踪，终于找到了问题的关键所在。这里给出一个<a href="https://github.com/chieryw/TestJSPatchCase" target="_blank" rel="noopener">Demo</a>，欢迎大家下载验证。回到剖析问题的话题，当时我们修复了一个主流程的点击事件的bug,这个点击事件是会触发多个网络请求的。之后修复的bug，就是和这个网络请求有关。</p>
-<p><img src="%3C!--%EF%BF%BC0--%3E/images/testProtocol.h.png" alt="之后bug的图片"></p>
-<p><img src="%3C!--%EF%BF%BC1--%3E/images/testProtocol.h.png" alt="之后bug的图片"></p>
+<p><img src="/images/testProtocol.h.png" alt="之后bug的图片"></p>
+<p><img src="/images/testProtocol.h.png" alt="之后bug的图片"></p>
 <p>修复了继承自NSURLProtocol的+(BOOL)canInitWithRequest:(NSURLRequest *)request方法，那么这个方法的触发条件是什么？</p>
 <ul>
 <li>NSURLConnection的请求都会走到这个方法中去</li>
@@ -373,14 +373,14 @@ defineClass(&apos;TestProtocol&apos;, {}, {
         return true;
 },
 })</code></pre><p>ios7日志图片</p>
-<p><img src="%3C!--%EF%BF%BC2--%3E/images/ios7Log.png" alt="ios7Log图片"></p>
+<p><img src="/images/ios7Log.png" alt="ios7Log图片"></p>
 <p>根据日志，我们预测了ios7上的JSPatch的执行线程为：</p>
-<p><img src="%3C!--%EF%BF%BC3--%3E/images/ios7Thread.png" alt="线程执行的流程"></p>
+<p><img src="/images/ios7Thread.png" alt="线程执行的流程"></p>
 <p>ios8,ios9不会奔溃，我们打印了相应的log从日志分析中，我们会读到想要的信息</p>
 <p>ios9日志图片</p>
-<p><img src="%3C!--%EF%BF%BC4--%3E/images/ios9Log.png" alt="ios9Log图片"></p>
+<p><img src="/images/ios9Log.png" alt="ios9Log图片"></p>
 <p>从日志中得出ios9上的执行顺序有了变化</p>
-<p><img src="%3C!--%EF%BF%BC5--%3E/images/ios9Thread.png" alt="线程执行的流程"></p>
+<p><img src="/images/ios9Thread.png" alt="线程执行的流程"></p>
 <p>区别还是很大的，ios7上修复的JSPatch，会并行执行。ios8、9上则是顺序执行。看来cpu在对JSCore操作分配顺序上ios7和ios8、9存在了很大的区别。这也就解释了为什么在ios8/9上没有存在子线程卡死主线程的情况。</p>
 <h2 id="追加描述"><a href="#追加描述" class="headerlink" title="追加描述"></a>追加描述</h2><p>后期发现这个问题似乎不是系统问题，可能是32位的原因。设备有限，等待验证。</p>
 

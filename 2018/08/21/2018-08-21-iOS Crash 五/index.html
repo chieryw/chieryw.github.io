@@ -87,14 +87,14 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="之前介绍符号化文件的时候，使用atos命令可以将符号堆栈信息变的可读。方法如下： atos -o dYSM -arch **arch -l imageAddress stackAddress在真实的环境中使用的时候需要准备的dYSM文件远远不止archive出来的app二进制文件。奔溃的堆栈中都会出现系统的库，例如： CoreFundation UIkit libdyld.dylib ...">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2018/08/21/2018-08-21-iOS%20Crash%20五/%3C!--%EF%BF%BC0--%3E/images/crash-13.png">
-<meta property="og:image" content="http://yoursite.com/2018/08/21/2018-08-21-iOS%20Crash%20五/%3C!--%EF%BF%BC1--%3E/images/crash-14.png">
-<meta property="og:image" content="http://yoursite.com/2018/08/21/2018-08-21-iOS%20Crash%20五/%3C!--%EF%BF%BC2--%3E/images/crash-15.png">
-<meta property="og:updated_time" content="2018-08-25T17:32:23.000Z">
+<meta property="og:image" content="http://yoursite.com/images/crash-13.png">
+<meta property="og:image" content="http://yoursite.com/images/crash-14.png">
+<meta property="og:image" content="http://yoursite.com/images/crash-15.png">
+<meta property="og:updated_time" content="2019-08-07T13:28:17.809Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS Crash 五">
 <meta name="twitter:description" content="之前介绍符号化文件的时候，使用atos命令可以将符号堆栈信息变的可读。方法如下： atos -o dYSM -arch **arch -l imageAddress stackAddress在真实的环境中使用的时候需要准备的dYSM文件远远不止archive出来的app二进制文件。奔溃的堆栈中都会出现系统的库，例如： CoreFundation UIkit libdyld.dylib ...">
-<meta name="twitter:image" content="http://yoursite.com/2018/08/21/2018-08-21-iOS%20Crash%20五/%3C!--%EF%BF%BC0--%3E/images/crash-13.png">
+<meta name="twitter:image" content="http://yoursite.com/images/crash-13.png">
 
 
 
@@ -338,9 +338,9 @@ libdyld.dylib
 
 // 当前我测试的系统版本是11.4.1,系统的符号文件在对应版本的文件夹下
 ~/Library/Developer/Xcode/iOS DeviceSupport/11.4.1 (15G77)/Symbols</code></pre><p>常见的Foundation等系统库符号文件在这个文件中</p>
-<p><img src="%3C!--%EF%BF%BC0--%3E/images/crash-13.png" alt></p>
+<p><img src="/images/crash-13.png" alt></p>
 <p>常见的lib符号文件在这个文件中</p>
-<p><img src="%3C!--%EF%BF%BC1--%3E/images/crash-14.png" alt></p>
+<p><img src="/images/crash-14.png" alt></p>
 <p>更多的符号文件可以在这个<a href="https://drive.google.com/drive/folders/0B5oBYvBG2NS7aDVTR1JzX2JXaFE" target="_blank" rel="noopener">地址</a>中找到。</p>
 <h2 id="符号化文件（swift-server后台处理）"><a href="#符号化文件（swift-server后台处理）" class="headerlink" title="符号化文件（swift server后台处理）"></a>符号化文件（swift server后台处理）</h2><p>符号文件已经准备齐全，之后就是解析的过程了，在之前的文章中，上报的符号文件已经拆分成了diction的方式，每个diction单元中的信息包含：</p>
 <ul>
@@ -546,7 +546,7 @@ atos -arch arm64 -o ~/Library/Developer/Xcode/iOS\ DeviceSupport/11.4.1\ \(15G77
         symbolString = &quot;start (in libdyld.dylib) + 4&quot;;
     }
 )</code></pre><p>在看一眼xcode中自动符号的文件：</p>
-<p><img src="%3C!--%EF%BF%BC2--%3E/images/crash-15.png" alt></p>
+<p><img src="/images/crash-15.png" alt></p>
 <p>和上面手动符号化的文件一样。到此符号化文件已经完成。当前还存在一些问题：</p>
 <ul>
 <li>符号文件的时间过程，需要调研，单个文件的符号时间在3s左右，时间耗时过长，需要优化</li>

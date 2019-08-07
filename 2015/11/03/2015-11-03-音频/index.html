@@ -87,17 +87,17 @@
 <meta property="og:site_name" content="chiery&#39;blog">
 <meta property="og:description" content="音频在使用音频之前还是需要做相应的技术调研，可以更好的根据需求选择相应的技术方案和框架。技术调研的参考数据来自于Apple document。文档讲述了多种api的功能以及适合的场景，apple提供了丰富的组件来帮助开发者完成相应的需求。其中就包含： * Media Player framework播放系统音乐 * AV Foundation framework录制或是播放声音，此框架中提供了简单">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2015/11/03/2015-11-03-音频/%3C!--%EF%BF%BC0--%3E/images/AVAudioPlayer-1.jpeg">
-<meta property="og:image" content="http://yoursite.com/2015/11/03/2015-11-03-音频/%3C!--%EF%BF%BC1--%3E/images/MPMusicPlayerController-1.jpeg">
-<meta property="og:image" content="http://yoursite.com/2015/11/03/2015-11-03-音频/%3C!--%EF%BF%BC2--%3E/images/MPMusicPlayerController-2.jpeg">
-<meta property="og:image" content="http://yoursite.com/2015/11/03/2015-11-03-音频/%3C!--%EF%BF%BC3--%3E/images/MPMusicPlayerController-3.jpeg">
-<meta property="og:image" content="http://yoursite.com/2015/11/03/2015-11-03-音频/%3C!--%EF%BF%BC4--%3E/images/MPMusicPlayerController-4.jpeg">
-<meta property="og:image" content="http://yoursite.com/2015/11/03/2015-11-03-音频/%3C!--%EF%BF%BC5--%3E/images/AVAudioRecorder-1.jpeg">
-<meta property="og:updated_time" content="2018-08-25T17:42:45.000Z">
+<meta property="og:image" content="http://yoursite.com/images/AVAudioPlayer-1.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/MPMusicPlayerController-1.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/MPMusicPlayerController-2.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/MPMusicPlayerController-3.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/MPMusicPlayerController-4.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/AVAudioRecorder-1.jpeg">
+<meta property="og:updated_time" content="2019-08-07T13:27:43.937Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="音频">
 <meta name="twitter:description" content="音频在使用音频之前还是需要做相应的技术调研，可以更好的根据需求选择相应的技术方案和框架。技术调研的参考数据来自于Apple document。文档讲述了多种api的功能以及适合的场景，apple提供了丰富的组件来帮助开发者完成相应的需求。其中就包含： * Media Player framework播放系统音乐 * AV Foundation framework录制或是播放声音，此框架中提供了简单">
-<meta name="twitter:image" content="http://yoursite.com/2015/11/03/2015-11-03-音频/%3C!--%EF%BF%BC0--%3E/images/AVAudioPlayer-1.jpeg">
+<meta name="twitter:image" content="http://yoursite.com/images/AVAudioPlayer-1.jpeg">
 
 
 
@@ -462,7 +462,7 @@ void soundCompleteCallback(SystemSoundID soundID,void * clientData){
 <li>设置播放器属性，例如重复次数、音量大小等，准备播放</li>
 <li>设置代理，控制播放完成/出错的处理</li>
 </ul>
-<p><img src="%3C!--%EF%BF%BC0--%3E/images/AVAudioPlayer-1.jpeg" alt></p>
+<p><img src="/images/AVAudioPlayer-1.jpeg" alt></p>
 <p>对AVAudioPlayer做了如下的封装：.h文件</p>
 <pre><code>#import &lt;Foundation/Foundation.h&gt;
 
@@ -742,7 +742,7 @@ void soundCompleteCallback(SystemSoundID soundID,void * clientData){
 -(void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker{
     [self dismissViewControllerAnimated:YES completion:nil];
 }</code></pre><p>效果如下图：</p>
-<p><img src="%3C!--%EF%BF%BC1--%3E/images/MPMusicPlayerController-1.jpeg" alt> <img src="%3C!--%EF%BF%BC2--%3E/images/MPMusicPlayerController-2.jpeg" alt> <img src="%3C!--%EF%BF%BC3--%3E/images/MPMusicPlayerController-3.jpeg" alt> <img src="%3C!--%EF%BF%BC4--%3E/images/MPMusicPlayerController-4.jpeg" alt></p>
+<p><img src="/images/MPMusicPlayerController-1.jpeg" alt> <img src="/images/MPMusicPlayerController-2.jpeg" alt> <img src="/images/MPMusicPlayerController-3.jpeg" alt> <img src="/images/MPMusicPlayerController-4.jpeg" alt></p>
 <p><code>MPMediaPickerController</code>完成了开发者很多工作量，只要选中了对应的音乐，这个音乐就会在pickerController中消失，实现相应的代理方法，将选中的<code>MPMediaItem</code>添加到<code>MPMusicPlayerController</code>中，这里<code>MPMusicPlayerController</code>只是一个音乐库播放队列的管理器，没有实现相应的界面。</p>
 <h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><p>自定义界面播放系统库音乐，自定义界面可以通过<code>MPMediaItem</code>获取，包含了播放对象的全部资源：</p>
 <ul>
@@ -918,7 +918,7 @@ static const CGFloat recordTimerInterval = 0.08;
 }
 
 @end</code></pre><p>下面的是录音的效果图：</p>
-<p><img src="%3C!--%EF%BF%BC5--%3E/images/AVAudioRecorder-1.jpeg" alt></p>
+<p><img src="/images/AVAudioRecorder-1.jpeg" alt></p>
 <p>功能介绍：这个界面中，按住圆圈开始录音，松开停止录音。录音的时长控制在60s内，超过时长停止录音，中间的红色波纹表示录音时音量的大小。</p>
 <p>下面的录音设置可以做一下参考</p>
 <pre><code>NSMutableDictionary *settings = [[NSMutableDictionary alloc]init ];
