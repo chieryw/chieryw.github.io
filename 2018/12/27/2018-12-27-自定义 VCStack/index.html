@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1420881-b23b478b7cef34e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1420881-3b1aed376aa69e20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1420881-e1174a23cd508df8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-08-07T13:00:59.747Z">
+<meta property="og:updated_time" content="2019-08-07T13:15:26.495Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 自定义 VCStack">
 <meta name="twitter:description" content="背景介绍最近开发的几个工程使用的都是系统的VCStack，即UITabbarController + UINavigationController的方式。这是一个经典的组合，在现实的开发场景中基本已经能够满足需求。但是，最近几期UI稿和UE稿的设计规则，有点超出了这个既有框架的能力  遮罩全屏的半浮层 出栈入栈复杂的动画 跨VC堆栈的pop和push操作  在现有的UITabbarControll">
@@ -333,6 +333,8 @@
 <li>跨VC堆栈的<code>pop</code>和<code>push</code>操作</li>
 </ul>
 <p>在现有的<code>UITabbarController</code> + <code>UINavigationController</code>结构下，这些功能已经被实现，但是过程较为复杂，不少逻辑现在看来任有优化的空间，基于这个背景，打算写一个自定义的VCStack，解决系统空间的局限性</p>
+<a id="more"></a>
+
 <h4 id="系统VCStack存在的困境"><a href="#系统VCStack存在的困境" class="headerlink" title="系统VCStack存在的困境"></a>系统VCStack存在的困境</h4><p>在构思自定义VCStack之前，回顾了一下系统控件在日常开发中存在的瓶颈，这些瓶颈在日查那个的业务开发中经常困扰着我们，拖累开发人员的效率。总结了一下，有以下几点：</p>
 <ul>
 <li><p>UI***Bar层级过高导致的页面遮挡问题</p>
